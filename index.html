@@ -1,8 +1,4 @@
-from pathlib import Path
-
-out = Path("/mnt/data/Campus便利箱_全部入り.html")
-
-html = r'''<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
@@ -283,7 +279,4 @@ function calculateSaving(){const target=Number(document.getElementById("targetMo
 displayTasks();
 </script>
 </body>
-</html>'''
-
-out.write_text(html, encoding="utf-8")
-print(f"全部入りHTMLを作成しました: {out}（{out.stat().st_size:,} bytes）")
+</html>
