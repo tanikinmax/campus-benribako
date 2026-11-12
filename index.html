@@ -4,9 +4,10 @@
 <meta name="google-site-verification" content="uwnCDDbIpokMWPZ-vOZwe7_2-jG2XtuC3xSBWa77TpE" />
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Campus便利箱｜大学生向け無料便利ツール・便利サイト</title>
 
-<meta name="description" content="Campus便利箱は大学生のための無料便利ツール集です。GPA計算機、文字数カウンター、バイト給料計算、割り勘計算、レポート構成メーカー、課題締切管理など、大学生活に役立つ機能を無料で利用できます。">
+<title>Campus便利箱｜大学生向け無料便利ツール集・GPA計算機・文字数カウンター</title>
+
+<meta name="description" content="Campus便利箱は大学生向けの無料便利ツール集です。GPA計算機、文字数カウンター、バイト給料計算、割り勘計算、レポート構成メーカー、課題締切管理など、大学生活に役立つWebツールを無料で利用できます。">
 
 <meta name="robots" content="index, follow">
 
@@ -17,8 +18,8 @@
 <!-- OGP設定 -->
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ja_JP">
-<meta property="og:title" content="Campus便利箱｜大学生向け無料便利ツール">
-<meta property="og:description" content="大学生活をもっと便利に！GPA計算、文字数カウント、給料計算など、大学生向けの無料便利ツール集。">
+<meta property="og:title" content="Campus便利箱｜大学生向け無料便利ツール集">
+<meta property="og:description" content="大学生活をもっと便利に！GPA計算機、文字数カウンター、給料計算、割り勘計算などの無料ツールを利用できます。">
 <meta property="og:url" content="https://tanikinmax.github.io/campus-benribako/">
 <meta property="og:site_name" content="Campus便利箱">
 
@@ -29,53 +30,284 @@
   "@type": "WebSite",
   "name": "Campus便利箱",
   "url": "https://tanikinmax.github.io/campus-benribako/",
-  "description": "大学生向けの無料便利ツール集。GPA計算機や文字数カウンターなどを提供しています。",
-  "inLanguage": "ja"
+  "description": "大学生向けの無料便利ツール集。GPA計算機、文字数カウンター、バイト給料計算など、大学生活に役立つWebツールを提供しています。",
+  "inLanguage": "ja",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Campus便利箱"
+  }
 }
 </script>
 
 <style>
 *{box-sizing:border-box}
-body{margin:0;font-family:"Noto Sans JP",sans-serif;background:#f4f7fb;color:#333}
-header{background:linear-gradient(135deg,#4f7cff,#6c63ff);color:white;text-align:center;padding:42px 20px}
-header h1{font-size:32px;margin:0 0 10px}
-header p{margin:0;opacity:.9}
-.container{max-width:1100px;margin:30px auto;padding:0 18px}
-.tool-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px}
-.card{background:white;padding:23px;border-radius:18px;box-shadow:0 5px 20px rgba(0,0,0,.05);min-width:0}
-.card h2{font-size:19px;margin:0 0 8px;color:#4f63d9}
-.card p{color:#777;font-size:13px;margin:0 0 14px}
-input,textarea,select{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd;border-radius:10px;font-size:14px;background:white}
-textarea{resize:vertical;min-height:110px}
-button{padding:11px 14px;margin-top:8px;background:#5b72f2;color:white;border:0;border-radius:10px;font-size:14px;font-weight:bold;cursor:pointer}
-button:hover{background:#4057d8}
-button.secondary{background:#edf0ff;color:#4658bd}
-button.danger{background:#ffeded;color:#c54b59}
-button.full{width:100%}
-.result{margin-top:12px;padding:13px;background:#eef2ff;border-radius:10px;color:#4257c5;font-weight:bold;white-space:pre-wrap;font-size:14px}
-.task-item,.gpa-item{background:#f4f6ff;padding:11px;border-radius:10px;margin-top:9px;font-size:13px}
-.task-item button,.gpa-item button{margin-left:6px}
-.gpa-row{display:grid;grid-template-columns:1fr 90px 100px;gap:6px;align-items:center}
-.gpa-row input{min-width:0}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
-.stat{background:#eef2ff;padding:12px 6px;border-radius:10px;text-align:center}
-.stat span{display:block;font-size:11px;color:#68769a}
-.stat strong{display:block;color:#4057c5;font-size:21px;margin-top:4px}
-.tool-section{margin-top:28px}
-.section-title{color:#4658bd;font-size:21px;margin:0 0 15px}
-.small-note{font-size:11px;color:#8993a5;line-height:1.6;margin-top:10px}
-.progress{height:9px;background:#edf0f6;border-radius:20px;overflow:hidden;margin-top:8px}
-.bar{height:100%;width:0;background:#6c7ff5}
 
-@media(max-width:600px){
-  header h1{font-size:26px}
-  .container{padding:0 12px}
-  .card{padding:17px}
-  .gpa-row{grid-template-columns:1fr 65px 85px}
-  .stats{grid-template-columns:1fr 1fr 1fr}
+body{
+margin:0;
+font-family:"Noto Sans JP",sans-serif;
+background:#f4f7fb;
+color:#333;
+line-height:1.6;
 }
 
-footer{text-align:center;padding:28px;color:#999;font-size:12px}
+header{
+background:linear-gradient(135deg,#4f7cff,#6c63ff);
+color:white;
+text-align:center;
+padding:42px 20px;
+}
+
+header h1{
+font-size:32px;
+margin:0 0 10px;
+}
+
+header p{
+margin:0;
+opacity:.9;
+}
+
+.container{
+max-width:1100px;
+margin:30px auto;
+padding:0 18px;
+}
+
+.tool-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:22px;
+}
+
+.card{
+background:white;
+padding:23px;
+border-radius:18px;
+box-shadow:0 5px 20px rgba(0,0,0,.05);
+min-width:0;
+}
+
+.card h2{
+font-size:19px;
+margin:0 0 8px;
+color:#4f63d9;
+}
+
+.card p{
+color:#777;
+font-size:13px;
+margin:0 0 14px;
+}
+
+input,textarea,select{
+width:100%;
+padding:11px;
+margin:6px 0;
+border:1px solid #ddd;
+border-radius:10px;
+font-size:14px;
+background:white;
+}
+
+textarea{
+resize:vertical;
+min-height:110px;
+}
+
+button{
+padding:11px 14px;
+margin-top:8px;
+background:#5b72f2;
+color:white;
+border:0;
+border-radius:10px;
+font-size:14px;
+font-weight:bold;
+cursor:pointer;
+}
+
+button:hover{
+background:#4057d8;
+}
+
+button.secondary{
+background:#edf0ff;
+color:#4658bd;
+}
+
+button.danger{
+background:#ffeded;
+color:#c54b59;
+}
+
+button.full{
+width:100%;
+}
+
+.result{
+margin-top:12px;
+padding:13px;
+background:#eef2ff;
+border-radius:10px;
+color:#4257c5;
+font-weight:bold;
+white-space:pre-wrap;
+font-size:14px;
+}
+
+.task-item,.gpa-item{
+background:#f4f6ff;
+padding:11px;
+border-radius:10px;
+margin-top:9px;
+font-size:13px;
+}
+
+.task-item button,.gpa-item button{
+margin-left:6px;
+}
+
+.gpa-row{
+display:grid;
+grid-template-columns:1fr 90px 100px;
+gap:6px;
+align-items:center;
+}
+
+.gpa-row input{
+min-width:0;
+}
+
+.stats{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:8px;
+margin-top:12px;
+}
+
+.stat{
+background:#eef2ff;
+padding:12px 6px;
+border-radius:10px;
+text-align:center;
+}
+
+.stat span{
+display:block;
+font-size:11px;
+color:#68769a;
+}
+
+.stat strong{
+display:block;
+color:#4057c5;
+font-size:21px;
+margin-top:4px;
+}
+
+.tool-section{
+margin-top:28px;
+}
+
+.section-title{
+color:#4658bd;
+font-size:21px;
+margin:0 0 15px;
+}
+
+.small-note{
+font-size:11px;
+color:#8993a5;
+line-height:1.6;
+margin-top:10px;
+}
+
+.progress{
+height:9px;
+background:#edf0f6;
+border-radius:20px;
+overflow:hidden;
+margin-top:8px;
+}
+
+.bar{
+height:100%;
+width:0;
+background:#6c7ff5;
+}
+
+.seo-links{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+gap:15px;
+margin-top:20px;
+}
+
+.seo-link-card{
+display:block;
+background:#fff;
+padding:20px;
+border-radius:15px;
+text-decoration:none;
+color:#4658bd;
+box-shadow:0 3px 15px rgba(0,0,0,.04);
+transition:transform .2s;
+}
+
+.seo-link-card:hover{
+transform:translateY(-3px);
+}
+
+.seo-link-card h3{
+margin:0 0 8px;
+font-size:17px;
+}
+
+.seo-link-card p{
+margin:0;
+font-size:13px;
+color:#777;
+}
+
+.info-section{
+background:white;
+padding:23px;
+border-radius:18px;
+margin-top:25px;
+box-shadow:0 5px 20px rgba(0,0,0,.04);
+}
+
+.info-section h2{
+color:#4658bd;
+font-size:20px;
+margin-top:0;
+}
+
+.info-section h3{
+font-size:16px;
+margin-top:20px;
+}
+
+.info-section p{
+font-size:14px;
+line-height:1.9;
+color:#555;
+}
+
+@media(max-width:600px){
+header h1{font-size:26px}
+.container{padding:0 12px}
+.card{padding:17px}
+.gpa-row{grid-template-columns:1fr 65px 85px}
+.stats{grid-template-columns:1fr 1fr 1fr}
+}
+
+footer{
+text-align:center;
+padding:28px;
+color:#999;
+font-size:12px;
+}
 
 @media print{
 header,footer,.no-print{display:none!important}
@@ -94,18 +326,54 @@ body{background:white}
 </header>
 
 <main class="container">
-<div class="card" style="margin-bottom:22px;">
-  <h2>Campus便利箱とは？</h2>
 
-  <p style="font-size:14px;line-height:1.9;color:#555;">
-    Campus便利箱は、大学生の毎日をもっと便利にするための無料Webツール集です。
-    GPA計算機や文字数カウンター、バイト給料計算、割り勘計算など、
-    大学生活で役立つ便利な機能をひとつのサイトにまとめました。
-    レポート作成や成績管理、日々の予定管理などにぜひ活用してください。
-  </p>
+<!-- サイト紹介 -->
+<section class="card" style="margin-bottom:22px;">
+<h2>Campus便利箱とは？</h2>
+
+<p style="font-size:14px;line-height:1.9;color:#555;">
+Campus便利箱は、大学生の毎日をもっと便利にするための無料Webツール集です。
+GPA計算機や文字数カウンター、バイト給料計算、割り勘計算など、
+大学生活で役立つ便利な機能をひとつのサイトにまとめました。
+大学のレポート作成、成績管理、課題の締切管理、日々の生活費の計算などに活用できます。
+スマートフォンやパソコンから無料で利用できる、大学生のための便利サイトです。
+</p>
+</section>
+
+<!-- 専用ページへのリンク -->
+<section aria-labelledby="dedicated-tools-title">
+
+<h2 class="section-title" id="dedicated-tools-title">
+📖 人気の大学生向け専用ツール
+</h2>
+
+<div class="seo-links">
+
+<a href="gpa.html" class="seo-link-card">
+<h3>📊 GPA計算機</h3>
+<p>
+大学の成績と単位数からGPAを計算できる無料ツール。
+大学生の成績管理やGPA確認に活用できます。
+</p>
+</a>
+
+<a href="mojisu.html" class="seo-link-card">
+<h3>✍️ 文字数カウンター</h3>
+<p>
+大学のレポートや課題の文字数を簡単にチェック。
+空白除外や目標文字数の確認にも対応しています。
+</p>
+</a>
+
 </div>
-  
-<h2 class="section-title">📚 大学生向け便利ツール</h2>
+
+</section>
+
+<!-- ツール一覧 -->
+<h2 class="section-title" style="margin-top:28px;">
+🧰 大学生向け無料便利ツール一覧
+</h2>
+
 <div class="tool-grid">
 
 <!-- GPA計算機 -->
@@ -131,6 +399,12 @@ body{background:white}
 
 <div id="gpaList"></div>
 <button id="gpaClear" class="danger">GPAデータを全削除</button>
+
+<p style="margin-top:15px;">
+<a href="gpa.html" style="color:#4658bd;font-weight:bold;">
+GPA計算機専用ページはこちら →
+</a>
+</p>
 </section>
 
 <!-- 文字数カウンター -->
@@ -160,20 +434,22 @@ body{background:white}
 
 <button id="wcCopy">文章をコピー</button>
 <button id="wcClear" class="secondary">クリア</button>
-  <a href="mojisu.html" style="
-    display: block;
-    text-align: center;
-    margin-top: 15px;
-    padding: 13px;
-    background: #edf0ff;
-    color: #4658bd;
-    border-radius: 10px;
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: bold;
+
+<a href="mojisu.html" style="
+display:block;
+text-align:center;
+margin-top:15px;
+padding:13px;
+background:#edf0ff;
+color:#4658bd;
+border-radius:10px;
+text-decoration:none;
+font-size:14px;
+font-weight:bold;
 ">
-    📚 レポート専用文字数カウンターを使う →
+📚 レポート専用文字数カウンターを使う →
 </a>
+
 </section>
 
 <!-- バイト給料計算 -->
@@ -244,8 +520,47 @@ body{background:white}
 </section>
 
 </div>
-</main>
 
+<!-- SEO向けの説明コンテンツ -->
+<section class="info-section">
+
+<h2>Campus便利箱でできること</h2>
+
+<p>
+Campus便利箱では、大学生活で必要になる計算や管理を簡単に行えます。
+大学生が日常的に利用するGPA計算、レポート文字数の確認、アルバイトの給料計算、
+友達との割り勘、課題の締切管理など、さまざまな場面で役立つ無料ツールを提供しています。
+</p>
+
+<h3>大学生のGPA計算・成績管理</h3>
+
+<p>
+GPA計算機では、科目ごとの単位数とGPを入力することでGPAを計算できます。
+大学の成績評価に合わせて入力することで、自分の成績を確認する際に役立ちます。
+詳しくは<a href="gpa.html" style="color:#4658bd;font-weight:bold;">GPA計算機専用ページ</a>をご利用ください。
+なお、GPAの算出方法は大学によって異なる場合があります。
+</p>
+
+<h3>大学のレポート・課題の文字数チェック</h3>
+
+<p>
+文字数カウンターでは、文章の文字数をリアルタイムで確認できます。
+大学のレポートや課題で指定された文字数を満たしているか確認する際に便利です。
+空白や改行を含めた文字数、空白を除いた文字数などを確認できます。
+<a href="mojisu.html" style="color:#4658bd;font-weight:bold;">文字数カウンター専用ページ</a>も利用できます。
+</p>
+
+<h3>大学生活のお金・予定の管理</h3>
+
+<p>
+アルバイトの給料計算や友達との割り勘計算、節約計画の作成も簡単に行えます。
+課題締切管理を使えば、大学のレポートや提出課題の期限を整理することもできます。
+Campus便利箱を活用して、大学生活をより便利に過ごしましょう。
+</p>
+
+</section>
+
+</main>
 
 <script>
 
@@ -387,7 +702,7 @@ document.getElementById("wcCopy").onclick=async()=>{
 updateWordCount();
 
 
-// 既存の便利ツール
+// バイト給料計算
 function calculateSalary(){
  const w=Number(document.getElementById("wage").value);
  const h=Number(document.getElementById("hours").value);
@@ -401,6 +716,8 @@ function calculateSalary(){
  document.getElementById("salaryResult").innerText="💰 月収目安："+(w*h*d).toLocaleString()+"円";
 }
 
+
+// 割り勘計算
 function calculateSplit(){
  const t=Number(document.getElementById("total").value);
  const p=Number(document.getElementById("people").value);
@@ -418,6 +735,8 @@ function calculateSplit(){
  (remainder?"\n端数："+remainder+"円（調整してください）":"");
 }
 
+
+// レポート構成メーカー
 function makeReport(){
  const theme=document.getElementById("reportTheme").value.trim();
  const type=document.getElementById("reportType").value;
@@ -446,6 +765,8 @@ function makeReport(){
  document.getElementById("reportResult").innerText=s;
 }
 
+
+// 課題締切管理
 let tasks=[];
 
 try{
@@ -505,6 +826,8 @@ function deleteTask(index){
  displayTasks();
 }
 
+
+// 節約計算
 function calculateSaving(){
  const target=Number(document.getElementById("targetMoney").value);
  const saved=Number(document.getElementById("savedMoney").value);
@@ -526,44 +849,41 @@ function calculateSaving(){
 displayTasks();
 
 </script>
+
 <!-- フッター -->
 <footer style="
-  text-align: center;
-  padding: 30px 15px;
-  margin-top: 40px;
-  background: #ffffff;
-  border-top: 1px solid #eeeeee;
-  color: #777;
-  font-size: 13px;
+text-align:center;
+padding:30px 15px;
+margin-top:40px;
+background:#ffffff;
+border-top:1px solid #eeeeee;
+color:#777;
+font-size:13px;
 ">
 
-  <div style="
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 25px;
-    margin-bottom: 15px;
-  ">
+<div style="
+display:flex;
+justify-content:center;
+flex-wrap:wrap;
+gap:25px;
+margin-bottom:15px;
+">
 
-    <a href="privacy.html" style="
-      color: #4361ee;
-      text-decoration: none;
-    ">
-      プライバシーポリシー
-    </a>
+<a href="privacy.html" style="color:#4361ee;text-decoration:none;">
+プライバシーポリシー
+</a>
 
-    <a href="contact.html" style="
-      color: #4361ee;
-      text-decoration: none;
-    ">
-      お問い合わせ
-    </a>
+<a href="contact.html" style="color:#4361ee;text-decoration:none;">
+お問い合わせ
+</a>
 
-  </div>
+</div>
 
-  <p style="margin: 0;">
-    © 2026 Campus便利箱
-  </p>
+<p style="margin:0;">
+© 2026 Campus便利箱
+</p>
 
-</footer></body>
+</footer>
+
+</body>
 </html>
