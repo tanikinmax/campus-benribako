@@ -4,95 +4,239 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Campus便利箱 | 大学生の便利ツール集</title>
+<title>Campus便利箱 | 学生生活をもっと便利に</title>
 
 <style>
-body {
-    margin: 0;
-    font-family: sans-serif;
-    background: #f5f7fb;
-    color: #333;
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap');
+
+:root {
+    --main: #5B7CFA;
+    --dark: #202B4C;
+    --bg: #F5F7FC;
+    --white: #FFFFFF;
+    --text: #29334F;
+    --sub: #8791AA;
 }
 
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: 'Noto Sans JP', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+}
+
+/* ヘッダー */
+
 header {
-    background: #4f70e8;
+    background: linear-gradient(135deg, #536FF5, #8299FF);
     color: white;
-    padding: 30px 20px;
+    padding: 55px 20px 75px;
     text-align: center;
+    border-radius: 0 0 35px 35px;
+}
+
+.logo {
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    opacity: 0.9;
 }
 
 header h1 {
-    margin: 0;
-    font-size: 30px;
+    font-size: clamp(30px, 5vw, 48px);
+    font-weight: 900;
+    margin: 20px 0 12px;
 }
 
 header p {
-    margin-top: 10px;
+    font-size: 15px;
+    opacity: 0.9;
 }
+
+/* メイン */
 
 .container {
-    max-width: 900px;
-    margin: 30px auto;
-    padding: 20px;
+    max-width: 1100px;
+    margin: -35px auto 0;
+    padding: 0 22px;
 }
 
-h2 {
+.intro {
+    background: white;
+    padding: 25px 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 35px rgba(50,70,130,0.07);
+    margin-bottom: 35px;
+}
+
+.intro span {
+    color: var(--main);
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.intro h2 {
+    margin: 8px 0;
+    font-size: 22px;
+}
+
+.intro p {
+    margin: 0;
+    color: var(--sub);
+    font-size: 13px;
+}
+
+/* ツール */
+
+.section-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     margin-bottom: 20px;
+}
+
+.section-title h2 {
+    font-size: 22px;
+    margin: 0;
+}
+
+.section-title span {
+    color: var(--sub);
+    font-size: 12px;
 }
 
 .tools {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 22px;
 }
 
 .card {
     background: white;
-    padding: 25px;
-    border-radius: 15px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+    padding: 27px;
+    border-radius: 22px;
+    box-shadow: 0 5px 20px rgba(40,60,120,0.04);
+    transition: 0.25s;
+    border: 1px solid #EDF0F8;
 }
 
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(50,70,130,0.1);
+}
+
+.icon {
+    width: 55px;
+    height: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px;
+    font-size: 26px;
+    margin-bottom: 20px;
+}
+
+.blue { background: #E8EDFF; }
+.green { background: #E2F8EE; }
+.orange { background: #FFF0DF; }
+.purple { background: #F0E7FF; }
+.pink { background: #FFE7EF; }
+
 .card h3 {
-    margin-top: 0;
+    font-size: 18px;
+    margin: 0 0 10px;
 }
 
 .card p {
-    color: #666;
-    font-size: 14px;
+    color: var(--sub);
+    font-size: 13px;
+    line-height: 1.8;
+    margin-bottom: 20px;
 }
 
+/* 入力 */
+
+input {
+    width: 100%;
+    padding: 13px;
+    margin: 7px 0;
+    border: 1px solid #E2E7F2;
+    border-radius: 12px;
+    font-size: 14px;
+    outline: none;
+    background: #FAFBFE;
+}
+
+input:focus {
+    border-color: var(--main);
+    background: white;
+}
+
+/* ボタン */
+
 button {
-    background: #4f70e8;
+    width: 100%;
+    background: var(--main);
     color: white;
     border: none;
-    padding: 10px 15px;
-    border-radius: 8px;
+    padding: 13px;
+    border-radius: 12px;
+    font-weight: bold;
+    font-size: 14px;
     cursor: pointer;
+    margin-top: 10px;
+    transition: 0.2s;
 }
 
 button:hover {
-    background: #3658cc;
-}
-
-input {
-    width: 90%;
-    padding: 10px;
-    margin: 8px 0;
-    border: 1px solid #ddd;
-    border-radius: 8px;
+    background: #405FE0;
+    transform: scale(1.02);
 }
 
 .result {
-    font-weight: bold;
+    background: #F0F4FF;
+    padding: 14px;
+    border-radius: 12px;
     margin-top: 15px;
-    color: #4f70e8;
+    color: var(--main);
+    font-weight: bold;
+    font-size: 14px;
+    display: none;
 }
+
+/* フッター */
 
 footer {
     text-align: center;
-    padding: 30px;
-    color: #888;
+    padding: 50px 20px;
+    color: var(--sub);
+    font-size: 12px;
+}
+
+footer strong {
+    color: var(--main);
+}
+
+@media (max-width: 600px) {
+    header {
+        padding: 40px 15px 65px;
+    }
+
+    .container {
+        padding: 0 15px;
+    }
+
+    .intro {
+        padding: 22px;
+    }
+
+    .card {
+        padding: 23px;
+    }
 }
 </style>
 </head>
@@ -100,99 +244,159 @@ footer {
 <body>
 
 <header>
+    <div class="logo">CAMPUS TOOL BOX</div>
+
     <h1>🎓 Campus便利箱</h1>
+
     <p>大学生活を、もっとラクに。もっと便利に。</p>
 </header>
 
 <div class="container">
 
-<h2>📚 大学生向け便利ツール</h2>
+    <div class="intro">
+        <span>WELCOME TO CAMPUS TOOL BOX</span>
 
-<div class="tools">
+        <h2>学生生活の「面倒くさい」を解決しよう。</h2>
 
-<div class="card">
-    <h3>💰 バイト給料計算</h3>
-    <p>時給と勤務時間から給料を計算！</p>
+        <p>
+            お金の計算、課題の管理、毎日のちょっとした悩み。
+            便利なツールで大学生活をスマートに。
+        </p>
+    </div>
 
-    <input type="number" id="wage" placeholder="時給（円）">
-    <input type="number" id="hours" placeholder="勤務時間">
+    <div class="section-title">
+        <h2>🧰 便利ツール一覧</h2>
+        <span>TOOLS / 05</span>
+    </div>
 
-    <button onclick="calculateSalary()">計算する</button>
+    <div class="tools">
 
-    <div class="result" id="salaryResult"></div>
-</div>
+        <!-- 給料計算 -->
 
-<div class="card">
-    <h3>📊 割り勘計算</h3>
-    <p>友達との食事や旅行の費用を分配！</p>
+        <div class="card">
+            <div class="icon blue">💰</div>
 
-    <input type="number" id="total" placeholder="合計金額（円）">
-    <input type="number" id="people" placeholder="人数">
+            <h3>バイト給料計算</h3>
 
-    <button onclick="calculateSplit()">計算する</button>
+            <p>時給と勤務時間から給料を簡単に計算。</p>
 
-    <div class="result" id="splitResult"></div>
-</div>
+            <input type="number" id="wage" placeholder="時給（円）">
 
-<div class="card">
-    <h3>📝 レポート構成メーカー</h3>
-    <p>レポートのテーマから構成を考える。</p>
+            <input type="number" id="hours" placeholder="勤務時間">
 
-    <button onclick="alert('レポート構成メーカーは準備中です！')">
-    利用する
-    </button>
-</div>
+            <button onclick="calculateSalary()">給料を計算する →</button>
 
-<div class="card">
-    <h3>📅 課題締切管理</h3>
-    <p>課題の締切を整理して忘れないように。</p>
+            <div class="result" id="salaryResult"></div>
+        </div>
 
-    <button onclick="alert('課題締切管理は準備中です！')">
-    利用する
-    </button>
-</div>
+        <!-- 割り勘 -->
 
-<div class="card">
-    <h3>🎓 節約計算ツール</h3>
-    <p>毎月の予算を簡単に計算。</p>
+        <div class="card">
+            <div class="icon green">🧾</div>
 
-    <button onclick="alert('節約計算ツールは準備中です！')">
-    利用する
-    </button>
-</div>
+            <h3>割り勘計算</h3>
 
-</div>
+            <p>友達との食事や旅行の費用を公平に分配。</p>
+
+            <input type="number" id="total" placeholder="合計金額（円）">
+
+            <input type="number" id="people" placeholder="人数">
+
+            <button onclick="calculateSplit()">割り勘する →</button>
+
+            <div class="result" id="splitResult"></div>
+        </div>
+
+        <!-- レポート -->
+
+        <div class="card">
+            <div class="icon orange">📝</div>
+
+            <h3>レポート構成メーカー</h3>
+
+            <p>レポートのテーマから構成案を考えよう。</p>
+
+            <button onclick="alert('レポート構成メーカーは準備中です！')">
+                利用する →
+            </button>
+        </div>
+
+        <!-- 課題管理 -->
+
+        <div class="card">
+            <div class="icon purple">📅</div>
+
+            <h3>課題締切管理</h3>
+
+            <p>課題の提出期限を忘れないように整理。</p>
+
+            <button onclick="alert('課題締切管理は準備中です！')">
+                利用する →
+            </button>
+        </div>
+
+        <!-- 節約 -->
+
+        <div class="card">
+            <div class="icon pink">🎓</div>
+
+            <h3>大学生節約計算</h3>
+
+            <p>毎月の予算を整理して賢く節約しよう。</p>
+
+            <button onclick="alert('節約計算ツールは準備中です！')">
+                利用する →
+            </button>
+        </div>
+
+    </div>
 </div>
 
 <footer>
-    © 2026 Campus便利箱
+    <strong>Campus便利箱</strong><br><br>
+    © 2026 Campus便利箱 | Made for Students
 </footer>
 
 <script>
 
 function calculateSalary() {
+
     let wage = Number(document.getElementById("wage").value);
     let hours = Number(document.getElementById("hours").value);
 
+    if (wage <= 0 || hours <= 0) {
+        alert("時給と勤務時間を正しく入力してください！");
+        return;
+    }
+
     let salary = wage * hours;
 
-    document.getElementById("salaryResult").innerText =
-    "給料：約 " + salary.toLocaleString() + " 円";
+    let result = document.getElementById("salaryResult");
+
+    result.style.display = "block";
+
+    result.innerText =
+        "💰 給料：約 " + salary.toLocaleString() + " 円";
 }
 
 function calculateSplit() {
+
     let total = Number(document.getElementById("total").value);
     let people = Number(document.getElementById("people").value);
 
-    if (people <= 0) {
-        alert("人数を正しく入力してください");
+    if (total <= 0 || people <= 0) {
+        alert("金額と人数を正しく入力してください！");
         return;
     }
 
     let split = Math.ceil(total / people);
 
-    document.getElementById("splitResult").innerText =
-    "1人あたり：約 " + split.toLocaleString() + " 円";
+    let result = document.getElementById("splitResult");
+
+    result.style.display = "block";
+
+    result.innerText =
+        "🧾 1人あたり：約 " + split.toLocaleString() + " 円";
 }
 
 </script>
