@@ -3,37 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Campus便利箱</title>
 
 <style>
-* {
-    box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
     margin: 0;
-    font-family: "Noto Sans JP", sans-serif;
+    font-family: sans-serif;
     background: #f4f7fb;
     color: #333;
 }
 
 header {
-    background: linear-gradient(135deg, #4f7cff, #6c63ff);
+    background: linear-gradient(135deg,#4f7cff,#6c63ff);
     color: white;
     text-align: center;
-    padding: 45px 20px;
+    padding: 40px 20px;
 }
 
-header h1 {
-    font-size: 32px;
-    margin: 0 0 10px;
-}
-
-header p {
-    margin: 0;
-    opacity: 0.9;
-}
+header h1 { margin: 0 0 10px; }
 
 .container {
     max-width: 1100px;
@@ -43,21 +32,21 @@ header p {
 
 .tool-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 25px;
+    grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+    gap: 22px;
 }
 
 .card {
     background: white;
-    padding: 25px;
+    padding: 24px;
     border-radius: 18px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+    box-shadow: 0 5px 20px rgba(0,0,0,.05);
 }
 
 .card h2 {
-    font-size: 20px;
-    margin-top: 0;
     color: #4f63d9;
+    margin-top: 0;
+    font-size: 20px;
 }
 
 .card p {
@@ -65,47 +54,37 @@ header p {
     font-size: 14px;
 }
 
-input, textarea, select {
+input,select {
     width: 100%;
     padding: 12px;
-    margin: 8px 0;
+    margin: 7px 0;
     border: 1px solid #ddd;
-    border-radius: 10px;
+    border-radius: 9px;
     font-size: 15px;
-}
-
-textarea {
-    resize: vertical;
-    min-height: 80px;
 }
 
 button {
     width: 100%;
-    padding: 13px;
-    margin-top: 10px;
+    padding: 12px;
+    margin-top: 9px;
     background: #5b72f2;
     color: white;
     border: none;
-    border-radius: 10px;
-    font-size: 15px;
+    border-radius: 9px;
     font-weight: bold;
     cursor: pointer;
-    transition: 0.2s;
 }
 
-button:hover {
-    background: #4057d8;
-    transform: translateY(-2px);
-}
+button:hover { background: #4057d8; }
 
 .result {
-    margin-top: 15px;
-    padding: 15px;
+    margin-top: 14px;
+    padding: 13px;
     background: #eef2ff;
-    border-radius: 10px;
+    border-radius: 9px;
     color: #4257c5;
-    font-weight: bold;
     white-space: pre-wrap;
+    font-weight: bold;
 }
 
 .task-item {
@@ -116,16 +95,39 @@ button:hover {
     font-size: 14px;
 }
 
-.task-item button {
-    background: #ff6b6b;
-    margin-top: 8px;
+.delete-btn { background: #ff6b6b; }
+
+.expense-summary {
+    background: #eef2ff;
+    padding: 16px;
+    border-radius: 12px;
+    margin: 12px 0;
+}
+
+.expense-summary h3 {
+    margin: 5px 0;
+    color: #4f63d9;
+}
+
+.expense-item {
+    border-bottom: 1px solid #eee;
+    padding: 12px 0;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    align-items: center;
+}
+
+.expense-item button {
+    width: auto;
+    padding: 7px 12px;
+    margin: 0;
 }
 
 footer {
     text-align: center;
     padding: 30px;
     color: #999;
-    font-size: 13px;
 }
 
 </style>
@@ -139,209 +141,225 @@ footer {
 </header>
 
 <div class="container">
-
 <div class="tool-grid">
 
-<!-- バイト給料計算 -->
+<!-- 1 給料計算 -->
 
 <div class="card">
-    <h2>💰 バイト給料計算</h2>
-    <p>時給と勤務時間から給料を計算！</p>
+<h2>💰 バイト給料計算</h2>
+<p>時給と勤務時間から給料を計算！</p>
 
-    <input type="number" id="wage" placeholder="時給（円）">
-    <input type="number" id="hours" placeholder="勤務時間（時間）">
-    <input type="number" id="days" placeholder="勤務日数">
+<input type="number" id="wage" placeholder="時給（円）">
+<input type="number" id="hours" placeholder="勤務時間（時間）">
+<input type="number" id="days" placeholder="勤務日数">
 
-    <button onclick="calculateSalary()">給料を計算する</button>
-
-    <div class="result" id="salaryResult">
-        ここに計算結果が表示されます
-    </div>
+<button onclick="calculateSalary()">計算する</button>
+<div class="result" id="salaryResult">結果が表示されます</div>
 </div>
 
-<!-- 割り勘計算 -->
+<!-- 2 割り勘 -->
 
 <div class="card">
-    <h2>🍕 割り勘計算</h2>
-    <p>友達との食事代を簡単に割り勘！</p>
+<h2>🍕 割り勘計算</h2>
+<p>友達との食事代を簡単に計算！</p>
 
-    <input type="number" id="total" placeholder="合計金額（円）">
-    <input type="number" id="people" placeholder="人数">
+<input type="number" id="total" placeholder="合計金額（円）">
+<input type="number" id="people" placeholder="人数">
 
-    <button onclick="calculateSplit()">割り勘する</button>
-
-    <div class="result" id="splitResult">
-        ここに計算結果が表示されます
-    </div>
+<button onclick="calculateSplit()">計算する</button>
+<div class="result" id="splitResult">結果が表示されます</div>
 </div>
 
-<!-- レポート構成メーカー -->
+<!-- 3 レポート -->
 
 <div class="card">
-    <h2>📝 レポート構成メーカー</h2>
-    <p>テーマを入力してレポートの構成を作成！</p>
+<h2>📝 レポート構成メーカー</h2>
+<p>テーマからレポートの構成を作成！</p>
 
-    <input type="text" id="reportTheme" placeholder="レポートのテーマ">
+<input type="text" id="reportTheme" placeholder="レポートのテーマ">
 
-    <select id="reportType">
-        <option value="general">一般的なレポート</option>
-        <option value="opinion">意見・考察型</option>
-        <option value="research">調査・研究型</option>
-    </select>
+<select id="reportType">
+<option value="general">一般的なレポート</option>
+<option value="opinion">意見・考察型</option>
+<option value="research">調査・研究型</option>
+</select>
 
-    <button onclick="makeReport()">構成を作る</button>
-
-    <div class="result" id="reportResult">
-        ここに構成が表示されます
-    </div>
+<button onclick="makeReport()">構成を作る</button>
+<div class="result" id="reportResult">結果が表示されます</div>
 </div>
 
-<!-- 課題締切管理 -->
+<!-- 4 課題管理 -->
 
 <div class="card">
-    <h2>📅 課題締切管理</h2>
-    <p>提出期限を忘れないように管理！</p>
+<h2>📅 課題締切管理</h2>
+<p>課題の提出期限を管理！</p>
 
-    <input type="text" id="taskName" placeholder="課題名">
+<input type="text" id="taskName" placeholder="課題名">
+<input type="date" id="taskDate">
 
-    <input type="date" id="taskDate">
-
-    <button onclick="addTask()">課題を追加する</button>
-
-    <div id="taskList"></div>
+<button onclick="addTask()">課題を追加</button>
+<div id="taskList"></div>
 </div>
 
-<!-- 節約計算 -->
+<!-- 5 貯金計算 -->
 
 <div class="card">
-    <h2>💸 大学生節約計算</h2>
-    <p>目標金額まであといくら？</p>
+<h2>💸 大学生節約計算</h2>
+<p>目標金額まであといくら？</p>
 
-    <input type="number" id="targetMoney" placeholder="目標金額（円）">
-    <input type="number" id="savedMoney" placeholder="現在の貯金額（円）">
-    <input type="number" id="monthlyMoney" placeholder="毎月の貯金額（円）">
+<input type="number" id="targetMoney" placeholder="目標金額">
+<input type="number" id="savedMoney" placeholder="現在の貯金額">
+<input type="number" id="monthlyMoney" placeholder="毎月の貯金額">
 
-    <button onclick="calculateSaving()">貯金計画を計算する</button>
+<button onclick="calculateSaving()">計算する</button>
+<div class="result" id="savingResult">結果が表示されます</div>
+</div>
 
-    <div class="result" id="savingResult">
-        ここに計算結果が表示されます
-    </div>
+<!-- 6 お財布管理 -->
+
+<div class="card">
+<h2>💳 お財布管理</h2>
+<p>毎日の支出を記録しよう！</p>
+
+<input type="number" id="budget" placeholder="今月の予算（円）">
+
+<button onclick="saveBudget()">予算を設定</button>
+
+<div class="expense-summary">
+    <p>今月の支出</p>
+    <h3 id="monthlyTotal">0円</h3>
+
+    <p>残りの予算</p>
+    <h3 id="remainingBudget">未設定</h3>
+</div>
+
+<input type="text" id="expenseName" placeholder="支出内容（例：昼ごはん）">
+
+<input type="number" id="expenseAmount" placeholder="金額（円）">
+
+<select id="expenseCategory">
+<option value="食費">🍚 食費</option>
+<option value="交通費">🚃 交通費</option>
+<option value="娯楽費">🎮 娯楽費</option>
+<option value="買い物">🛍️ 買い物</option>
+<option value="その他">📦 その他</option>
+</select>
+
+<input type="date" id="expenseDate">
+
+<button onclick="addExpense()">支出を登録</button>
+
+<h3>📋 支出履歴</h3>
+
+<input type="month" id="expenseMonth" onchange="displayExpenses()">
+
+<div id="expenseList"></div>
+
 </div>
 
 </div>
 </div>
 
 <footer>
-    © 2026 Campus便利箱
-    <br>
-    大学生のための便利ツールサイト
+© 2026 Campus便利箱
+<br>
+大学生のための便利ツールサイト
 </footer>
 
 <script>
 
-// バイト給料計算
+// 給料計算
 
 function calculateSalary() {
+    const w = Number(document.getElementById("wage").value);
+    const h = Number(document.getElementById("hours").value);
+    const d = Number(document.getElementById("days").value);
 
-    const wage = Number(document.getElementById("wage").value);
-    const hours = Number(document.getElementById("hours").value);
-    const days = Number(document.getElementById("days").value);
-
-    if (wage <= 0 || hours <= 0 || days <= 0) {
-        alert("すべての項目を正しく入力してください！");
+    if(w <= 0 || h <= 0 || d <= 0) {
+        alert("正しい数字を入力してください");
         return;
     }
-
-    const salary = wage * hours * days;
 
     document.getElementById("salaryResult").innerText =
-        "💰 月収目安：" + salary.toLocaleString() + "円";
+    "月収目安：" + (w*h*d).toLocaleString() + "円";
 }
 
 
-// 割り勘計算
+// 割り勘
 
 function calculateSplit() {
+    const t = Number(document.getElementById("total").value);
+    const p = Number(document.getElementById("people").value);
 
-    const total = Number(document.getElementById("total").value);
-    const people = Number(document.getElementById("people").value);
-
-    if (total <= 0 || people <= 0) {
-        alert("金額と人数を正しく入力してください！");
+    if(t <= 0 || p <= 0) {
+        alert("正しい数字を入力してください");
         return;
     }
 
-    const split = Math.ceil(total / people);
-
     document.getElementById("splitResult").innerText =
-        "🍕 1人あたり：" + split.toLocaleString() + "円";
+    "1人あたり：" + Math.ceil(t/p).toLocaleString() + "円";
 }
 
 
-// レポート構成メーカー
+// レポート
 
 function makeReport() {
-
     const theme = document.getElementById("reportTheme").value;
     const type = document.getElementById("reportType").value;
 
-    if (theme.trim() === "") {
-        alert("テーマを入力してください！");
+    if(!theme.trim()) {
+        alert("テーマを入力してください");
         return;
     }
 
-    let structure = "";
+    let result = "";
 
-    if (type === "general") {
+    if(type === "general") {
+        result = `テーマ：${theme}
 
-        structure =
-        "【レポート構成】\n\n" +
-        "テーマ：" + theme + "\n\n" +
-        "① はじめに\n" +
-        "・テーマの背景\n" +
-        "・問題提起\n\n" +
-        "② 本論\n" +
-        "・テーマに関する説明\n" +
-        "・具体例やデータ\n" +
-        "・重要なポイント\n\n" +
-        "③ 考察\n" +
-        "・内容についての分析\n" +
-        "・自分の考え\n\n" +
-        "④ おわりに\n" +
-        "・結論\n" +
-        "・今後の課題";
+① はじめに
+・テーマの背景
+・問題提起
+
+② 本論
+・テーマの説明
+・具体例やデータ
+
+③ 考察
+・内容の分析
+・自分の考え
+
+④ おわりに
+・結論
+・今後の課題`;
     }
 
-    else if (type === "opinion") {
+    if(type === "opinion") {
+        result = `テーマ：${theme}
 
-        structure =
-        "【意見・考察型レポート】\n\n" +
-        "テーマ：" + theme + "\n\n" +
-        "① 問題提起\n" +
-        "② 自分の主張\n" +
-        "③ 根拠・具体例\n" +
-        "④ 反対意見への検討\n" +
-        "⑤ 結論";
+① 問題提起
+② 自分の主張
+③ 根拠・具体例
+④ 反対意見の検討
+⑤ 結論`;
     }
 
-    else if (type === "research") {
+    if(type === "research") {
+        result = `テーマ：${theme}
 
-        structure =
-        "【調査・研究型レポート】\n\n" +
-        "テーマ：" + theme + "\n\n" +
-        "① 研究目的\n" +
-        "② 先行研究\n" +
-        "③ 調査方法\n" +
-        "④ 調査結果\n" +
-        "⑤ 考察\n" +
-        "⑥ 結論";
+① 研究目的
+② 先行研究
+③ 調査方法
+④ 調査結果
+⑤ 考察
+⑥ 結論`;
     }
 
-    document.getElementById("reportResult").innerText = structure;
+    document.getElementById("reportResult").innerText = result;
 }
 
 
-// 課題締切管理
+// 課題管理
 
 let tasks = JSON.parse(localStorage.getItem("campusTasks")) || [];
 
@@ -350,21 +368,16 @@ function saveTasks() {
 }
 
 function addTask() {
-
     const name = document.getElementById("taskName").value;
     const date = document.getElementById("taskDate").value;
 
-    if (name.trim() === "" || date === "") {
-        alert("課題名と締切を入力してください！");
+    if(!name.trim() || !date) {
+        alert("課題名と締切を入力してください");
         return;
     }
 
-    tasks.push({
-        name: name,
-        date: date
-    });
-
-    tasks.sort((a, b) => a.date.localeCompare(b.date));
+    tasks.push({name,date});
+    tasks.sort((a,b) => a.date.localeCompare(b.date));
 
     saveTasks();
     displayTasks();
@@ -374,75 +387,182 @@ function addTask() {
 }
 
 function displayTasks() {
-
     const list = document.getElementById("taskList");
-
     list.innerHTML = "";
 
-    tasks.forEach((task, index) => {
-
+    tasks.forEach((task,index) => {
         const div = document.createElement("div");
         div.className = "task-item";
 
-        const text = document.createElement("div");
-        text.innerText = "📌 " + task.name + "\n締切：" + task.date;
+        const text = document.createElement("span");
+        text.textContent = "📌 " + task.name + " / 締切：" + task.date;
 
         const button = document.createElement("button");
-        button.innerText = "削除";
-        button.onclick = function() {
-            deleteTask(index);
+        button.className = "delete-btn";
+        button.textContent = "削除";
+        button.onclick = () => {
+            tasks.splice(index,1);
+            saveTasks();
+            displayTasks();
         };
 
-        div.appendChild(text);
-        div.appendChild(button);
-
+        div.append(text,button);
         list.appendChild(div);
     });
 }
 
-function deleteTask(index) {
 
-    tasks.splice(index, 1);
-
-    saveTasks();
-    displayTasks();
-}
-
-
-// 節約計算
+// 貯金計算
 
 function calculateSaving() {
-
     const target = Number(document.getElementById("targetMoney").value);
     const saved = Number(document.getElementById("savedMoney").value);
     const monthly = Number(document.getElementById("monthlyMoney").value);
 
-    if (target <= 0 || saved < 0 || monthly <= 0) {
-        alert("正しい金額を入力してください！");
+    if(target <= 0 || saved < 0 || monthly <= 0) {
+        alert("正しい金額を入力してください");
         return;
     }
 
-    const remaining = target - saved;
+    const remaining = target-saved;
 
-    if (remaining <= 0) {
-
+    if(remaining <= 0) {
         document.getElementById("savingResult").innerText =
-            "🎉 目標達成！おめでとう！";
-
+        "🎉 目標達成！おめでとう！";
         return;
     }
-
-    const months = Math.ceil(remaining / monthly);
 
     document.getElementById("savingResult").innerText =
-        "💸 あと：" + remaining.toLocaleString() + "円\n" +
-        "📅 目標達成まで：約" + months + "ヶ月";
+    "あと：" + remaining.toLocaleString() + "円\n" +
+    "達成まで：約" + Math.ceil(remaining/monthly) + "ヶ月";
+}
+
+
+// お財布管理
+
+let expenses = JSON.parse(localStorage.getItem("campusExpenses")) || [];
+
+let budget = Number(localStorage.getItem("campusBudget")) || 0;
+
+function saveBudget() {
+    const value = Number(document.getElementById("budget").value);
+
+    if(value <= 0) {
+        alert("正しい予算を入力してください");
+        return;
+    }
+
+    budget = value;
+
+    localStorage.setItem("campusBudget",budget);
+
+    updateExpenseSummary();
+}
+
+function addExpense() {
+    const name = document.getElementById("expenseName").value;
+    const amount = Number(document.getElementById("expenseAmount").value);
+    const category = document.getElementById("expenseCategory").value;
+    const date = document.getElementById("expenseDate").value;
+
+    if(!name.trim() || amount <= 0 || !date) {
+        alert("内容・金額・日付を入力してください");
+        return;
+    }
+
+    expenses.push({
+        id: Date.now() + Math.random(),
+        name,
+        amount,
+        category,
+        date
+    });
+
+    localStorage.setItem("campusExpenses",JSON.stringify(expenses));
+
+    document.getElementById("expenseName").value = "";
+    document.getElementById("expenseAmount").value = "";
+
+    updateExpenseSummary();
+    displayExpenses();
+}
+
+function updateExpenseSummary() {
+    const month = new Date().toISOString().slice(0,7);
+
+    const total = expenses
+        .filter(e => e.date.startsWith(month))
+        .reduce((sum,e) => sum + e.amount,0);
+
+    document.getElementById("monthlyTotal").innerText =
+        total.toLocaleString() + "円";
+
+    document.getElementById("remainingBudget").innerText =
+        budget > 0
+        ? (budget-total).toLocaleString() + "円"
+        : "未設定";
+
+    document.getElementById("budget").value =
+        budget || "";
+}
+
+function displayExpenses() {
+    const monthInput = document.getElementById("expenseMonth");
+
+    const month = monthInput.value ||
+        new Date().toISOString().slice(0,7);
+
+    monthInput.value = month;
+
+    const list = document.getElementById("expenseList");
+    list.innerHTML = "";
+
+    const filtered = expenses
+        .filter(e => e.date.startsWith(month))
+        .sort((a,b) => b.date.localeCompare(a.date));
+
+    if(filtered.length === 0) {
+        list.textContent = "この月の支出はありません";
+        return;
+    }
+
+    filtered.forEach(e => {
+        const div = document.createElement("div");
+        div.className = "expense-item";
+
+        const info = document.createElement("span");
+        info.textContent =
+            `${e.date} / ${e.category} / ${e.name} / ${e.amount.toLocaleString()}円`;
+
+        const button = document.createElement("button");
+        button.className = "delete-btn";
+        button.textContent = "削除";
+
+        button.onclick = () => {
+            if(!confirm("この支出を削除しますか？")) return;
+
+            expenses = expenses.filter(item => item.id !== e.id);
+
+            localStorage.setItem(
+                "campusExpenses",
+                JSON.stringify(expenses)
+            );
+
+            updateExpenseSummary();
+            displayExpenses();
+        };
+
+        div.append(info,button);
+        list.appendChild(div);
+    });
 }
 
 
 // 初期表示
 
 displayTasks();
+updateExpenseSummary();
+displayExpenses();
 
 </script>
 
