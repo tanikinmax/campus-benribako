@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Campus便利箱 | 大学生の便利ツール集</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: sans-serif;
+    background: #f5f7fb;
+    color: #333;
+}
+
+header {
+    background: #4f70e8;
+    color: white;
+    padding: 30px 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 30px;
+}
+
+header p {
+    margin-top: 10px;
+}
+
+.container {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 20px;
+}
+
+h2 {
+    margin-bottom: 20px;
+}
+
+.tools {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+}
+
+.card h3 {
+    margin-top: 0;
+}
+
+.card p {
+    color: #666;
+    font-size: 14px;
+}
+
+button {
+    background: #4f70e8;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #3658cc;
+}
+
+input {
+    width: 90%;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.result {
+    font-weight: bold;
+    margin-top: 15px;
+    color: #4f70e8;
+}
+
+footer {
+    text-align: center;
+    padding: 30px;
+    color: #888;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>🎓 Campus便利箱</h1>
+    <p>大学生活を、もっとラクに。もっと便利に。</p>
+</header>
+
+<div class="container">
+
+<h2>📚 大学生向け便利ツール</h2>
+
+<div class="tools">
+
+<div class="card">
+    <h3>💰 バイト給料計算</h3>
+    <p>時給と勤務時間から給料を計算！</p>
+
+    <input type="number" id="wage" placeholder="時給（円）">
+    <input type="number" id="hours" placeholder="勤務時間">
+
+    <button onclick="calculateSalary()">計算する</button>
+
+    <div class="result" id="salaryResult"></div>
+</div>
+
+<div class="card">
+    <h3>📊 割り勘計算</h3>
+    <p>友達との食事や旅行の費用を分配！</p>
+
+    <input type="number" id="total" placeholder="合計金額（円）">
+    <input type="number" id="people" placeholder="人数">
+
+    <button onclick="calculateSplit()">計算する</button>
+
+    <div class="result" id="splitResult"></div>
+</div>
+
+<div class="card">
+    <h3>📝 レポート構成メーカー</h3>
+    <p>レポートのテーマから構成を考える。</p>
+
+    <button onclick="alert('レポート構成メーカーは準備中です！')">
+    利用する
+    </button>
+</div>
+
+<div class="card">
+    <h3>📅 課題締切管理</h3>
+    <p>課題の締切を整理して忘れないように。</p>
+
+    <button onclick="alert('課題締切管理は準備中です！')">
+    利用する
+    </button>
+</div>
+
+<div class="card">
+    <h3>🎓 節約計算ツール</h3>
+    <p>毎月の予算を簡単に計算。</p>
+
+    <button onclick="alert('節約計算ツールは準備中です！')">
+    利用する
+    </button>
+</div>
+
+</div>
+</div>
+
+<footer>
+    © 2026 Campus便利箱
+</footer>
+
+<script>
+
+function calculateSalary() {
+    let wage = Number(document.getElementById("wage").value);
+    let hours = Number(document.getElementById("hours").value);
+
+    let salary = wage * hours;
+
+    document.getElementById("salaryResult").innerText =
+    "給料：約 " + salary.toLocaleString() + " 円";
+}
+
+function calculateSplit() {
+    let total = Number(document.getElementById("total").value);
+    let people = Number(document.getElementById("people").value);
+
+    if (people <= 0) {
+        alert("人数を正しく入力してください");
+        return;
+    }
+
+    let split = Math.ceil(total / people);
+
+    document.getElementById("splitResult").innerText =
+    "1人あたり：約 " + split.toLocaleString() + " 円";
+}
+
+</script>
+
+</body>
+</html>
