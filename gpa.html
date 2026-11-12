@@ -1,664 +1,879 @@
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="大学生・専門学生向けの無料GPA計算機。科目と単位数、成績を入力してGPAを自動計算できます。">
-<title>GPA計算機 | Campus便利箱</title>
+
+<title>GPA計算機｜大学生向け無料ツール | Campus便利箱</title>
+
+<meta name="description" content="大学生向けの無料GPA計算機。科目ごとの単位数とGPを入力するだけでGPAを自動計算。0.0〜5.0の自由入力に対応し、取得単位数も確認できます。">
+<meta name="keywords" content="GPA計算機,GPA計算,大学生,大学,単位,GPA,無料ツール">
+
+<link rel="canonical" href="https://tanikinmax.github.io/campus-benribako/gpa.html">
+
+<meta property="og:title" content="GPA計算機｜Campus便利箱">
+<meta property="og:description" content="単位数とGPを入力するだけでGPAを自動計算。大学生向け無料ツール。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tanikinmax.github.io/campus-benribako/gpa.html">
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;800&display=swap');
-
-:root {
-  --navy: #233b60;
-  --blue: #729ed2;
-  --light-blue: #eaf3fc;
-  --bg: #f5f8fc;
-  --white: #ffffff;
-  --text: #29384c;
-  --muted: #8492a5;
-  --border: #e5ebf2;
-  --green: #3d9877;
-  --red: #d86c76;
+* {
+    box-sizing: border-box;
 }
-
-* { box-sizing: border-box; }
 
 body {
-  margin: 0;
-  font-family: 'Noto Sans JP', sans-serif;
-  background: var(--bg);
-  color: var(--text);
+    margin: 0;
+    font-family: "Noto Sans JP", "Yu Gothic", sans-serif;
+    background: #f4f7fb;
+    color: #263449;
+    line-height: 1.7;
 }
 
-a { text-decoration: none; color: inherit; }
-
 header {
-  background: var(--white);
-  border-bottom: 1px solid var(--border);
-  padding: 16px 20px;
+    background: #183153;
+    color: white;
+    padding: 18px 20px;
 }
 
 .header-inner {
-  max-width: 920px;
-  margin: auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+    max-width: 950px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
 .logo {
-  font-size: 19px;
-  font-weight: 800;
-  color: var(--navy);
+    font-size: 20px;
+    font-weight: bold;
 }
 
-.back {
-  font-size: 13px;
-  color: var(--blue);
-  font-weight: 600;
+header a {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
 }
 
 main {
-  max-width: 850px;
-  margin: 35px auto;
-  padding: 0 18px 50px;
+    max-width: 850px;
+    margin: 35px auto;
+    padding: 0 16px;
 }
 
 .hero {
-  text-align: center;
-  margin-bottom: 28px;
+    text-align: center;
+    margin-bottom: 30px;
 }
 
-.tag {
-  display: inline-block;
-  background: var(--light-blue);
-  color: var(--blue);
-  padding: 5px 13px;
-  border-radius: 30px;
-  font-size: 11px;
-  font-weight: 700;
-}
-
-h1 {
-  font-size: 29px;
-  color: var(--navy);
-  margin: 13px 0 8px;
+.hero h1 {
+    font-size: 29px;
+    color: #183153;
+    margin-bottom: 10px;
 }
 
 .hero p {
-  color: var(--muted);
-  font-size: 13px;
-  margin: 0;
+    color: #68778b;
+    font-size: 14px;
 }
 
 .card {
-  background: var(--white);
-  border-radius: 17px;
-  padding: 23px;
-  margin-bottom: 18px;
-  box-shadow: 0 4px 18px rgba(35,59,96,0.045);
+    background: white;
+    padding: 25px;
+    border-radius: 16px;
+    margin-bottom: 22px;
+    box-shadow: 0 4px 15px rgba(25, 49, 83, 0.06);
 }
 
-.card-title {
-  font-size: 16px;
-  font-weight: 800;
-  color: var(--navy);
-  margin: 0 0 17px;
+.card h2 {
+    font-size: 19px;
+    margin-top: 0;
+    color: #183153;
 }
 
-.result-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
+.result-card {
+    background: linear-gradient(135deg, #183153, #315d8c);
+    color: white;
+    text-align: center;
 }
 
-.result-box {
-  background: var(--light-blue);
-  border-radius: 13px;
-  padding: 20px 12px;
-  text-align: center;
-}
-
-.result-box.primary {
-  background: var(--navy);
-  color: white;
-}
-
-.result-label {
-  font-size: 12px;
-  opacity: .8;
+.result-card h2 {
+    color: white;
 }
 
 .result-number {
-  font-size: 34px;
-  font-weight: 800;
-  margin-top: 5px;
-  line-height: 1.4;
+    font-size: 48px;
+    font-weight: bold;
+    margin: 5px 0;
 }
 
-.result-unit {
-  font-size: 11px;
-  opacity: .75;
+.result-sub {
+    font-size: 13px;
+    opacity: 0.85;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.stat {
+    background: rgba(255,255,255,0.13);
+    padding: 12px 5px;
+    border-radius: 10px;
+}
+
+.stat strong {
+    display: block;
+    font-size: 21px;
+}
+
+.stat span {
+    font-size: 12px;
 }
 
 .progress-area {
-  margin-top: 18px;
+    margin-top: 20px;
+    text-align: left;
 }
 
-.progress-info {
-  display: flex;
-  justify-content: space-between;
-  font-size: 12px;
-  margin-bottom: 8px;
-  color: var(--muted);
+.progress-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    margin-bottom: 7px;
 }
 
-.progress-track {
-  height: 9px;
-  border-radius: 20px;
-  background: #edf0f5;
-  overflow: hidden;
+.progress-bg {
+    height: 10px;
+    background: rgba(255,255,255,0.25);
+    border-radius: 20px;
+    overflow: hidden;
 }
 
-.progress-fill {
-  height: 100%;
-  width: 0%;
-  background: var(--blue);
-  border-radius: 20px;
-  transition: width .3s;
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background: #7ee0c0;
+    border-radius: 20px;
+    transition: width 0.3s;
 }
 
-.subject-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+.form-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 12px;
 }
 
-.subject {
-  display: grid;
-  grid-template-columns: minmax(100px, 2fr) 1fr 1fr auto;
-  gap: 9px;
-  align-items: end;
-  padding: 13px;
-  background: #f8fafd;
-  border: 1px solid var(--border);
-  border-radius: 12px;
+label {
+    display: block;
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 6px;
 }
 
-.field {
-  min-width: 0;
+input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #d8e0eb;
+    border-radius: 9px;
+    font-size: 15px;
+    background: #fbfcfe;
 }
 
-.field label {
-  display: block;
-  font-size: 11px;
-  color: var(--muted);
-  margin-bottom: 6px;
-  font-weight: 600;
+input:focus {
+    outline: none;
+    border-color: #4d83c2;
+    box-shadow: 0 0 0 3px rgba(77,131,194,0.12);
 }
 
-.field input, .field select {
-  width: 100%;
-  min-width: 0;
-  height: 42px;
-  padding: 0 10px;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  background: white;
-  font-family: inherit;
-  font-size: 13px;
-  color: var(--text);
-  outline: none;
+button {
+    border: none;
+    border-radius: 9px;
+    padding: 12px 18px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
 }
 
-.field input:focus, .field select:focus {
-  border-color: var(--blue);
-  box-shadow: 0 0 0 3px rgba(114,158,210,.12);
+button:hover {
+    opacity: 0.85;
+}
+
+.primary-btn {
+    background: #285b91;
+    color: white;
+    width: 100%;
+    margin-top: 17px;
+}
+
+.secondary-btn {
+    background: #e9f0f8;
+    color: #285b91;
+}
+
+.danger-btn {
+    background: #fff0f0;
+    color: #d44b4b;
+}
+
+.button-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 15px;
+}
+
+.subject-item {
+    display: grid;
+    grid-template-columns: 2fr 0.7fr 0.7fr auto;
+    gap: 10px;
+    align-items: center;
+    padding: 13px 0;
+    border-bottom: 1px solid #edf0f5;
+}
+
+.subject-item:last-child {
+    border-bottom: none;
+}
+
+.subject-name {
+    font-weight: bold;
+    overflow-wrap: anywhere;
+}
+
+.subject-info {
+    font-size: 13px;
+    color: #68778b;
 }
 
 .delete-btn {
-  height: 42px;
-  width: 39px;
-  border: none;
-  border-radius: 8px;
-  background: #fff0f1;
-  color: var(--red);
-  font-size: 19px;
-  cursor: pointer;
+    padding: 7px 11px;
+    background: #fff0f0;
+    color: #d44b4b;
 }
 
-.add-btn {
-  width: 100%;
-  margin-top: 15px;
-  padding: 13px;
-  border: 1px dashed var(--blue);
-  background: var(--light-blue);
-  color: var(--navy);
-  border-radius: 10px;
-  font-family: inherit;
-  font-size: 13px;
-  font-weight: 700;
-  cursor: pointer;
+.empty {
+    text-align: center;
+    color: #8995a5;
+    padding: 25px 0;
+    font-size: 14px;
 }
 
-.add-btn:hover { background: #dceafa; }
-
-.hint {
-  font-size: 11px;
-  color: var(--muted);
-  line-height: 1.8;
-  margin: 12px 0 0;
+.note {
+    background: #f0f6fc;
+    border-left: 4px solid #4d83c2;
+    padding: 13px 15px;
+    border-radius: 7px;
+    font-size: 13px;
+    color: #53677f;
+    margin-top: 15px;
 }
 
-.actions {
-  display: flex;
-  gap: 10px;
-  margin-top: 17px;
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
 }
 
-.action-btn {
-  flex: 1;
-  border: none;
-  padding: 12px;
-  border-radius: 9px;
-  font-family: inherit;
-  font-size: 12px;
-  font-weight: 700;
-  cursor: pointer;
+th, td {
+    border-bottom: 1px solid #e8edf3;
+    padding: 11px;
+    text-align: left;
 }
 
-.clear-btn {
-  color: var(--red);
-  background: #fff0f1;
+th {
+    color: #183153;
+    background: #f5f8fc;
 }
 
-.sample-btn {
-  color: var(--navy);
-  background: var(--light-blue);
+.faq-item {
+    border-bottom: 1px solid #e8edf3;
+    padding: 15px 0;
 }
 
-.grade-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 13px;
-  text-align: center;
+.faq-item:last-child {
+    border-bottom: none;
 }
 
-.grade-table th, .grade-table td {
-  padding: 11px 5px;
-  border-bottom: 1px solid var(--border);
+.faq-item strong {
+    color: #285b91;
+    display: block;
+    margin-bottom: 5px;
 }
 
-.grade-table th {
-  color: var(--muted);
-  font-size: 11px;
-}
-
-.grade-table td:first-child {
-  font-weight: 800;
-  color: var(--navy);
+.faq-item p {
+    font-size: 14px;
+    color: #65748a;
+    margin: 0;
 }
 
 footer {
-  text-align: center;
-  padding: 22px;
-  color: var(--muted);
-  font-size: 11px;
+    text-align: center;
+    padding: 30px 15px;
+    color: #8190a3;
+    font-size: 12px;
 }
 
-.notice {
-  font-size: 11px;
-  color: var(--muted);
-  line-height: 1.8;
-  margin-top: 14px;
+footer a {
+    color: #557ba5;
+    text-decoration: none;
+    margin: 0 8px;
 }
 
-@media (max-width: 560px) {
-  main { margin-top: 25px; }
-  h1 { font-size: 25px; }
-  .card { padding: 17px; }
-  .subject {
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-  }
-  .subject .field:first-child { grid-column: 1 / -1; }
-  .subject .delete-btn {
-    width: 100%;
-    grid-column: 1 / -1;
-  }
-  .result-number { font-size: 29px; }
+@media (max-width: 600px) {
+    main {
+        margin-top: 25px;
+    }
+
+    .hero h1 {
+        font-size: 24px;
+    }
+
+    .card {
+        padding: 19px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .form-grid > div:first-child {
+        grid-column: 1 / -1;
+    }
+
+    .stats {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .stat strong {
+        font-size: 18px;
+    }
+
+    .subject-item {
+        grid-template-columns: 1fr 1fr;
+        gap: 5px;
+    }
+
+    .subject-item .delete-btn {
+        justify-self: start;
+    }
+
+    .result-number {
+        font-size: 42px;
+    }
 }
 </style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Campus便利箱 GPA計算機",
+  "url": "https://tanikinmax.github.io/campus-benribako/gpa.html",
+  "description": "大学生向けの無料GPA計算機。単位数とGPを入力してGPAを自動計算できます。",
+  "applicationCategory": "EducationalApplication",
+  "operatingSystem": "Any",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  }
+}
+</script>
+
 </head>
 
 <body>
 
 <header>
-  <div class="header-inner">
-    <a class="logo" href="index.html">Campus便利箱</a>
-    <a class="back" href="index.html">← ツール一覧へ戻る</a>
-  </div>
+    <div class="header-inner">
+        <div class="logo">Campus便利箱</div>
+        <a href="index.html">← トップページへ戻る</a>
+    </div>
 </header>
 
 <main>
 
-  <section class="hero">
-    <span class="tag">STUDENT TOOL</span>
+<section class="hero">
     <h1>GPA計算機</h1>
-    <p>成績と単位数を入力するだけ。あなたのGPAを自動計算！</p>
-  </section>
+    <p>科目ごとの単位数とGPを入力するだけで、あなたのGPAを自動計算！</p>
+</section>
 
-  <section class="card">
-    <h2 class="card-title">📊 あなたの成績</h2>
+<section class="card result-card">
 
-    <div class="result-grid">
-      <div class="result-box primary">
-        <div class="result-label">現在のGPA</div>
-        <div class="result-number" id="gpa">0.00</div>
-        <div class="result-unit"> / 4.00</div>
-      </div>
+    <h2>あなたの現在のGPA</h2>
 
-      <div class="result-box">
-        <div class="result-label">取得単位数</div>
-        <div class="result-number" id="earned">0</div>
-        <div class="result-unit">単位</div>
-      </div>
+    <div class="result-number" id="gpaResult">0.00</div>
+    <div class="result-sub">単位数による加重平均 / 5.00</div>
 
-      <div class="result-box">
-        <div class="result-label">登録科目数</div>
-        <div class="result-number" id="count">0</div>
-        <div class="result-unit">科目</div>
-      </div>
+    <div class="stats">
 
-      <div class="result-box">
-        <div class="result-label">登録単位数</div>
-        <div class="result-number" id="totalCredits">0</div>
-        <div class="result-unit">単位</div>
-      </div>
+        <div class="stat">
+            <strong id="earnedCredits">0</strong>
+            <span>取得単位数</span>
+        </div>
+
+        <div class="stat">
+            <strong id="subjectCount">0</strong>
+            <span>登録科目数</span>
+        </div>
+
+        <div class="stat">
+            <strong id="totalCredits">0</strong>
+            <span>登録単位数</span>
+        </div>
+
     </div>
 
     <div class="progress-area">
-      <div class="progress-info">
-        <span>取得単位の割合</span>
-        <strong id="progressText">0%</strong>
-      </div>
-      <div class="progress-track">
-        <div class="progress-fill" id="progressFill"></div>
-      </div>
+
+        <div class="progress-label">
+            <span>単位取得割合</span>
+            <span id="progressText">0%</span>
+        </div>
+
+        <div class="progress-bg">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+
     </div>
-  </section>
 
-  <section class="card">
-    <h2 class="card-title">📝 科目を登録</h2>
+</section>
 
-    <div class="subject-list" id="subjectList"></div>
+<section class="card">
 
-    <button class="add-btn" id="addBtn" type="button">
-      ＋ 科目を追加する
-    </button>
+    <h2>科目を追加する</h2>
 
-    <p class="hint">
-      ※ 科目名・単位数・評価を入力してください。<br>
-      ※ 評価を変更するとGPAが自動で更新されます。<br>
-      ※ D評価はGPAに含まれますが、取得単位には含まれません。
-    </p>
+    <div class="form-grid">
 
-    <div class="actions">
-      <button class="action-btn sample-btn" id="sampleBtn" type="button">
-        サンプルを入力
-      </button>
-      <button class="action-btn clear-btn" id="clearBtn" type="button">
-        すべて削除
-      </button>
+        <div>
+            <label for="subjectName">科目名</label>
+            <input type="text" id="subjectName" placeholder="例：英語コミュニケーション">
+        </div>
+
+        <div>
+            <label for="subjectCredits">単位数</label>
+            <input type="number" id="subjectCredits" min="1" step="1" value="2">
+        </div>
+
+        <div>
+            <label for="subjectPoint">GP（0〜5）</label>
+            <input type="number" id="subjectPoint" min="0" max="5" step="0.1" value="4.0">
+        </div>
+
     </div>
-  </section>
 
-  <section class="card">
-    <h2 class="card-title">📖 GPAの計算基準</h2>
-    <table class="grade-table">
-      <thead>
-        <tr>
-          <th>評価</th>
-          <th>GP</th>
-          <th>取得単位</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td>S</td><td>4.0</td><td>○</td></tr>
-        <tr><td>A</td><td>3.0</td><td>○</td></tr>
-        <tr><td>B</td><td>2.0</td><td>○</td></tr>
-        <tr><td>C</td><td>1.0</td><td>○</td></tr>
-        <tr><td>D</td><td>0.0</td><td>×</td></tr>
-      </tbody>
+    <button class="primary-btn" id="addSubject">＋ 科目を追加する</button>
+
+    <div class="note">
+        GPは0.0〜5.0の範囲で入力してください。0.1刻みで入力できます。大学によってGPの評価基準は異なります。
+    </div>
+
+</section>
+
+<section class="card">
+
+    <h2>登録した科目</h2>
+
+    <div id="subjectList">
+        <div class="empty">まだ科目が登録されていません。</div>
+    </div>
+
+    <div class="button-row">
+
+        <button class="secondary-btn" id="sampleBtn">サンプルを入力</button>
+
+        <button class="danger-btn" id="clearBtn">すべて削除</button>
+
+    </div>
+
+</section>
+
+<section class="card">
+
+    <h2>GPAの計算方法</h2>
+
+    <p>GPAは、それぞれの科目のGPに単位数を掛けた合計を、登録した科目の単位数の合計で割って算出します。</p>
+
+    <div class="note">
+        <strong>計算式</strong><br>
+        GPA ＝（各科目のGP × 単位数）の合計 ÷ 登録単位数の合計
+    </div>
+
+    <p>例えば、次のような成績の場合を考えてみましょう。</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>科目</th>
+                <th>単位数</th>
+                <th>GP</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td>英語</td>
+                <td>2</td>
+                <td>4.0</td>
+            </tr>
+
+            <tr>
+                <td>経済学</td>
+                <td>2</td>
+                <td>3.0</td>
+            </tr>
+
+            <tr>
+                <td>情報処理</td>
+                <td>2</td>
+                <td>2.0</td>
+            </tr>
+        </tbody>
     </table>
 
-    <p class="notice">
-      GPA ＝ Σ（GP × 単位数）÷ GPA計算対象の総単位数<br>
-      この計算機では、D評価も計算対象に含めています。大学によってGPや計算対象、合否判定は異なるため、所属大学の規則を確認してください。
-    </p>
-  </section>
+    <p><strong>計算結果：3.00</strong></p>
+
+</section>
+
+<section class="card">
+
+    <h2>よくある質問</h2>
+
+    <div class="faq-item">
+        <strong>Q. GPAとは何ですか？</strong>
+        <p>GPA（Grade Point Average）は、大学の成績を数値化した指標です。各科目の成績に対応するGPを単位数に応じて平均することで算出します。</p>
+    </div>
+
+    <div class="faq-item">
+        <strong>Q. 大学によってGPAの基準は違いますか？</strong>
+        <p>はい。GPの割り当てや評価方法は大学によって異なります。この計算機ではGPを自由に入力できるため、自分の大学の基準に合わせて利用できます。</p>
+    </div>
+
+    <div class="faq-item">
+        <strong>Q. 入力したデータは保存されますか？</strong>
+        <p>はい。入力した科目データはブラウザのローカルストレージに自動保存されます。同じブラウザで開けば、次回もデータを利用できます。</p>
+    </div>
+
+    <div class="faq-item">
+        <strong>Q. GPAが0.00になるのはなぜですか？</strong>
+        <p>科目が未登録の場合、または登録した科目のGPがすべて0.0の場合は、GPAが0.00と表示されます。</p>
+    </div>
+
+</section>
 
 </main>
 
 <footer>
-  © Campus便利箱
+    <p>Campus便利箱｜大学生活をもっと便利に。</p>
+    <p>
+        <a href="index.html">トップページ</a>
+        <a href="privacy.html">プライバシーポリシー</a>
+    </p>
 </footer>
 
 <script>
-const STORAGE_KEY = "campusGpaSubjects";
 
+// GPA計算機
+
+const STORAGE_KEY = "campusGpa";
+
+// 旧バージョンの成績をGPに変換
 const gradePoints = {
-  S: 4.0,
-  A: 3.0,
-  B: 2.0,
-  C: 1.0,
-  D: 0.0
+    S: 4.0,
+    A: 3.0,
+    B: 2.0,
+    C: 1.0,
+    D: 0.0
 };
-
-const subjectList = document.getElementById("subjectList");
 
 let subjects = [];
 
-function loadData() {
-  try {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) {
-      const parsed = JSON.parse(saved);
-      if (Array.isArray(parsed)) {
-        subjects = parsed
-          .filter(item =>
-            item &&
-            typeof item.name === "string" &&
-            Number.isFinite(Number(item.credits)) &&
-            gradePoints[item.grade] !== undefined
-          )
-          .map(item => ({
-            name: item.name,
-            credits: Math.max(0, Number(item.credits)),
-            grade: item.grade
-          }));
-      }
+// 保存データを読み込む
+function loadSubjects() {
+
+    try {
+
+        // トップページのデータを優先
+        const currentData = localStorage.getItem("campusGpa");
+
+        if (currentData !== null) {
+
+            const parsed = JSON.parse(currentData);
+
+            if (Array.isArray(parsed)) {
+
+                subjects = parsed.map(item => ({
+                    name: String(item.name || ""),
+                    credits: Number(item.credits),
+                    point: Number(item.point)
+                })).filter(item =>
+                    Number.isFinite(item.credits) &&
+                    item.credits > 0 &&
+                    Number.isFinite(item.point) &&
+                    item.point >= 0 &&
+                    item.point <= 5
+                );
+
+                return;
+            }
+        }
+
+        // トップページのデータがない場合は旧gpa.htmlのデータを読み込む
+        const oldData = localStorage.getItem("campusGpaSubjects");
+
+        if (oldData !== null) {
+
+            const parsed = JSON.parse(oldData);
+
+            if (Array.isArray(parsed)) {
+
+                subjects = parsed.map(item => {
+
+                    const grade = String(item.grade || "D").toUpperCase();
+
+                    return {
+                        name: String(item.name || ""),
+                        credits: Number(item.credits),
+                        point: gradePoints[grade] ?? 0
+                    };
+
+                }).filter(item =>
+                    Number.isFinite(item.credits) &&
+                    item.credits > 0
+                );
+
+                // 新しい形式にも保存
+                saveSubjects();
+
+                return;
+            }
+        }
+
+        subjects = [];
+
+    } catch (error) {
+
+        console.error("GPAデータの読み込みに失敗しました。", error);
+        subjects = [];
+
     }
-  } catch (error) {
-    subjects = [];
-  }
 
-  if (subjects.length === 0) {
-    subjects = [{ name: "", credits: 2, grade: "A" }];
-  }
-
-  render();
 }
 
-function saveData() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(subjects));
+// データ保存
+function saveSubjects() {
+
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(subjects));
+
 }
 
-function render() {
-  subjectList.innerHTML = "";
+// GPA計算
+function calculateGPA() {
 
-  subjects.forEach((subject, index) => {
-    const item = document.createElement("div");
-    item.className = "subject";
+    let totalCredits = 0;
+    let totalPoints = 0;
+    let earnedCredits = 0;
 
-    const nameField = document.createElement("div");
-    nameField.className = "field";
+    subjects.forEach(subject => {
 
-    const nameLabel = document.createElement("label");
-    nameLabel.textContent = "科目名";
+        totalCredits += subject.credits;
 
-    const nameInput = document.createElement("input");
-    nameInput.type = "text";
-    nameInput.placeholder = "例：英語";
-    nameInput.value = subject.name;
-    nameInput.maxLength = 60;
-    nameInput.addEventListener("input", () => {
-      subjects[index].name = nameInput.value;
-      saveData();
+        totalPoints += subject.credits * subject.point;
+
+        // GPが0より大きい科目を取得単位として扱う
+        if (subject.point > 0) {
+            earnedCredits += subject.credits;
+        }
+
     });
 
-    nameField.append(nameLabel, nameInput);
+    const gpa = totalCredits > 0
+        ? totalPoints / totalCredits
+        : 0;
 
-    const creditField = document.createElement("div");
-    creditField.className = "field";
+    const progress = totalCredits > 0
+        ? (earnedCredits / totalCredits) * 100
+        : 0;
 
-    const creditLabel = document.createElement("label");
-    creditLabel.textContent = "単位数";
+    document.getElementById("gpaResult").textContent =
+        gpa.toFixed(2);
 
-    const creditInput = document.createElement("input");
-    creditInput.type = "number";
-    creditInput.min = "0.5";
-    creditInput.max = "30";
-    creditInput.step = "0.5";
-    creditInput.value = subject.credits;
+    document.getElementById("earnedCredits").textContent =
+        earnedCredits;
 
-    creditInput.addEventListener("change", () => {
-      const value = Number(creditInput.value);
-      subjects[index].credits =
-        Number.isFinite(value) && value > 0
-          ? Math.min(value, 30)
-          : 0;
-      creditInput.value = subjects[index].credits;
-      updateResults();
-      saveData();
-    });
+    document.getElementById("subjectCount").textContent =
+        subjects.length;
 
-    creditField.append(creditLabel, creditInput);
+    document.getElementById("totalCredits").textContent =
+        totalCredits;
 
-    const gradeField = document.createElement("div");
-    gradeField.className = "field";
+    document.getElementById("progressText").textContent =
+        Math.round(progress) + "%";
 
-    const gradeLabel = document.createElement("label");
-    gradeLabel.textContent = "評価";
+    document.getElementById("progressBar").style.width =
+        progress + "%";
 
-    const gradeSelect = document.createElement("select");
+    renderSubjects();
 
-    ["S", "A", "B", "C", "D"].forEach(grade => {
-      const option = document.createElement("option");
-      option.value = grade;
-      option.textContent = grade + "（" + gradePoints[grade].toFixed(1) + "）";
-      gradeSelect.appendChild(option);
-    });
-
-    gradeSelect.value = subject.grade;
-
-    gradeSelect.addEventListener("change", () => {
-      subjects[index].grade = gradeSelect.value;
-      updateResults();
-      saveData();
-    });
-
-    gradeField.append(gradeLabel, gradeSelect);
-
-    const deleteBtn = document.createElement("button");
-    deleteBtn.type = "button";
-    deleteBtn.className = "delete-btn";
-    deleteBtn.textContent = "×";
-    deleteBtn.setAttribute("aria-label", "この科目を削除");
-
-    deleteBtn.addEventListener("click", () => {
-      subjects.splice(index, 1);
-      render();
-      saveData();
-    });
-
-    item.append(nameField, creditField, gradeField, deleteBtn);
-    subjectList.appendChild(item);
-  });
-
-  updateResults();
 }
 
-function updateResults() {
-  let totalCredits = 0;
-  let earnedCredits = 0;
-  let totalPoints = 0;
-  let registeredCount = 0;
+// 科目一覧表示
+function renderSubjects() {
 
-  subjects.forEach(subject => {
-    const credits = Number(subject.credits);
-    const grade = subject.grade;
+    const list = document.getElementById("subjectList");
 
-    if (!Number.isFinite(credits) || credits <= 0) return;
+    list.innerHTML = "";
 
-    totalCredits += credits;
-    totalPoints += gradePoints[grade] * credits;
-    registeredCount++;
+    if (subjects.length === 0) {
 
-    if (grade !== "D") {
-      earnedCredits += credits;
+        list.innerHTML =
+            '<div class="empty">まだ科目が登録されていません。</div>';
+
+        return;
     }
-  });
 
-  const gpa = totalCredits > 0
-    ? totalPoints / totalCredits
-    : 0;
+    subjects.forEach((subject, index) => {
 
-  const progress = totalCredits > 0
-    ? earnedCredits / totalCredits * 100
-    : 0;
+        const item = document.createElement("div");
 
-  document.getElementById("gpa").textContent = gpa.toFixed(2);
-  document.getElementById("earned").textContent = earnedCredits;
-  document.getElementById("count").textContent = registeredCount;
-  document.getElementById("totalCredits").textContent = totalCredits;
-  document.getElementById("progressText").textContent =
-    progress.toFixed(1) + "%";
+        item.className = "subject-item";
 
-  document.getElementById("progressFill").style.width =
-    Math.min(progress, 100) + "%";
+        const name = document.createElement("div");
+        name.className = "subject-name";
+        name.textContent = subject.name || "科目名なし";
+
+        const credits = document.createElement("div");
+        credits.className = "subject-info";
+        credits.textContent = subject.credits + "単位";
+
+        const point = document.createElement("div");
+        point.className = "subject-info";
+        point.textContent = "GP " + subject.point.toFixed(1);
+
+        const deleteButton = document.createElement("button");
+        deleteButton.className = "delete-btn";
+        deleteButton.textContent = "削除";
+
+        deleteButton.addEventListener("click", () => {
+
+            subjects.splice(index, 1);
+
+            saveSubjects();
+            calculateGPA();
+
+        });
+
+        item.appendChild(name);
+        item.appendChild(credits);
+        item.appendChild(point);
+        item.appendChild(deleteButton);
+
+        list.appendChild(item);
+
+    });
+
 }
 
-document.getElementById("addBtn").addEventListener("click", () => {
-  subjects.push({ name: "", credits: 2, grade: "A" });
-  render();
-  saveData();
+// 科目追加
+document.getElementById("addSubject").addEventListener("click", () => {
+
+    const name = document.getElementById("subjectName").value.trim();
+
+    const credits = Number(
+        document.getElementById("subjectCredits").value
+    );
+
+    const point = Number(
+        document.getElementById("subjectPoint").value
+    );
+
+    if (!name) {
+        alert("科目名を入力してください。");
+        return;
+    }
+
+    if (!Number.isInteger(credits) || credits <= 0) {
+        alert("単位数は1以上の整数で入力してください。");
+        return;
+    }
+
+    if (
+        !Number.isFinite(point) ||
+        point < 0 ||
+        point > 5 ||
+        Math.round(point * 10) !== point * 10
+    ) {
+        alert("GPは0.0〜5.0の範囲で0.1刻みで入力してください。");
+        return;
+    }
+
+    subjects.push({
+        name: name,
+        credits: credits,
+        point: point
+    });
+
+    saveSubjects();
+    calculateGPA();
+
+    document.getElementById("subjectName").value = "";
+    document.getElementById("subjectCredits").value = 2;
+    document.getElementById("subjectPoint").value = 4.0;
+
 });
 
+// 全削除
 document.getElementById("clearBtn").addEventListener("click", () => {
-  if (!confirm("登録した科目をすべて削除しますか？")) return;
 
-  subjects = [];
-  render();
-  saveData();
+    if (subjects.length === 0) {
+        alert("削除する科目がありません。");
+        return;
+    }
+
+    if (!confirm("登録した科目をすべて削除しますか？")) {
+        return;
+    }
+
+    subjects = [];
+
+    saveSubjects();
+    calculateGPA();
+
 });
 
+// サンプル入力
 document.getElementById("sampleBtn").addEventListener("click", () => {
-  subjects = [
-    { name: "英語", credits: 2, grade: "S" },
-    { name: "経済学", credits: 2, grade: "A" },
-    { name: "情報処理", credits: 2, grade: "B" },
-    { name: "専門科目", credits: 2, grade: "A" },
-    { name: "第二外国語", credits: 2, grade: "C" }
-  ];
 
-  render();
-  saveData();
+    if (
+        subjects.length > 0 &&
+        !confirm("現在の科目データをサンプルデータに置き換えますか？")
+    ) {
+        return;
+    }
+
+    subjects = [
+        { name: "英語コミュニケーション", credits: 2, point: 4.0 },
+        { name: "経済学入門", credits: 2, point: 3.0 },
+        { name: "情報処理", credits: 2, point: 2.0 },
+        { name: "第二外国語", credits: 2, point: 3.5 },
+        { name: "基礎演習", credits: 2, point: 4.5 }
+    ];
+
+    saveSubjects();
+    calculateGPA();
+
 });
 
-loadData();
+// 初期化
+loadSubjects();
+calculateGPA();
+
 </script>
 
 </body>
