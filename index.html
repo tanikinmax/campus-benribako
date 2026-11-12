@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -10,16 +11,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap');
 
 :root {
-    --main: #5B7CFA;
-    --dark: #202B4C;
-    --bg: #F5F7FC;
-    --white: #FFFFFF;
+    --main: #5278F5;
+    --main-dark: #3F61D8;
+    --bg: #F4F6FB;
     --text: #29334F;
     --sub: #8791AA;
+    --border: #E8ECF5;
+    --shadow: 0 8px 28px rgba(40,60,120,0.06);
 }
 
 * {
     box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 body {
@@ -32,148 +38,162 @@ body {
 /* ヘッダー */
 
 header {
-    background: linear-gradient(135deg, #536FF5, #8299FF);
+    background: linear-gradient(135deg, #4568E8, #8299FF);
     color: white;
-    padding: 55px 20px 75px;
+    padding: 65px 20px 90px;
     text-align: center;
-    border-radius: 0 0 35px 35px;
+    border-radius: 0 0 40px 40px;
 }
 
 .logo {
-    font-size: 14px;
-    font-weight: bold;
-    letter-spacing: 2px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 3px;
     opacity: 0.9;
 }
 
 header h1 {
     font-size: clamp(30px, 5vw, 48px);
     font-weight: 900;
-    margin: 20px 0 12px;
+    margin: 22px 0 14px;
 }
 
 header p {
     font-size: 15px;
-    opacity: 0.9;
+    opacity: 0.95;
+    line-height: 1.8;
 }
 
 /* メイン */
 
 .container {
     max-width: 1100px;
-    margin: -35px auto 0;
+    margin: -45px auto 0;
     padding: 0 22px;
 }
 
 .intro {
     background: white;
-    padding: 25px 30px;
-    border-radius: 20px;
-    box-shadow: 0 10px 35px rgba(50,70,130,0.07);
-    margin-bottom: 35px;
+    padding: 32px;
+    border-radius: 24px;
+    box-shadow: var(--shadow);
+    margin-bottom: 45px;
+    border: 1px solid var(--border);
 }
 
 .intro span {
     color: var(--main);
-    font-weight: bold;
-    font-size: 12px;
+    font-weight: 900;
+    font-size: 11px;
+    letter-spacing: 1.5px;
 }
 
 .intro h2 {
-    margin: 8px 0;
-    font-size: 22px;
+    margin: 12px 0;
+    font-size: clamp(18px, 3vw, 24px);
+    font-weight: 900;
 }
 
 .intro p {
     margin: 0;
     color: var(--sub);
     font-size: 13px;
+    line-height: 1.9;
 }
 
-/* ツール */
+/* ツール一覧 */
 
 .section-title {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 20px;
+    margin-bottom: 24px;
 }
 
 .section-title h2 {
     font-size: 22px;
+    font-weight: 900;
     margin: 0;
 }
 
 .section-title span {
     color: var(--sub);
-    font-size: 12px;
+    font-size: 11px;
+    letter-spacing: 1px;
 }
 
 .tools {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 22px;
+    gap: 24px;
 }
+
+/* カード */
 
 .card {
     background: white;
-    padding: 27px;
-    border-radius: 22px;
-    box-shadow: 0 5px 20px rgba(40,60,120,0.04);
-    transition: 0.25s;
-    border: 1px solid #EDF0F8;
+    padding: 30px;
+    border-radius: 24px;
+    box-shadow: var(--shadow);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    border: 1px solid var(--border);
 }
 
 .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 30px rgba(50,70,130,0.1);
+    transform: translateY(-6px);
+    box-shadow: 0 16px 35px rgba(50,70,130,0.12);
 }
 
 .icon {
-    width: 55px;
-    height: 55px;
+    width: 58px;
+    height: 58px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 16px;
-    font-size: 26px;
-    margin-bottom: 20px;
+    border-radius: 18px;
+    font-size: 27px;
+    margin-bottom: 22px;
 }
 
-.blue { background: #E8EDFF; }
-.green { background: #E2F8EE; }
-.orange { background: #FFF0DF; }
-.purple { background: #F0E7FF; }
-.pink { background: #FFE7EF; }
+.blue { background: #E9EEFF; }
+.green { background: #E3F8EF; }
+.orange { background: #FFF1E2; }
+.purple { background: #F0E8FF; }
+.pink { background: #FFE8F0; }
 
 .card h3 {
     font-size: 18px;
-    margin: 0 0 10px;
+    font-weight: 900;
+    margin: 0 0 12px;
 }
 
 .card p {
     color: var(--sub);
     font-size: 13px;
-    line-height: 1.8;
-    margin-bottom: 20px;
+    line-height: 1.9;
+    margin: 0 0 22px;
+    min-height: 48px;
 }
 
-/* 入力 */
+/* 入力欄 */
 
 input {
     width: 100%;
-    padding: 13px;
+    padding: 14px 15px;
     margin: 7px 0;
-    border: 1px solid #E2E7F2;
-    border-radius: 12px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
     font-size: 14px;
     outline: none;
-    background: #FAFBFE;
+    background: #F8FAFE;
+    color: var(--text);
+    transition: 0.2s;
 }
 
 input:focus {
     border-color: var(--main);
     background: white;
+    box-shadow: 0 0 0 3px rgba(82,120,245,0.10);
 }
 
 /* ボタン */
@@ -183,28 +203,36 @@ button {
     background: var(--main);
     color: white;
     border: none;
-    padding: 13px;
-    border-radius: 12px;
-    font-weight: bold;
+    padding: 15px;
+    border-radius: 14px;
+    font-weight: 700;
     font-size: 14px;
     cursor: pointer;
-    margin-top: 10px;
+    margin-top: 12px;
     transition: 0.2s;
 }
 
 button:hover {
-    background: #405FE0;
-    transform: scale(1.02);
+    background: var(--main-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(82,120,245,0.2);
 }
 
+button:active {
+    transform: scale(0.98);
+}
+
+/* 計算結果 */
+
 .result {
-    background: #F0F4FF;
-    padding: 14px;
-    border-radius: 12px;
-    margin-top: 15px;
-    color: var(--main);
-    font-weight: bold;
+    background: #EEF3FF;
+    padding: 16px;
+    border-radius: 14px;
+    margin-top: 18px;
+    color: var(--main-dark);
+    font-weight: 700;
     font-size: 14px;
+    line-height: 1.8;
     display: none;
 }
 
@@ -212,18 +240,23 @@ button:hover {
 
 footer {
     text-align: center;
-    padding: 50px 20px;
+    padding: 60px 20px;
     color: var(--sub);
     font-size: 12px;
+    line-height: 1.8;
 }
 
 footer strong {
     color: var(--main);
+    font-size: 14px;
 }
+
+/* スマホ対応 */
 
 @media (max-width: 600px) {
     header {
-        padding: 40px 15px 65px;
+        padding: 45px 15px 75px;
+        border-radius: 0 0 28px 28px;
     }
 
     .container {
@@ -231,11 +264,22 @@ footer strong {
     }
 
     .intro {
-        padding: 22px;
+        padding: 24px;
+        border-radius: 20px;
+    }
+
+    .tools {
+        grid-template-columns: 1fr;
+        gap: 18px;
     }
 
     .card {
-        padding: 23px;
+        padding: 25px;
+        border-radius: 20px;
+    }
+
+    .section-title h2 {
+        font-size: 18px;
     }
 }
 </style>
@@ -245,9 +289,7 @@ footer strong {
 
 <header>
     <div class="logo">CAMPUS TOOL BOX</div>
-
     <h1>🎓 Campus便利箱</h1>
-
     <p>大学生活を、もっとラクに。もっと便利に。</p>
 </header>
 
@@ -255,9 +297,7 @@ footer strong {
 
     <div class="intro">
         <span>WELCOME TO CAMPUS TOOL BOX</span>
-
         <h2>学生生活の「面倒くさい」を解決しよう。</h2>
-
         <p>
             お金の計算、課題の管理、毎日のちょっとした悩み。
             便利なツールで大学生活をスマートに。
@@ -271,49 +311,36 @@ footer strong {
 
     <div class="tools">
 
-        <!-- 給料計算 -->
-
+        <!-- バイト給料計算 -->
         <div class="card">
             <div class="icon blue">💰</div>
-
             <h3>バイト給料計算</h3>
-
             <p>時給と勤務時間から給料を簡単に計算。</p>
 
             <input type="number" id="wage" placeholder="時給（円）">
-
             <input type="number" id="hours" placeholder="勤務時間">
 
             <button onclick="calculateSalary()">給料を計算する →</button>
-
             <div class="result" id="salaryResult"></div>
         </div>
 
-        <!-- 割り勘 -->
-
+        <!-- 割り勘計算 -->
         <div class="card">
             <div class="icon green">🧾</div>
-
             <h3>割り勘計算</h3>
-
             <p>友達との食事や旅行の費用を公平に分配。</p>
 
             <input type="number" id="total" placeholder="合計金額（円）">
-
             <input type="number" id="people" placeholder="人数">
 
             <button onclick="calculateSplit()">割り勘する →</button>
-
             <div class="result" id="splitResult"></div>
         </div>
 
-        <!-- レポート -->
-
+        <!-- レポート構成メーカー -->
         <div class="card">
             <div class="icon orange">📝</div>
-
             <h3>レポート構成メーカー</h3>
-
             <p>レポートのテーマから構成案を考えよう。</p>
 
             <button onclick="alert('レポート構成メーカーは準備中です！')">
@@ -321,13 +348,10 @@ footer strong {
             </button>
         </div>
 
-        <!-- 課題管理 -->
-
+        <!-- 課題締切管理 -->
         <div class="card">
             <div class="icon purple">📅</div>
-
             <h3>課題締切管理</h3>
-
             <p>課題の提出期限を忘れないように整理。</p>
 
             <button onclick="alert('課題締切管理は準備中です！')">
@@ -335,13 +359,10 @@ footer strong {
             </button>
         </div>
 
-        <!-- 節約 -->
-
+        <!-- 節約計算 -->
         <div class="card">
             <div class="icon pink">🎓</div>
-
             <h3>大学生節約計算</h3>
-
             <p>毎月の予算を整理して賢く節約しよう。</p>
 
             <button onclick="alert('節約計算ツールは準備中です！')">
@@ -384,7 +405,7 @@ function calculateSplit() {
     let total = Number(document.getElementById("total").value);
     let people = Number(document.getElementById("people").value);
 
-    if (total <= 0 || people <= 0) {
+    if (total <= 0 || people <= 0 || !Number.isInteger(people)) {
         alert("金額と人数を正しく入力してください！");
         return;
     }
@@ -403,3 +424,4 @@ function calculateSplit() {
 
 </body>
 </html>
+```
