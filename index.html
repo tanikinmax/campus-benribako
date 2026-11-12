@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -10,7 +9,8 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:"Noto Sans JP",sans-serif;background:#f4f7fb;color:#333}
 header{background:linear-gradient(135deg,#4f7cff,#6c63ff);color:white;text-align:center;padding:42px 20px}
-header h1{font-size:32px;margin:0 0 10px}header p{margin:0;opacity:.9}
+header h1{font-size:32px;margin:0 0 10px}
+header p{margin:0;opacity:.9}
 .container{max-width:1100px;margin:30px auto;padding:0 18px}
 .tool-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px}
 .card{background:white;padding:23px;border-radius:18px;box-shadow:0 5px 20px rgba(0,0,0,.05);min-width:0}
@@ -30,10 +30,13 @@ button.full{width:100%}
 .gpa-row input{min-width:0}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
 .stat{background:#eef2ff;padding:12px 6px;border-radius:10px;text-align:center}
-.stat span{display:block;font-size:11px;color:#68769a}.stat strong{display:block;color:#4057c5;font-size:21px;margin-top:4px}
-.tool-section{margin-top:28px}.section-title{color:#4658bd;font-size:21px;margin:0 0 15px}
+.stat span{display:block;font-size:11px;color:#68769a}
+.stat strong{display:block;color:#4057c5;font-size:21px;margin-top:4px}
+.tool-section{margin-top:28px}
+.section-title{color:#4658bd;font-size:21px;margin:0 0 15px}
 .small-note{font-size:11px;color:#8993a5;line-height:1.6;margin-top:10px}
-.progress{height:9px;background:#edf0f6;border-radius:20px;overflow:hidden;margin-top:8px}.bar{height:100%;width:0;background:#6c7ff5}
+.progress{height:9px;background:#edf0f6;border-radius:20px;overflow:hidden;margin-top:8px}
+.bar{height:100%;width:0;background:#6c7ff5}
 .timetable-wrap{overflow-x:auto}
 table{border-collapse:separate;border-spacing:5px;width:100%;min-width:700px;table-layout:fixed}
 th{font-size:12px;color:#59688b;padding:7px;background:#eef2ff;border-radius:8px}
@@ -43,12 +46,46 @@ td{vertical-align:top;background:#f8faff;border:1px solid #e5eaf4;border-radius:
 .cell input{font-size:11px;padding:7px;margin:3px 0}
 .cell select{font-size:10px;padding:5px;margin:3px 0}
 .period-input{font-size:10px!important;padding:5px 2px!important}
+
+/* 時間割コンパクト表示 */
+.tt-view-buttons{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.tt-view-buttons button{margin-top:0}
+.tt-view-buttons button.active{background:#4057d8;color:#fff}
+#ttWrap.compact table{min-width:560px;border-spacing:2px}
+#ttWrap.compact th{font-size:10px;padding:4px}
+#ttWrap.compact th:first-child{width:62px}
+#ttWrap.compact td{padding:2px}
+#ttWrap.compact .cell{padding:2px}
+#ttWrap.compact .cell input{font-size:10px;padding:4px 3px;margin:2px 0}
+#ttWrap.compact .cell input[data-field="teacher"],
+#ttWrap.compact .cell select{display:none}
+#ttWrap.compact .period-input{font-size:9px!important;padding:3px 1px!important}
+
+@media(max-width:600px){
+  #ttWrap.compact table{min-width:500px}
+  .tt-view-buttons button{flex:1}
+  header h1{font-size:26px}
+  .container{padding:0 12px}
+  .card{padding:17px}
+  .gpa-row{grid-template-columns:1fr 65px 85px}
+  .stats{grid-template-columns:1fr 1fr 1fr}
+}
+
 footer{text-align:center;padding:28px;color:#999;font-size:12px}
-@media(max-width:600px){header h1{font-size:26px}.container{padding:0 12px}.card{padding:17px}.gpa-row{grid-template-columns:1fr 65px 85px}.stats{grid-template-columns:1fr 1fr 1fr}}
-@media print{header,footer,.no-print{display:none!important}body{background:white}.container{margin:0;max-width:none}.card{box-shadow:none;break-inside:avoid}.timetable-wrap{overflow:visible}table{min-width:0}}
+
+@media print{
+header,footer,.no-print{display:none!important}
+body{background:white}
+.container{margin:0;max-width:none}
+.card{box-shadow:none;break-inside:avoid}
+.timetable-wrap{overflow:visible}
+table{min-width:0}
+}
 </style>
 </head>
+
 <body>
+
 <header>
 <h1>🎓 Campus便利箱</h1>
 <p>大学生活をもっと便利に、もっと楽しく。</p>
@@ -91,7 +128,10 @@ footer{text-align:center;padding:28px;color:#999;font-size:12px}
 </div>
 <div class="result" id="wcPages">原稿用紙換算：0.00枚（400字）</div>
 <div id="wcGoalArea" style="display:none">
-<div style="display:flex;justify-content:space-between;font-size:12px;color:#68769a;margin-top:12px"><span>目標達成率</span><strong id="wcGoalText">0%</strong></div>
+<div style="display:flex;justify-content:space-between;font-size:12px;color:#68769a;margin-top:12px">
+<span>目標達成率</span>
+<strong id="wcGoalText">0%</strong>
+</div>
 <div class="progress"><div class="bar" id="wcBar"></div></div>
 <div class="small-note" id="wcRemaining"></div>
 </div>
@@ -103,23 +143,49 @@ footer{text-align:center;padding:28px;color:#999;font-size:12px}
 <section class="card" id="timetable" style="grid-column:1/-1">
 <h2>📅 時間割メーカー</h2>
 <p>曜日数・コマ数・授業時間を自由に設定。授業内容は自動保存されます。</p>
+
 <div class="no-print" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px">
-<div><label>曜日数</label><select id="ttDays"><option value="5">月〜金（5日）</option><option value="6">月〜土（6日）</option></select></div>
-<div><label>1日のコマ数</label><select id="ttPeriods"></select></div>
-<div><label>時間割の名前</label><input id="ttName" maxlength="30" placeholder="例：2026年度 前期"></div>
+<div>
+<label>曜日数</label>
+<select id="ttDays">
+<option value="5">月〜金（5日）</option>
+<option value="6">月〜土（6日）</option>
+</select>
 </div>
+
+<div>
+<label>1日のコマ数</label>
+<select id="ttPeriods"></select>
+</div>
+
+<div>
+<label>時間割の名前</label>
+<input id="ttName" maxlength="30" placeholder="例：2026年度 前期">
+</div>
+</div>
+
 <div class="no-print">
 <button id="ttApply">設定を反映</button>
 <button id="ttPrint" class="secondary">印刷する</button>
 <button id="ttReset" class="danger">時間割をリセット</button>
+
+<div class="tt-view-buttons">
+<button id="ttNormalView" class="secondary" type="button">通常表示</button>
+<button id="ttCompactView" class="secondary" type="button">コンパクト表示</button>
 </div>
-<div class="timetable-wrap" style="margin-top:12px"><table id="ttTable"></table></div>
+</div>
+
+<div class="timetable-wrap" id="ttWrap" style="margin-top:12px">
+<table id="ttTable"></table>
+</div>
+
 <div class="small-note">授業名・教室・担当教員を入力すると自動保存されます。時限名と開始・終了時刻も編集できます。データはこのブラウザ内に保存されます。</div>
 </section>
 
 <!-- バイト給料計算 -->
 <section class="card">
-<h2>💰 バイト給料計算</h2><p>時給と勤務時間から給料を計算！</p>
+<h2>💰 バイト給料計算</h2>
+<p>時給と勤務時間から給料を計算！</p>
 <input type="number" id="wage" placeholder="時給（円）" min="1">
 <input type="number" id="hours" placeholder="勤務時間（時間）" min="0.1" step="0.1">
 <input type="number" id="days" placeholder="勤務日数" min="1">
@@ -129,7 +195,8 @@ footer{text-align:center;padding:28px;color:#999;font-size:12px}
 
 <!-- 割り勘計算 -->
 <section class="card">
-<h2>🍕 割り勘計算</h2><p>友達との食事代を簡単に割り勘！</p>
+<h2>🍕 割り勘計算</h2>
+<p>友達との食事代を簡単に割り勘！</p>
 <input type="number" id="total" placeholder="合計金額（円）" min="1">
 <input type="number" id="people" placeholder="人数" min="1" step="1">
 <button class="full" onclick="calculateSplit()">割り勘する</button>
@@ -138,16 +205,22 @@ footer{text-align:center;padding:28px;color:#999;font-size:12px}
 
 <!-- レポート構成メーカー -->
 <section class="card">
-<h2>📝 レポート構成メーカー</h2><p>テーマを入力してレポートの構成を作成！</p>
+<h2>📝 レポート構成メーカー</h2>
+<p>テーマを入力してレポートの構成を作成！</p>
 <input type="text" id="reportTheme" placeholder="レポートのテーマ">
-<select id="reportType"><option value="general">一般的なレポート</option><option value="opinion">意見・考察型</option><option value="research">調査・研究型</option></select>
+<select id="reportType">
+<option value="general">一般的なレポート</option>
+<option value="opinion">意見・考察型</option>
+<option value="research">調査・研究型</option>
+</select>
 <button class="full" onclick="makeReport()">構成を作る</button>
 <div class="result" id="reportResult">ここに構成が表示されます</div>
 </section>
 
 <!-- 課題締切管理 -->
 <section class="card">
-<h2>📌 課題締切管理</h2><p>提出期限を忘れないように管理！</p>
+<h2>📌 課題締切管理</h2>
+<p>提出期限を忘れないように管理！</p>
 <input type="text" id="taskName" placeholder="課題名">
 <input type="date" id="taskDate">
 <button class="full" onclick="addTask()">課題を追加する</button>
@@ -156,7 +229,8 @@ footer{text-align:center;padding:28px;color:#999;font-size:12px}
 
 <!-- 節約計算 -->
 <section class="card">
-<h2>💸 大学生節約計算</h2><p>目標金額まであといくら？</p>
+<h2>💸 大学生節約計算</h2>
+<p>目標金額まであといくら？</p>
 <input type="number" id="targetMoney" placeholder="目標金額（円）" min="1">
 <input type="number" id="savedMoney" placeholder="現在の貯金額（円）" min="0">
 <input type="number" id="monthlyMoney" placeholder="毎月の貯金額（円）" min="1">
@@ -166,117 +240,505 @@ footer{text-align:center;padding:28px;color:#999;font-size:12px}
 
 </div>
 </main>
+
 <footer>© 2026 Campus便利箱<br>大学生のための便利ツールサイト</footer>
 
 <script>
 // GPA計算機
 let gpaCourses=[];
-try{const v=JSON.parse(localStorage.getItem("campusGpa")||"[]");if(Array.isArray(v))gpaCourses=v}catch(e){}
-function saveGpa(){localStorage.setItem("campusGpa",JSON.stringify(gpaCourses))}
+
+try{
+ const v=JSON.parse(localStorage.getItem("campusGpa")||"[]");
+ if(Array.isArray(v))gpaCourses=v;
+}catch(e){}
+
+function saveGpa(){
+ localStorage.setItem("campusGpa",JSON.stringify(gpaCourses));
+}
+
 function displayGpa(){
- const list=document.getElementById("gpaList");list.innerHTML="";
+ const list=document.getElementById("gpaList");
+ list.innerHTML="";
  let weighted=0,total=0,earned=0;
+
  gpaCourses.forEach((c,i)=>{
-  const credits=Number(c.credits),point=Number(c.point);
-  total+=credits;weighted+=credits*point;if(point>0)earned+=credits;
-  const div=document.createElement("div");div.className="gpa-item";
-  const info=document.createElement("span");info.textContent=`${c.name}：${credits}単位 / GP ${point.toFixed(1)}`;
-  const del=document.createElement("button");del.textContent="削除";del.className="danger";del.onclick=()=>{gpaCourses.splice(i,1);saveGpa();displayGpa()};
-  div.append(info,del);list.appendChild(div);
+  const credits=Number(c.credits);
+  const point=Number(c.point);
+  total+=credits;
+  weighted+=credits*point;
+  if(point>0)earned+=credits;
+
+  const div=document.createElement("div");
+  div.className="gpa-item";
+
+  const info=document.createElement("span");
+  info.textContent=`${c.name}：${credits}単位 / GP ${point.toFixed(1)}`;
+
+  const del=document.createElement("button");
+  del.textContent="削除";
+  del.className="danger";
+  del.onclick=()=>{
+   gpaCourses.splice(i,1);
+   saveGpa();
+   displayGpa();
+  };
+
+  div.append(info,del);
+  list.appendChild(div);
  });
+
  document.getElementById("gpaResult").textContent=total?(weighted/total).toFixed(2):"0.00";
  document.getElementById("gpaCount").textContent=gpaCourses.length;
  document.getElementById("gpaCreditsTotal").textContent=total;
 }
+
 document.getElementById("gpaAdd").onclick=()=>{
- const name=document.getElementById("gpaName").value.trim(),credits=Number(document.getElementById("gpaCredits").value),point=Number(document.getElementById("gpaPoint").value);
- if(!name||!Number.isInteger(credits)||credits<=0||document.getElementById("gpaPoint").value===""||point<0||point>5||Math.round(point*10)!==point*10){alert("科目名・正の整数の単位数・0〜5のGP（0.1刻み）を入力してください。");return}
- gpaCourses.push({name,credits,point});saveGpa();displayGpa();
- document.getElementById("gpaName").value="";document.getElementById("gpaCredits").value="";document.getElementById("gpaPoint").value="";
+ const name=document.getElementById("gpaName").value.trim();
+ const credits=Number(document.getElementById("gpaCredits").value);
+ const point=Number(document.getElementById("gpaPoint").value);
+
+ if(!name||!Number.isInteger(credits)||credits<=0||
+ document.getElementById("gpaPoint").value===""||
+ point<0||point>5||Math.round(point*10)!==point*10){
+  alert("科目名・正の整数の単位数・0〜5のGP（0.1刻み）を入力してください。");
+  return;
+ }
+
+ gpaCourses.push({name,credits,point});
+ saveGpa();
+ displayGpa();
+
+ document.getElementById("gpaName").value="";
+ document.getElementById("gpaCredits").value="";
+ document.getElementById("gpaPoint").value="";
 };
-document.getElementById("gpaClear").onclick=()=>{if(confirm("登録したGPAデータをすべて削除しますか？")){gpaCourses=[];saveGpa();displayGpa()}};
+
+document.getElementById("gpaClear").onclick=()=>{
+ if(confirm("登録したGPAデータをすべて削除しますか？")){
+  gpaCourses=[];
+  saveGpa();
+  displayGpa();
+ }
+};
+
 displayGpa();
 
 // 文字数カウンター
-const wcText=document.getElementById("wcText"),wcTarget=document.getElementById("wcTarget");
+const wcText=document.getElementById("wcText");
+const wcTarget=document.getElementById("wcTarget");
+
 function updateWordCount(){
- const v=wcText.value,all=[...v].length,noSpace=[...v.replace(/[\s\u3000]/g,"")].length,noNewline=[...v.replace(/\r\n|\r|\n/g,"")].length;
+ const v=wcText.value;
+ const all=[...v].length;
+ const noSpace=[...v.replace(/[\s\u3000]/g,"")].length;
+ const noNewline=[...v.replace(/\r\n|\r|\n/g,"")].length;
+
  document.getElementById("wcAll").textContent=all.toLocaleString();
  document.getElementById("wcNoSpace").textContent=noSpace.toLocaleString();
  document.getElementById("wcNoNewline").textContent=noNewline.toLocaleString();
  document.getElementById("wcPages").textContent="原稿用紙換算："+(all/400).toFixed(2)+"枚（400字）";
- const goal=Number(wcTarget.value),area=document.getElementById("wcGoalArea");
- if(goal>0){area.style.display="block";document.getElementById("wcGoalText").textContent=(all/goal*100).toFixed(1)+"%";document.getElementById("wcBar").style.width=Math.min(all/goal*100,100)+"%";document.getElementById("wcRemaining").textContent=all>=goal?"🎉 目標文字数を達成しています！":"目標まであと "+(goal-all).toLocaleString()+" 文字です。"}else area.style.display="none";
+
+ const goal=Number(wcTarget.value);
+ const area=document.getElementById("wcGoalArea");
+
+ if(goal>0){
+  area.style.display="block";
+  document.getElementById("wcGoalText").textContent=(all/goal*100).toFixed(1)+"%";
+  document.getElementById("wcBar").style.width=Math.min(all/goal*100,100)+"%";
+  document.getElementById("wcRemaining").textContent=all>=goal
+   ?"🎉 目標文字数を達成しています！"
+   :"目標まであと "+(goal-all).toLocaleString()+" 文字です。";
+ }else{
+  area.style.display="none";
+ }
 }
-wcText.addEventListener("input",updateWordCount);wcTarget.addEventListener("input",updateWordCount);
-document.getElementById("wcClear").onclick=()=>{if(!wcText.value||confirm("入力した文章を消去しますか？")){wcText.value="";updateWordCount()}};
-document.getElementById("wcCopy").onclick=async()=>{if(!wcText.value){alert("コピーする文章がありません。");return}try{await navigator.clipboard.writeText(wcText.value);alert("文章をコピーしました！")}catch(e){wcText.select();document.execCommand("copy");alert("文章をコピーしました！")}};
+
+wcText.addEventListener("input",updateWordCount);
+wcTarget.addEventListener("input",updateWordCount);
+
+document.getElementById("wcClear").onclick=()=>{
+ if(!wcText.value||confirm("入力した文章を消去しますか？")){
+  wcText.value="";
+  updateWordCount();
+ }
+};
+
+document.getElementById("wcCopy").onclick=async()=>{
+ if(!wcText.value){
+  alert("コピーする文章がありません。");
+  return;
+ }
+ try{
+  await navigator.clipboard.writeText(wcText.value);
+  alert("文章をコピーしました！");
+ }catch(e){
+  wcText.select();
+  document.execCommand("copy");
+  alert("文章をコピーしました！");
+ }
+};
+
 updateWordCount();
 
 // 時間割メーカー
-const TT_KEY="campusTimetableV1",ttDays=["月曜日","火曜日","水曜日","木曜日","金曜日","土曜日"];
-const ttColors=[["ラベンダー","#eef0ff"],["ブルー","#e8f3ff"],["グリーン","#e8f7ef"],["ピンク","#fff0f4"],["イエロー","#fff8df"],["オレンジ","#fff0e5"]];
-function newPeriod(i){return {label:(i+1)+"限",start:"",end:""}}
-let tt={dayCount:5,periodCount:5,name:"",periods:[],classes:{}};
-try{const v=JSON.parse(localStorage.getItem(TT_KEY)||"null");if(v&&typeof v==="object")tt={...tt,...v}}catch(e){}
-tt.dayCount=Number(tt.dayCount)===6?6:5;tt.periodCount=Math.max(1,Math.min(10,Number(tt.periodCount)||5));
+const TT_KEY="campusTimetableV1";
+const ttDays=["月曜日","火曜日","水曜日","木曜日","金曜日","土曜日"];
+
+const ttColors=[
+ ["ラベンダー","#eef0ff"],
+ ["ブルー","#e8f3ff"],
+ ["グリーン","#e8f7ef"],
+ ["ピンク","#fff0f4"],
+ ["イエロー","#fff8df"],
+ ["オレンジ","#fff0e5"]
+];
+
+function newPeriod(i){
+ return {label:(i+1)+"限",start:"",end:""};
+}
+
+let tt={
+ dayCount:5,
+ periodCount:5,
+ name:"",
+ periods:[],
+ classes:{}
+};
+
+try{
+ const v=JSON.parse(localStorage.getItem(TT_KEY)||"null");
+ if(v&&typeof v==="object")tt={...tt,...v};
+}catch(e){}
+
+tt.dayCount=Number(tt.dayCount)===6?6:5;
+tt.periodCount=Math.max(1,Math.min(10,Number(tt.periodCount)||5));
+
 if(!Array.isArray(tt.periods))tt.periods=[];
 if(!tt.classes||typeof tt.classes!=="object")tt.classes={};
-while(tt.periods.length<tt.periodCount)tt.periods.push(newPeriod(tt.periods.length));
+
+while(tt.periods.length<tt.periodCount){
+ tt.periods.push(newPeriod(tt.periods.length));
+}
+
 tt.periods=tt.periods.slice(0,tt.periodCount);
-function saveTT(){localStorage.setItem(TT_KEY,JSON.stringify(tt))}
+
+function saveTT(){
+ localStorage.setItem(TT_KEY,JSON.stringify(tt));
+}
+
+let ttCompact=tt.compact===true;
+const ttWrap=document.getElementById("ttWrap");
+
+function setTTView(compact){
+ ttCompact=compact;
+ tt.compact=compact;
+
+ ttWrap.classList.toggle("compact",compact);
+
+ document.getElementById("ttNormalView").classList.toggle("active",!compact);
+ document.getElementById("ttCompactView").classList.toggle("active",compact);
+
+ saveTT();
+}
+
+document.getElementById("ttNormalView").onclick=()=>setTTView(false);
+document.getElementById("ttCompactView").onclick=()=>setTTView(true);
+
 const periodSelect=document.getElementById("ttPeriods");
-for(let i=1;i<=10;i++){const o=document.createElement("option");o.value=i;o.textContent=i+"コマ";periodSelect.appendChild(o)}
-function escapeHTML(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
-function setupTTControls(){document.getElementById("ttDays").value=tt.dayCount;periodSelect.value=tt.periodCount;document.getElementById("ttName").value=tt.name||""}
+
+for(let i=1;i<=10;i++){
+ const o=document.createElement("option");
+ o.value=i;
+ o.textContent=i+"コマ";
+ periodSelect.appendChild(o);
+}
+
+function escapeHTML(s){
+ return String(s??"").replace(/[&<>"']/g,c=>({
+  "&":"&amp;",
+  "<":"&lt;",
+  ">":"&gt;",
+  '"':"&quot;",
+  "'":"&#39;"
+ }[c]));
+}
+
+function setupTTControls(){
+ document.getElementById("ttDays").value=tt.dayCount;
+ periodSelect.value=tt.periodCount;
+ document.getElementById("ttName").value=tt.name||"";
+}
+
 function renderTT(){
- const table=document.getElementById("ttTable");table.innerHTML="";
- const head=document.createElement("tr");head.innerHTML="<th>時限</th>"+ttDays.slice(0,tt.dayCount).map(d=>"<th>"+d+"</th>").join("");table.appendChild(head);
+ const table=document.getElementById("ttTable");
+ table.innerHTML="";
+
+ const head=document.createElement("tr");
+ head.innerHTML="<th>時限</th>"+ttDays.slice(0,tt.dayCount).map(d=>"<th>"+d+"</th>").join("");
+ table.appendChild(head);
+
  for(let i=0;i<tt.periodCount;i++){
-  const tr=document.createElement("tr"),p=tt.periods[i]||newPeriod(i),th=document.createElement("th");
-  th.innerHTML='<input class="period-input" aria-label="時限名" data-period-label="'+i+'" value="'+escapeHTML(p.label)+'"><input class="period-input" aria-label="開始時刻" type="time" data-period-start="'+i+'" value="'+escapeHTML(p.start)+'"><input class="period-input" aria-label="終了時刻" type="time" data-period-end="'+i+'" value="'+escapeHTML(p.end)+'">';
+  const tr=document.createElement("tr");
+  const p=tt.periods[i]||newPeriod(i);
+  const th=document.createElement("th");
+
+  th.innerHTML=
+   '<input class="period-input" aria-label="時限名" data-period-label="'+i+'" value="'+escapeHTML(p.label)+'">'+
+   '<input class="period-input" aria-label="開始時刻" type="time" data-period-start="'+i+'" value="'+escapeHTML(p.start)+'">'+
+   '<input class="period-input" aria-label="終了時刻" type="time" data-period-end="'+i+'" value="'+escapeHTML(p.end)+'">';
+
   tr.appendChild(th);
+
   for(let d=0;d<tt.dayCount;d++){
-   const key=d+"-"+i,c=tt.classes[key]||{},color=c.color||ttColors[0][1],td=document.createElement("td"),box=document.createElement("div");box.className="cell";box.style.setProperty("--cell-color",color);
-   box.innerHTML='<input data-key="'+key+'" data-field="name" placeholder="授業名" maxlength="40" value="'+escapeHTML(c.name||"")+'"><input data-key="'+key+'" data-field="room" placeholder="教室" maxlength="30" value="'+escapeHTML(c.room||"")+'"><input data-key="'+key+'" data-field="teacher" placeholder="担当教員" maxlength="30" value="'+escapeHTML(c.teacher||"")+'"><select data-key="'+key+'" data-field="color" aria-label="授業の色">'+ttColors.map(([n,v])=>'<option value="'+v+'" '+(v===color?"selected":"")+'>'+n+'</option>').join("")+'</select>';
-   td.appendChild(box);tr.appendChild(td);
+   const key=d+"-"+i;
+   const c=tt.classes[key]||{};
+   const color=c.color||ttColors[0][1];
+   const td=document.createElement("td");
+   const box=document.createElement("div");
+
+   box.className="cell";
+   box.style.setProperty("--cell-color",color);
+
+   box.innerHTML=
+    '<input data-key="'+key+'" data-field="name" placeholder="授業名" maxlength="40" value="'+escapeHTML(c.name||"")+'">'+
+    '<input data-key="'+key+'" data-field="room" placeholder="教室" maxlength="30" value="'+escapeHTML(c.room||"")+'">'+
+    '<input data-key="'+key+'" data-field="teacher" placeholder="担当教員" maxlength="30" value="'+escapeHTML(c.teacher||"")+'>'+
+    '<select data-key="'+key+'" data-field="color" aria-label="授業の色">'+
+    ttColors.map(([n,v])=>'<option value="'+v+'" '+(v===color?"selected":"")+'>'+n+'</option>').join("")+
+    '</select>';
+
+   td.appendChild(box);
+   tr.appendChild(td);
   }
+
   table.appendChild(tr);
  }
- table.querySelectorAll("[data-period-label],[data-period-start],[data-period-end]").forEach(el=>el.addEventListener("change",()=>{
-  const i=Number(el.dataset.periodLabel??el.dataset.periodStart??el.dataset.periodEnd);
-  if(el.dataset.periodLabel!==undefined)tt.periods[i].label=el.value;
-  if(el.dataset.periodStart!==undefined)tt.periods[i].start=el.value;
-  if(el.dataset.periodEnd!==undefined)tt.periods[i].end=el.value;
-  saveTT();
- }));
- table.querySelectorAll("[data-key]").forEach(el=>el.addEventListener("input",()=>updateTTCell(el)));
- table.querySelectorAll('select[data-key]').forEach(el=>el.addEventListener("change",()=>updateTTCell(el)));
+
+ table.querySelectorAll("[data-period-label],[data-period-start],[data-period-end]").forEach(el=>{
+  el.addEventListener("change",()=>{
+   const i=Number(el.dataset.periodLabel??el.dataset.periodStart??el.dataset.periodEnd);
+
+   if(el.dataset.periodLabel!==undefined)tt.periods[i].label=el.value;
+   if(el.dataset.periodStart!==undefined)tt.periods[i].start=el.value;
+   if(el.dataset.periodEnd!==undefined)tt.periods[i].end=el.value;
+
+   saveTT();
+  });
+ });
+
+ table.querySelectorAll("[data-key]").forEach(el=>{
+  el.addEventListener("input",()=>updateTTCell(el));
+ });
+
+ table.querySelectorAll('select[data-key]').forEach(el=>{
+  el.addEventListener("change",()=>updateTTCell(el));
+ });
 }
-function updateTTCell(el){const key=el.dataset.key,field=el.dataset.field;if(!tt.classes[key])tt.classes[key]={};tt.classes[key][field]=el.value;if(field==="color")el.closest(".cell").style.setProperty("--cell-color",el.value);saveTT()}
+
+function updateTTCell(el){
+ const key=el.dataset.key;
+ const field=el.dataset.field;
+
+ if(!tt.classes[key])tt.classes[key]={};
+
+ tt.classes[key][field]=el.value;
+
+ if(field==="color"){
+  el.closest(".cell").style.setProperty("--cell-color",el.value);
+ }
+
+ saveTT();
+}
+
 document.getElementById("ttApply").onclick=()=>{
- const days=Number(document.getElementById("ttDays").value),count=Number(periodSelect.value),name=document.getElementById("ttName").value.trim();
- if(count<tt.periodCount)for(const key of Object.keys(tt.classes))if(Number(key.split("-")[1])>=count)delete tt.classes[key];
- tt.dayCount=days;tt.periodCount=count;tt.name=name;
- while(tt.periods.length<count)tt.periods.push(newPeriod(tt.periods.length));
+ const days=Number(document.getElementById("ttDays").value);
+ const count=Number(periodSelect.value);
+ const name=document.getElementById("ttName").value.trim();
+
+ if(count<tt.periodCount){
+  for(const key of Object.keys(tt.classes)){
+   if(Number(key.split("-")[1])>=count)delete tt.classes[key];
+  }
+ }
+
+ tt.dayCount=days;
+ tt.periodCount=count;
+ tt.name=name;
+
+ while(tt.periods.length<count){
+  tt.periods.push(newPeriod(tt.periods.length));
+ }
+
  tt.periods=tt.periods.slice(0,count);
- for(const key of Object.keys(tt.classes))if(Number(key.split("-")[0])>=days)delete tt.classes[key];
- saveTT();renderTT();
+
+ for(const key of Object.keys(tt.classes)){
+  if(Number(key.split("-")[0])>=days)delete tt.classes[key];
+ }
+
+ saveTT();
+ renderTT();
 };
+
 document.getElementById("ttPrint").onclick=()=>window.print();
-document.getElementById("ttReset").onclick=()=>{if(confirm("時間割の登録内容をすべて削除しますか？")){tt={dayCount:5,periodCount:5,name:"",periods:Array.from({length:5},(_,i)=>newPeriod(i)),classes:{}};setupTTControls();saveTT();renderTT()}};
-setupTTControls();saveTT();renderTT();
+
+document.getElementById("ttReset").onclick=()=>{
+ if(confirm("時間割の登録内容をすべて削除しますか？")){
+  tt={
+   dayCount:5,
+   periodCount:5,
+   name:"",
+   periods:Array.from({length:5},(_,i)=>newPeriod(i)),
+   classes:{},
+   compact:ttCompact
+  };
+
+  setupTTControls();
+  saveTT();
+  renderTT();
+ }
+};
+
+setupTTControls();
+setTTView(ttCompact);
+saveTT();
+renderTT();
 
 // 既存の便利ツール
-function calculateSalary(){const w=Number(document.getElementById("wage").value),h=Number(document.getElementById("hours").value),d=Number(document.getElementById("days").value);if(w<=0||h<=0||d<=0){alert("すべての項目を正しく入力してください！");return}document.getElementById("salaryResult").innerText="💰 月収目安："+(w*h*d).toLocaleString()+"円"}
-function calculateSplit(){const t=Number(document.getElementById("total").value),p=Number(document.getElementById("people").value);if(t<=0||p<=0||!Number.isInteger(p)){alert("金額と人数を正しく入力してください！");return}const each=Math.floor(t/p),remainder=t%p;document.getElementById("splitResult").innerText="🍕 1人あたり："+each.toLocaleString()+"円"+(remainder?"\n端数："+remainder+"円（調整してください）":"")}
-function makeReport(){const theme=document.getElementById("reportTheme").value.trim(),type=document.getElementById("reportType").value;if(!theme){alert("テーマを入力してください！");return}let s="";if(type==="general")s="【レポート構成】\n\nテーマ："+theme+"\n\n① はじめに\n・テーマの背景\n・問題提起\n\n② 本論\n・テーマに関する説明\n・具体例やデータ\n・重要なポイント\n\n③ 考察\n・内容についての分析\n・自分の考え\n\n④ おわりに\n・結論\n・今後の課題";else if(type==="opinion")s="【意見・考察型レポート】\n\nテーマ："+theme+"\n\n① 問題提起\n② 自分の主張\n③ 根拠・具体例\n④ 反対意見への検討\n⑤ 結論";else s="【調査・研究型レポート】\n\nテーマ："+theme+"\n\n① 研究目的\n② 先行研究\n③ 調査方法\n④ 調査結果\n⑤ 考察\n⑥ 結論";document.getElementById("reportResult").innerText=s}
-let tasks=[];try{const saved=JSON.parse(localStorage.getItem("campusTasks")||"[]");if(Array.isArray(saved))tasks=saved}catch(e){tasks=[]}
-function saveTasks(){localStorage.setItem("campusTasks",JSON.stringify(tasks))}
-function addTask(){const name=document.getElementById("taskName").value.trim(),date=document.getElementById("taskDate").value;if(!name||!date){alert("課題名と締切を入力してください！");return}tasks.push({name,date});tasks.sort((a,b)=>a.date.localeCompare(b.date));saveTasks();displayTasks();document.getElementById("taskName").value="";document.getElementById("taskDate").value=""}
-function displayTasks(){const list=document.getElementById("taskList");list.innerHTML="";tasks.forEach((task,index)=>{const div=document.createElement("div");div.className="task-item";const text=document.createElement("div");text.innerText="📌 "+task.name+"\n締切："+task.date;const button=document.createElement("button");button.innerText="削除";button.className="danger";button.onclick=()=>deleteTask(index);div.append(text,button);list.appendChild(div)})}
-function deleteTask(index){tasks.splice(index,1);saveTasks();displayTasks()}
-function calculateSaving(){const target=Number(document.getElementById("targetMoney").value),saved=Number(document.getElementById("savedMoney").value),monthly=Number(document.getElementById("monthlyMoney").value);if(target<=0||saved<0||monthly<=0){alert("正しい金額を入力してください！");return}const remaining=target-saved;document.getElementById("savingResult").innerText=remaining<=0?"🎉 目標達成！おめでとう！":"💸 あと："+remaining.toLocaleString()+"円\n📅 目標達成まで：約"+Math.ceil(remaining/monthly)+"ヶ月"}
+function calculateSalary(){
+ const w=Number(document.getElementById("wage").value);
+ const h=Number(document.getElementById("hours").value);
+ const d=Number(document.getElementById("days").value);
+
+ if(w<=0||h<=0||d<=0){
+  alert("すべての項目を正しく入力してください！");
+  return;
+ }
+
+ document.getElementById("salaryResult").innerText="💰 月収目安："+(w*h*d).toLocaleString()+"円";
+}
+
+function calculateSplit(){
+ const t=Number(document.getElementById("total").value);
+ const p=Number(document.getElementById("people").value);
+
+ if(t<=0||p<=0||!Number.isInteger(p)){
+  alert("金額と人数を正しく入力してください！");
+  return;
+ }
+
+ const each=Math.floor(t/p);
+ const remainder=t%p;
+
+ document.getElementById("splitResult").innerText=
+ "🍕 1人あたり："+each.toLocaleString()+"円"+
+ (remainder?"\n端数："+remainder+"円（調整してください）":"");
+}
+
+function makeReport(){
+ const theme=document.getElementById("reportTheme").value.trim();
+ const type=document.getElementById("reportType").value;
+
+ if(!theme){
+  alert("テーマを入力してください！");
+  return;
+ }
+
+ let s="";
+
+ if(type==="general"){
+  s="【レポート構成】\n\nテーマ："+theme+
+  "\n\n① はじめに\n・テーマの背景\n・問題提起"+
+  "\n\n② 本論\n・テーマに関する説明\n・具体例やデータ\n・重要なポイント"+
+  "\n\n③ 考察\n・内容についての分析\n・自分の考え"+
+  "\n\n④ おわりに\n・結論\n・今後の課題";
+ }else if(type==="opinion"){
+  s="【意見・考察型レポート】\n\nテーマ："+theme+
+  "\n\n① 問題提起\n② 自分の主張\n③ 根拠・具体例\n④ 反対意見への検討\n⑤ 結論";
+ }else{
+  s="【調査・研究型レポート】\n\nテーマ："+theme+
+  "\n\n① 研究目的\n② 先行研究\n③ 調査方法\n④ 調査結果\n⑤ 考察\n⑥ 結論";
+ }
+
+ document.getElementById("reportResult").innerText=s;
+}
+
+let tasks=[];
+
+try{
+ const saved=JSON.parse(localStorage.getItem("campusTasks")||"[]");
+ if(Array.isArray(saved))tasks=saved;
+}catch(e){
+ tasks=[];
+}
+
+function saveTasks(){
+ localStorage.setItem("campusTasks",JSON.stringify(tasks));
+}
+
+function addTask(){
+ const name=document.getElementById("taskName").value.trim();
+ const date=document.getElementById("taskDate").value;
+
+ if(!name||!date){
+  alert("課題名と締切を入力してください！");
+  return;
+ }
+
+ tasks.push({name,date});
+ tasks.sort((a,b)=>a.date.localeCompare(b.date));
+
+ saveTasks();
+ displayTasks();
+
+ document.getElementById("taskName").value="";
+ document.getElementById("taskDate").value="";
+}
+
+function displayTasks(){
+ const list=document.getElementById("taskList");
+ list.innerHTML="";
+
+ tasks.forEach((task,index)=>{
+  const div=document.createElement("div");
+  div.className="task-item";
+
+  const text=document.createElement("div");
+  text.innerText="📌 "+task.name+"\n締切："+task.date;
+
+  const button=document.createElement("button");
+  button.innerText="削除";
+  button.className="danger";
+  button.onclick=()=>deleteTask(index);
+
+  div.append(text,button);
+  list.appendChild(div);
+ });
+}
+
+function deleteTask(index){
+ tasks.splice(index,1);
+ saveTasks();
+ displayTasks();
+}
+
+function calculateSaving(){
+ const target=Number(document.getElementById("targetMoney").value);
+ const saved=Number(document.getElementById("savedMoney").value);
+ const monthly=Number(document.getElementById("monthlyMoney").value);
+
+ if(target<=0||saved<0||monthly<=0){
+  alert("正しい金額を入力してください！");
+  return;
+ }
+
+ const remaining=target-saved;
+
+ document.getElementById("savingResult").innerText=
+ remaining<=0
+ ?"🎉 目標達成！おめでとう！"
+ :"💸 あと："+remaining.toLocaleString()+"円\n📅 目標達成まで：約"+Math.ceil(remaining/monthly)+"ヶ月";
+}
+
 displayTasks();
 </script>
 </body>
