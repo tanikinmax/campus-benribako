@@ -1,219 +1,450 @@
-```html
 <!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Campus便利箱 | 学生生活をもっと便利に</title>
+<title>Campus便利箱</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap');
-
-:root {
-    --main: #5278F5;
-    --main-dark: #3F61D8;
-    --bg: #F4F6FB;
-    --text: #29334F;
-    --sub: #8791AA;
-    --border: #E8ECF5;
-    --shadow: 0 8px 28px rgba(40,60,120,0.06);
-}
-
 * {
     box-sizing: border-box;
 }
 
-html {
-    scroll-behavior: smooth;
-}
-
 body {
     margin: 0;
-    font-family: 'Noto Sans JP', sans-serif;
-    background: var(--bg);
-    color: var(--text);
+    font-family: "Noto Sans JP", sans-serif;
+    background: #f4f7fb;
+    color: #333;
 }
-
-/* ヘッダー */
 
 header {
-    background: linear-gradient(135deg, #4568E8, #8299FF);
+    background: linear-gradient(135deg, #4f7cff, #6c63ff);
     color: white;
-    padding: 65px 20px 90px;
     text-align: center;
-    border-radius: 0 0 40px 40px;
-}
-
-.logo {
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 3px;
-    opacity: 0.9;
+    padding: 45px 20px;
 }
 
 header h1 {
-    font-size: clamp(30px, 5vw, 48px);
-    font-weight: 900;
-    margin: 22px 0 14px;
+    font-size: 32px;
+    margin: 0 0 10px;
 }
 
 header p {
-    font-size: 15px;
-    opacity: 0.95;
-    line-height: 1.8;
+    margin: 0;
+    opacity: 0.9;
 }
-
-/* メイン */
 
 .container {
     max-width: 1100px;
-    margin: -45px auto 0;
-    padding: 0 22px;
+    margin: 35px auto;
+    padding: 0 20px;
 }
 
-.intro {
-    background: white;
-    padding: 32px;
-    border-radius: 24px;
-    box-shadow: var(--shadow);
-    margin-bottom: 45px;
-    border: 1px solid var(--border);
-}
-
-.intro span {
-    color: var(--main);
-    font-weight: 900;
-    font-size: 11px;
-    letter-spacing: 1.5px;
-}
-
-.intro h2 {
-    margin: 12px 0;
-    font-size: clamp(18px, 3vw, 24px);
-    font-weight: 900;
-}
-
-.intro p {
-    margin: 0;
-    color: var(--sub);
-    font-size: 13px;
-    line-height: 1.9;
-}
-
-/* ツール一覧 */
-
-.section-title {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 24px;
-}
-
-.section-title h2 {
-    font-size: 22px;
-    font-weight: 900;
-    margin: 0;
-}
-
-.section-title span {
-    color: var(--sub);
-    font-size: 11px;
-    letter-spacing: 1px;
-}
-
-.tools {
+.tool-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 24px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
 }
-
-/* カード */
 
 .card {
     background: white;
-    padding: 30px;
-    border-radius: 24px;
-    box-shadow: var(--shadow);
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-    border: 1px solid var(--border);
-}
-
-.card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 16px 35px rgba(50,70,130,0.12);
-}
-
-.icon {
-    width: 58px;
-    height: 58px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    padding: 25px;
     border-radius: 18px;
-    font-size: 27px;
-    margin-bottom: 22px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.05);
 }
 
-.blue { background: #E9EEFF; }
-.green { background: #E3F8EF; }
-.orange { background: #FFF1E2; }
-.purple { background: #F0E8FF; }
-.pink { background: #FFE8F0; }
-
-.card h3 {
-    font-size: 18px;
-    font-weight: 900;
-    margin: 0 0 12px;
+.card h2 {
+    font-size: 20px;
+    margin-top: 0;
+    color: #4f63d9;
 }
 
 .card p {
-    color: var(--sub);
-    font-size: 13px;
-    line-height: 1.9;
-    margin: 0 0 22px;
-    min-height: 48px;
-}
-
-/* 入力欄 */
-
-input {
-    width: 100%;
-    padding: 14px 15px;
-    margin: 7px 0;
-    border: 1px solid var(--border);
-    border-radius: 14px;
+    color: #777;
     font-size: 14px;
-    outline: none;
-    background: #F8FAFE;
-    color: var(--text);
-    transition: 0.2s;
-    font-family: inherit;
 }
 
-input:focus {
-    border-color: var(--main);
-    background: white;
-    box-shadow: 0 0 0 3px rgba(82,120,245,0.10);
+input, textarea, select {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 15px;
 }
 
-/* ボタン */
+textarea {
+    resize: vertical;
+    min-height: 80px;
+}
 
 button {
     width: 100%;
-    background: var(--main);
+    padding: 13px;
+    margin-top: 10px;
+    background: #5b72f2;
     color: white;
     border: none;
-    padding: 15px;
-    border-radius: 14px;
-    font-weight: 700;
-    font-size: 14px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: bold;
     cursor: pointer;
-    margin-top: 12px;
     transition: 0.2s;
-    font-family: inherit;
 }
 
 button:hover {
-    background: var(--main-dark);
-    transform: translateY(-2px
+    background: #4057d8;
+    transform: translateY(-2px);
+}
+
+.result {
+    margin-top: 15px;
+    padding: 15px;
+    background: #eef2ff;
+    border-radius: 10px;
+    color: #4257c5;
+    font-weight: bold;
+    white-space: pre-wrap;
+}
+
+.task-item {
+    background: #f4f6ff;
+    padding: 12px;
+    border-radius: 10px;
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+.task-item button {
+    background: #ff6b6b;
+    margin-top: 8px;
+}
+
+footer {
+    text-align: center;
+    padding: 30px;
+    color: #999;
+    font-size: 13px;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>🎓 Campus便利箱</h1>
+    <p>大学生活をもっと便利に、もっと楽しく。</p>
+</header>
+
+<div class="container">
+
+<div class="tool-grid">
+
+<!-- バイト給料計算 -->
+
+<div class="card">
+    <h2>💰 バイト給料計算</h2>
+    <p>時給と勤務時間から給料を計算！</p>
+
+    <input type="number" id="wage" placeholder="時給（円）">
+    <input type="number" id="hours" placeholder="勤務時間（時間）">
+    <input type="number" id="days" placeholder="勤務日数">
+
+    <button onclick="calculateSalary()">給料を計算する</button>
+
+    <div class="result" id="salaryResult">
+        ここに計算結果が表示されます
+    </div>
+</div>
+
+<!-- 割り勘計算 -->
+
+<div class="card">
+    <h2>🍕 割り勘計算</h2>
+    <p>友達との食事代を簡単に割り勘！</p>
+
+    <input type="number" id="total" placeholder="合計金額（円）">
+    <input type="number" id="people" placeholder="人数">
+
+    <button onclick="calculateSplit()">割り勘する</button>
+
+    <div class="result" id="splitResult">
+        ここに計算結果が表示されます
+    </div>
+</div>
+
+<!-- レポート構成メーカー -->
+
+<div class="card">
+    <h2>📝 レポート構成メーカー</h2>
+    <p>テーマを入力してレポートの構成を作成！</p>
+
+    <input type="text" id="reportTheme" placeholder="レポートのテーマ">
+
+    <select id="reportType">
+        <option value="general">一般的なレポート</option>
+        <option value="opinion">意見・考察型</option>
+        <option value="research">調査・研究型</option>
+    </select>
+
+    <button onclick="makeReport()">構成を作る</button>
+
+    <div class="result" id="reportResult">
+        ここに構成が表示されます
+    </div>
+</div>
+
+<!-- 課題締切管理 -->
+
+<div class="card">
+    <h2>📅 課題締切管理</h2>
+    <p>提出期限を忘れないように管理！</p>
+
+    <input type="text" id="taskName" placeholder="課題名">
+
+    <input type="date" id="taskDate">
+
+    <button onclick="addTask()">課題を追加する</button>
+
+    <div id="taskList"></div>
+</div>
+
+<!-- 節約計算 -->
+
+<div class="card">
+    <h2>💸 大学生節約計算</h2>
+    <p>目標金額まであといくら？</p>
+
+    <input type="number" id="targetMoney" placeholder="目標金額（円）">
+    <input type="number" id="savedMoney" placeholder="現在の貯金額（円）">
+    <input type="number" id="monthlyMoney" placeholder="毎月の貯金額（円）">
+
+    <button onclick="calculateSaving()">貯金計画を計算する</button>
+
+    <div class="result" id="savingResult">
+        ここに計算結果が表示されます
+    </div>
+</div>
+
+</div>
+</div>
+
+<footer>
+    © 2026 Campus便利箱
+    <br>
+    大学生のための便利ツールサイト
+</footer>
+
+<script>
+
+// バイト給料計算
+
+function calculateSalary() {
+
+    const wage = Number(document.getElementById("wage").value);
+    const hours = Number(document.getElementById("hours").value);
+    const days = Number(document.getElementById("days").value);
+
+    if (wage <= 0 || hours <= 0 || days <= 0) {
+        alert("すべての項目を正しく入力してください！");
+        return;
+    }
+
+    const salary = wage * hours * days;
+
+    document.getElementById("salaryResult").innerText =
+        "💰 月収目安：" + salary.toLocaleString() + "円";
+}
+
+
+// 割り勘計算
+
+function calculateSplit() {
+
+    const total = Number(document.getElementById("total").value);
+    const people = Number(document.getElementById("people").value);
+
+    if (total <= 0 || people <= 0) {
+        alert("金額と人数を正しく入力してください！");
+        return;
+    }
+
+    const split = Math.ceil(total / people);
+
+    document.getElementById("splitResult").innerText =
+        "🍕 1人あたり：" + split.toLocaleString() + "円";
+}
+
+
+// レポート構成メーカー
+
+function makeReport() {
+
+    const theme = document.getElementById("reportTheme").value;
+    const type = document.getElementById("reportType").value;
+
+    if (theme.trim() === "") {
+        alert("テーマを入力してください！");
+        return;
+    }
+
+    let structure = "";
+
+    if (type === "general") {
+
+        structure =
+        "【レポート構成】\n\n" +
+        "テーマ：" + theme + "\n\n" +
+        "① はじめに\n" +
+        "・テーマの背景\n" +
+        "・問題提起\n\n" +
+        "② 本論\n" +
+        "・テーマに関する説明\n" +
+        "・具体例やデータ\n" +
+        "・重要なポイント\n\n" +
+        "③ 考察\n" +
+        "・内容についての分析\n" +
+        "・自分の考え\n\n" +
+        "④ おわりに\n" +
+        "・結論\n" +
+        "・今後の課題";
+    }
+
+    else if (type === "opinion") {
+
+        structure =
+        "【意見・考察型レポート】\n\n" +
+        "テーマ：" + theme + "\n\n" +
+        "① 問題提起\n" +
+        "② 自分の主張\n" +
+        "③ 根拠・具体例\n" +
+        "④ 反対意見への検討\n" +
+        "⑤ 結論";
+    }
+
+    else if (type === "research") {
+
+        structure =
+        "【調査・研究型レポート】\n\n" +
+        "テーマ：" + theme + "\n\n" +
+        "① 研究目的\n" +
+        "② 先行研究\n" +
+        "③ 調査方法\n" +
+        "④ 調査結果\n" +
+        "⑤ 考察\n" +
+        "⑥ 結論";
+    }
+
+    document.getElementById("reportResult").innerText = structure;
+}
+
+
+// 課題締切管理
+
+let tasks = JSON.parse(localStorage.getItem("campusTasks")) || [];
+
+function saveTasks() {
+    localStorage.setItem("campusTasks", JSON.stringify(tasks));
+}
+
+function addTask() {
+
+    const name = document.getElementById("taskName").value;
+    const date = document.getElementById("taskDate").value;
+
+    if (name.trim() === "" || date === "") {
+        alert("課題名と締切を入力してください！");
+        return;
+    }
+
+    tasks.push({
+        name: name,
+        date: date
+    });
+
+    tasks.sort((a, b) => a.date.localeCompare(b.date));
+
+    saveTasks();
+    displayTasks();
+
+    document.getElementById("taskName").value = "";
+    document.getElementById("taskDate").value = "";
+}
+
+function displayTasks() {
+
+    const list = document.getElementById("taskList");
+
+    list.innerHTML = "";
+
+    tasks.forEach((task, index) => {
+
+        const div = document.createElement("div");
+        div.className = "task-item";
+
+        const text = document.createElement("div");
+        text.innerText = "📌 " + task.name + "\n締切：" + task.date;
+
+        const button = document.createElement("button");
+        button.innerText = "削除";
+        button.onclick = function() {
+            deleteTask(index);
+        };
+
+        div.appendChild(text);
+        div.appendChild(button);
+
+        list.appendChild(div);
+    });
+}
+
+function deleteTask(index) {
+
+    tasks.splice(index, 1);
+
+    saveTasks();
+    displayTasks();
+}
+
+
+// 節約計算
+
+function calculateSaving() {
+
+    const target = Number(document.getElementById("targetMoney").value);
+    const saved = Number(document.getElementById("savedMoney").value);
+    const monthly = Number(document.getElementById("monthlyMoney").value);
+
+    if (target <= 0 || saved < 0 || monthly <= 0) {
+        alert("正しい金額を入力してください！");
+        return;
+    }
+
+    const remaining = target - saved;
+
+    if (remaining <= 0) {
+
+        document.getElementById("savingResult").innerText =
+            "🎉 目標達成！おめでとう！";
+
+        return;
+    }
+
+    const months = Math.ceil(remaining / monthly);
+
+    document.getElementById("savingResult").innerText =
+        "💸 あと：" + remaining.toLocaleString() + "円\n" +
+        "📅 目標達成まで：約" + months + "ヶ月";
+}
+
+
+// 初期表示
+
+displayTasks();
+
+</script>
+
+</body>
+</html>
