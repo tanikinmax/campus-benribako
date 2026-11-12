@@ -1,0 +1,523 @@
+```html
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>レポート文字数カウンター｜目標文字数・達成率を確認 - Campus便利箱</title>
+
+<meta name="description" content="大学生のレポート作成に便利な無料文字数カウンター。目標文字数の設定、達成率、不足文字数、段落数、読了時間をリアルタイムで確認できます。">
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Noto Sans JP", sans-serif;
+    background: #f4f7fb;
+    color: #333;
+}
+
+header {
+    background: linear-gradient(135deg, #4f7cff, #6c63ff);
+    color: white;
+    padding: 28px 15px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 27px;
+}
+
+header p {
+    margin: 10px 0 0;
+    font-size: 14px;
+}
+
+.container {
+    max-width: 850px;
+    margin: 30px auto;
+    padding: 0 15px;
+}
+
+.card {
+    background: white;
+    border-radius: 16px;
+    padding: 25px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+}
+
+h2 {
+    font-size: 20px;
+    margin-top: 0;
+}
+
+textarea {
+    width: 100%;
+    height: 300px;
+    padding: 16px;
+    border: 2px solid #e0e6ef;
+    border-radius: 12px;
+    font-size: 16px;
+    line-height: 1.8;
+    resize: vertical;
+    outline: none;
+    background: #fff;
+}
+
+textarea:focus {
+    border-color: #4f7cff;
+}
+
+.target-setting {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.target-setting label {
+    font-weight: bold;
+}
+
+.target-setting input {
+    width: 130px;
+    padding: 10px;
+    border: 2px solid #e0e6ef;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.target-setting span {
+    color: #666;
+    font-size: 13px;
+}
+
+.progress-area {
+    background: #f4f7ff;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.progress-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.progress-top strong {
+    font-size: 30px;
+    color: #4f7cff;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 12px;
+    background: #dce4f5;
+    border-radius: 20px;
+    overflow: hidden;
+    margin: 15px 0;
+}
+
+.progress-fill {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #4f7cff, #8b7cff);
+    border-radius: 20px;
+    transition: width 0.2s;
+}
+
+.progress-message {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.stat {
+    background: #f8f9fc;
+    border: 1px solid #edf0f6;
+    border-radius: 12px;
+    padding: 18px;
+    text-align: center;
+}
+
+.stat p {
+    margin: 0 0 8px;
+    color: #666;
+    font-size: 13px;
+}
+
+.stat strong {
+    font-size: 27px;
+    color: #4f7cff;
+}
+
+.buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+button {
+    border: none;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: 0.85;
+}
+
+.copy-btn {
+    background: #4f7cff;
+    color: white;
+}
+
+.clear-btn {
+    background: #eeeeee;
+    color: #444;
+}
+
+.report-mode {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+    font-size: 14px;
+}
+
+.report-mode input {
+    width: 18px;
+    height: 18px;
+    accent-color: #4f7cff;
+}
+
+.info {
+    background: white;
+    padding: 22px;
+    border-radius: 14px;
+    line-height: 1.8;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.info h2 {
+    font-size: 18px;
+}
+
+.back {
+    display: block;
+    text-align: center;
+    margin: 25px 0;
+    color: #4f7cff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+footer {
+    text-align: center;
+    padding: 25px;
+    font-size: 12px;
+    color: #888;
+}
+
+@media (max-width: 500px) {
+    .card {
+        padding: 18px;
+    }
+
+    textarea {
+        height: 250px;
+    }
+
+    .stat strong {
+        font-size: 23px;
+    }
+
+    .progress-top strong {
+        font-size: 25px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>レポート文字数カウンター</h1>
+    <p>大学生のレポート・課題作成をサポート！</p>
+</header>
+
+<div class="container">
+
+    <div class="card">
+
+        <h2>📝 目標文字数を設定</h2>
+
+        <div class="target-setting">
+            <label for="targetCount">目標文字数</label>
+            <input type="number" id="targetCount" value="1200" min="1">
+            <span>文字</span>
+        </div>
+
+        <div class="report-mode">
+            <input type="checkbox" id="reportMode" checked>
+            <label for="reportMode">レポートモード（空白・改行を除いて計算）</label>
+        </div>
+
+        <div class="progress-area">
+
+            <div class="progress-top">
+                <span>目標達成率</span>
+                <strong id="progressPercent">0%</strong>
+            </div>
+
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+
+            <div class="progress-message" id="progressMessage">
+                目標まであと1200文字！
+            </div>
+
+        </div>
+
+        <h2>✏️ 文章を入力</h2>
+
+        <textarea id="textInput" placeholder="ここに大学のレポートや課題の文章を入力してください..."></textarea>
+
+        <div class="stats">
+
+            <div class="stat">
+                <p>総文字数（改行含む）</p>
+                <strong id="totalCount">0</strong>
+            </div>
+
+            <div class="stat">
+                <p>改行を除いた文字数</p>
+                <strong id="noLineCount">0</strong>
+            </div>
+
+            <div class="stat">
+                <p>空白・改行を除いた文字数</p>
+                <strong id="noSpaceCount">0</strong>
+            </div>
+
+            <div class="stat">
+                <p>段落数</p>
+                <strong id="paragraphCount">0</strong>
+            </div>
+
+            <div class="stat">
+                <p>単語数（スペース区切り）</p>
+                <strong id="wordCount">0</strong>
+            </div>
+
+            <div class="stat">
+                <p>読了時間の目安</p>
+                <strong id="readTime">0分</strong>
+            </div>
+
+        </div>
+
+        <div class="buttons">
+            <button class="copy-btn" onclick="copyText()">📋 文章をコピー</button>
+            <button class="clear-btn" onclick="clearText()">🗑️ クリア</button>
+        </div>
+
+    </div>
+
+    <div class="info">
+
+        <h2>📖 このツールの使い方</h2>
+
+        <p>
+        Campus便利箱のレポート文字数カウンターは、大学のレポートや課題の文字数をリアルタイムで確認できる無料ツールです。
+        </p>
+
+        <ul>
+            <li>目標文字数を自由に設定できます。</li>
+            <li>目標までの達成率を確認できます。</li>
+            <li>あと何文字必要かを自動計算します。</li>
+            <li>空白や改行を含めた文字数を確認できます。</li>
+            <li>段落数や読了時間の目安も確認できます。</li>
+            <li>入力した文章をコピーできます。</li>
+        </ul>
+
+        <p>
+        ※読了時間は日本語の文章を1分あたり500文字として計算した目安です。
+        </p>
+
+        <p>
+        ※単語数は空白で区切られた語の数です。日本語の単語を正確に解析するものではありません。
+        </p>
+
+        <p>
+        ※文字数の判定方法は大学や提出先の指定に従ってください。
+        </p>
+
+    </div>
+
+    <a href="index.html" class="back">
+        ← Campus便利箱のトップページへ戻る
+    </a>
+
+</div>
+
+<footer>
+    © Campus便利箱
+</footer>
+
+<script>
+
+const textInput = document.getElementById("textInput");
+const targetCount = document.getElementById("targetCount");
+const reportMode = document.getElementById("reportMode");
+
+function countCharacters() {
+
+    const text = textInput.value;
+
+    // 総文字数（改行含む）
+    const total = text.length;
+
+    // 改行を除いた文字数
+    const noLine = text.replace(/\r\n|\r|\n/g, "").length;
+
+    // 空白・改行を除いた文字数
+    const noSpace = text.replace(/\s/g, "").length;
+
+    // レポートモードに応じた文字数
+    const currentCount = reportMode.checked ? noSpace : total;
+
+    // 目標文字数
+    const target = Math.max(1, Number(targetCount.value) || 1);
+
+    // 達成率
+    const percentage = Math.floor((currentCount / target) * 100);
+
+    // 段落数（空行を除く）
+    const paragraphs = text.trim()
+        ? text.trim().split(/\n\s*\n/).filter(p => p.trim()).length
+        : 0;
+
+    // 単語数（空白区切り）
+    const words = text.trim().match(/\S+/g);
+
+    // 読了時間（500文字/分）
+    const readingMinutes = Math.ceil(noSpace / 500);
+
+    document.getElementById("totalCount").textContent = total;
+
+    document.getElementById("noLineCount").textContent = noLine;
+
+    document.getElementById("noSpaceCount").textContent = noSpace;
+
+    document.getElementById("paragraphCount").textContent = paragraphs;
+
+    document.getElementById("wordCount").textContent =
+        words ? words.length : 0;
+
+    document.getElementById("readTime").textContent =
+        readingMinutes + "分";
+
+    document.getElementById("progressPercent").textContent =
+        percentage + "%";
+
+    // バーは100%を上限にする
+    document.getElementById("progressFill").style.width =
+        Math.min(percentage, 100) + "%";
+
+    // 目標達成メッセージ
+    const message = document.getElementById("progressMessage");
+
+    if (currentCount >= target) {
+
+        message.textContent = "🎉 目標達成！お疲れさま！";
+
+    } else {
+
+        message.textContent =
+            "目標まであと" + (target - currentCount) + "文字！";
+
+    }
+}
+
+function clearText() {
+
+    if (!textInput.value) {
+        return;
+    }
+
+    if (confirm("入力した文章をすべて削除しますか？")) {
+
+        textInput.value = "";
+        countCharacters();
+
+    }
+}
+
+async function copyText() {
+
+    const text = textInput.value;
+
+    if (!text) {
+        alert("コピーする文章がありません！");
+        return;
+    }
+
+    try {
+
+        await navigator.clipboard.writeText(text);
+        alert("文章をコピーしました！");
+
+    } catch (error) {
+
+        textInput.select();
+
+        const result = document.execCommand("copy");
+
+        if (result) {
+            alert("文章をコピーしました！");
+        } else {
+            alert("コピーできませんでした。文章を選択してコピーしてください。");
+        }
+
+    }
+}
+
+// 入力時に自動計算
+textInput.addEventListener("input", countCharacters);
+
+// 目標文字数変更時
+targetCount.addEventListener("input", countCharacters);
+
+// モード変更時
+reportMode.addEventListener("change", countCharacters);
+
+// 初期表示
+countCharacters();
+
+</script>
+
+</body>
+</html>
+```
