@@ -1,40 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-
   <url>
     <loc>https://tanikinmax.github.io/campus-benribako/</loc>
   </url>
-
   <url>
     <loc>https://tanikinmax.github.io/campus-benribako/gpa.html</loc>
   </url>
-
   <url>
     <loc>https://tanikinmax.github.io/campus-benribako/mojisu.html</loc>
   </url>
-
   <url>
     <loc>https://tanikinmax.github.io/campus-benribako/baito.html</loc>
   </url>
-
   <url>
     <loc>https://tanikinmax.github.io/campus-benribako/gpa-guide.html</loc>
   </url>
-
   <url>
     <loc>https://tanikinmax.github.io/campus-benribako/about.html</loc>
   </url>
-
   <url>
     <loc>https://tanikinmax.github.io/campus-benribako/privacy.html</loc>
   </url>
-
   <url>
     <loc>https://tanikinmax.github.io/campus-benribako/contact.html</loc>
   </url>
-
-   <url>
+  <url>
     <loc>https://tanikinmax.github.io/campus-benribako/sitemap.html</loc>
-  </url> 
-
+  </url>
 </urlset>
