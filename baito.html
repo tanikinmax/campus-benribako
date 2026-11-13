@@ -4,12 +4,82 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>バイト給料計算機｜時給から月収・年収を簡単計算 - Campus便利箱</title>
+  <title>バイト給料計算機｜時給から日給・月収・年収を無料計算 - Campus便利箱</title>
 
-  <meta name="description" content="時給・1日の勤務時間・週の勤務日数から、アルバイトの給料を簡単計算。日給・週給・月収・年収の目安を無料で確認できます。">
+  <meta name="description" content="時給・1日の勤務時間・週の勤務日数を入力するだけで、アルバイトの日給・週給・月収・年収を無料で自動計算！大学生やアルバイトをしている方の収入目安の確認に便利な給料計算機です。">
+
+  <meta name="keywords" content="バイト給料計算,アルバイト給料計算,時給計算,月収計算,年収計算,バイト月収,給料計算機">
 
   <meta name="robots" content="index, follow">
+  <meta name="author" content="tanikinmax">
+
   <link rel="canonical" href="https://tanikinmax.github.io/campus-benribako/baito.html">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="バイト給料計算機｜Campus便利箱">
+  <meta property="og:description" content="時給と勤務時間から日給・週給・月収・年収を無料で簡単計算！">
+  <meta property="og:url" content="https://tanikinmax.github.io/campus-benribako/baito.html">
+  <meta property="og:site_name" content="Campus便利箱">
+
+  <meta name="twitter:card" content="summary">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "バイト給料計算機",
+    "url": "https://tanikinmax.github.io/campus-benribako/baito.html",
+    "description": "時給・1日の勤務時間・週の勤務日数から日給・週給・月収・年収の目安を計算できる無料ツールです。",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "JPY"
+    }
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "バイトの月収はどのように計算していますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "時給×1日の勤務時間×週の勤務日数で週給を計算し、週給×52÷12で1か月あたりの平均月収を算出しています。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "計算結果は手取り額ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "いいえ。表示される金額は税金や社会保険料などを差し引く前の額面給与の目安です。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "深夜手当や残業代も計算されますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "この計算機では深夜手当や残業代は含めていません。通常の時給と勤務時間をもとにした概算です。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "学生のアルバイトでも使えますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "はい。大学生や専門学生、高校生など、アルバイトの収入目安を確認したい方に利用できます。"
+        }
+      }
+    ]
+  }
+  </script>
 
   <style>
     * {
@@ -21,7 +91,7 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans JP", sans-serif;
       color: #263247;
       background: #f4f6fb;
-      line-height: 1.7;
+      line-height: 1.8;
     }
 
     header {
@@ -40,6 +110,7 @@
     header h1 {
       margin: 0;
       font-size: clamp(25px, 5vw, 34px);
+      line-height: 1.4;
     }
 
     header p {
@@ -50,6 +121,17 @@
     main {
       width: min(760px, calc(100% - 28px));
       margin: 28px auto 48px;
+    }
+
+    .breadcrumb {
+      margin: 0 0 18px;
+      color: #78849a;
+      font-size: 13px;
+    }
+
+    .breadcrumb a {
+      color: #526fc0;
+      text-decoration: none;
     }
 
     .card {
@@ -64,6 +146,13 @@
       margin: 0 0 16px;
       color: #344a78;
       font-size: 21px;
+      line-height: 1.5;
+    }
+
+    h3 {
+      margin: 22px 0 8px;
+      color: #344a78;
+      font-size: 17px;
     }
 
     .field {
@@ -173,6 +262,64 @@
       margin: 7px 0;
     }
 
+    .example {
+      padding: 16px;
+      border-radius: 12px;
+      background: #f3f6ff;
+      margin: 14px 0;
+    }
+
+    .example p {
+      margin: 5px 0;
+    }
+
+    .formula {
+      padding: 12px 15px;
+      margin: 12px 0;
+      border-left: 4px solid #4776e6;
+      background: #f5f7fc;
+      font-weight: 700;
+    }
+
+    .faq-item {
+      padding: 16px 0;
+      border-bottom: 1px solid #e8ecf4;
+    }
+
+    .faq-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .faq-item h3 {
+      margin: 0 0 8px;
+      font-size: 16px;
+    }
+
+    .faq-item p {
+      margin: 0;
+      color: #59667d;
+    }
+
+    .related-links {
+      display: grid;
+      gap: 10px;
+    }
+
+    .related-links a {
+      display: block;
+      padding: 13px 15px;
+      border-radius: 10px;
+      background: #f3f6ff;
+      color: #4265b4;
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .related-links a:hover {
+      background: #e8edff;
+    }
+
     footer {
       padding: 24px 16px;
       text-align: center;
@@ -215,13 +362,23 @@
 <header>
   <p class="site-name">Campus便利箱</p>
   <h1>バイト給料計算機</h1>
-  <p>時給と勤務時間から、給料の目安をかんたん計算！</p>
+  <p>時給と勤務時間から、日給・月収・年収をかんたん計算！</p>
 </header>
 
 <main>
 
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <a href="index.html">トップページ</a> ＞ バイト給料計算機
+  </nav>
+
   <section class="card">
-    <h2>給料を計算する</h2>
+    <h2>バイトの給料を無料計算</h2>
+
+    <p>
+      時給・1日の勤務時間・週の勤務日数を入力すると、
+      アルバイトの<strong>日給・週給・月収・年収</strong>の目安を自動で計算できます。
+      大学生やアルバイトをしている方の収入確認に活用してください。
+    </p>
 
     <div class="field">
       <label for="hourly">時給</label>
@@ -249,10 +406,11 @@
     </div>
 
     <button type="button" id="calculate">給料を計算する</button>
+    <p id="error" class="hint" role="alert" style="color:#c0392b;" aria-live="polite"></p>
   </section>
 
   <section class="card" aria-live="polite">
-    <h2>計算結果</h2>
+    <h2>バイトの給料計算結果</h2>
 
     <div class="results">
 
@@ -284,24 +442,152 @@
   </section>
 
   <section class="card">
-    <h2>この計算機の使い方</h2>
+    <h2>バイト給料計算機の使い方</h2>
 
     <ol class="steps">
       <li>アルバイト先の時給を入力します。</li>
       <li>1日に実際に働く時間（休憩を除く）を入力します。</li>
-      <li>週に何日働くかを入力して、「給料を計算する」を押します。</li>
+      <li>週に何日働くかを入力します。</li>
+      <li>「給料を計算する」を押すと、日給・週給・月収・年収が表示されます。</li>
     </ol>
+
+    <p>
+      入力内容を変更すると、計算結果も自動で更新されます。
+      シフトや時給が変わったときにも、気軽に使えます。
+    </p>
   </section>
 
   <section class="card">
-    <h2>計算するときの注意点</h2>
+    <h2>バイトの給料の計算方法</h2>
+
+    <p>
+      アルバイトの給料は、基本的に「時給」と「実際に働いた時間」をもとに計算できます。
+      週の勤務日数が決まっている場合は、1週間や1か月あたりの収入も概算できます。
+    </p>
+
+    <h3>日給の計算方法</h3>
+    <div class="formula">
+      時給 × 1日の勤務時間 ＝ 日給
+    </div>
+
+    <h3>週給の計算方法</h3>
+    <div class="formula">
+      日給 × 週の勤務日数 ＝ 週給
+    </div>
+
+    <h3>月収の計算方法</h3>
+    <div class="formula">
+      週給 × 52週 ÷ 12か月 ＝ 平均月収
+    </div>
+
+    <h3>年収の計算方法</h3>
+    <div class="formula">
+      週給 × 52週 ＝ 年収
+    </div>
+
+    <p>
+      この計算機では、1年間を52週として計算しています。
+      実際の収入はシフトや勤務日数によって変動するため、あくまで目安として利用してください。
+    </p>
+  </section>
+
+  <section class="card">
+    <h2>バイト給料の計算例</h2>
+
+    <p>
+      例えば、時給1,150円で1日5時間、週3日働く場合を考えてみましょう。
+    </p>
+
+    <div class="example">
+      <p><strong>時給：</strong>1,150円</p>
+      <p><strong>1日の勤務時間：</strong>5時間</p>
+      <p><strong>週の勤務日数：</strong>3日</p>
+      <hr>
+      <p><strong>日給：</strong>5,750円</p>
+      <p><strong>週給：</strong>17,250円</p>
+      <p><strong>平均月収：</strong>74,750円</p>
+      <p><strong>年収：</strong>897,000円</p>
+    </div>
+
+    <p>
+      このように、時給と勤務時間が分かれば、毎月どのくらい稼げるかを簡単に把握できます。
+    </p>
+  </section>
+
+  <section class="card">
+    <h2>給料を計算するときの注意点</h2>
 
     <div class="note">
       表示される金額は、毎週同じ日数・時間で働いた場合の単純な目安です。
-
       実際の給与は、シフト、勤務日数、深夜手当、時間外手当、各種控除などによって変わります。
-
       このページでは税金・社会保険料などを差し引いた手取り額は計算していません。
+    </div>
+
+    <h3>手取り額とは異なります</h3>
+    <p>
+      この計算機で表示される金額は、税金や社会保険料などを差し引く前の額面給与の目安です。
+      実際に受け取る金額は、勤務先での控除や個人の状況によって異なります。
+    </p>
+
+    <h3>深夜手当や残業代は含まれません</h3>
+    <p>
+      深夜勤務や時間外労働などに対する割増賃金は、この計算機では考慮していません。
+      通常の時給と勤務時間をもとにした概算として利用してください。
+    </p>
+
+    <h3>実際の月収は月によって変わります</h3>
+    <p>
+      月によって勤務日数やシフトが異なる場合、実際の給料も変わります。
+      このページの月収は、年間の週給を12か月で割った平均値です。
+    </p>
+  </section>
+
+  <section class="card">
+    <h2>バイト給料計算機のよくある質問</h2>
+
+    <div class="faq-item">
+      <h3>Q. バイトの月収はどのように計算していますか？</h3>
+      <p>
+        A. 時給×1日の勤務時間×週の勤務日数で週給を計算し、
+        週給×52÷12で1か月あたりの平均月収を算出しています。
+      </p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Q. 計算結果は手取り額ですか？</h3>
+      <p>
+        A. いいえ。表示される金額は税金や社会保険料などを差し引く前の額面給与の目安です。
+      </p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Q. 深夜手当や残業代も計算されますか？</h3>
+      <p>
+        A. この計算機では深夜手当や残業代は含めていません。
+        通常の時給と勤務時間をもとにした概算です。
+      </p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Q. 大学生のアルバイトでも使えますか？</h3>
+      <p>
+        A. はい。大学生や専門学生、高校生など、アルバイトの収入目安を確認したい方に利用できます。
+      </p>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Campus便利箱の関連ツール</h2>
+
+    <p>
+      アルバイトの給料計算以外にも、大学生活に役立つ無料ツールを用意しています。
+    </p>
+
+    <div class="related-links">
+      <a href="index.html">Campus便利箱トップページ｜無料便利ツール一覧</a>
+      <a href="gpa.html">GPA計算機｜大学のGPAを自動計算</a>
+      <a href="mojisu.html">文字数カウント｜レポートや課題の文字数確認</a>
+      <a href="gpa-guide.html">GPAとは？計算方法や目安を解説</a>
     </div>
   </section>
 
@@ -332,9 +618,24 @@
 
   function calculateSalary() {
 
-    const hourly = Number(document.getElementById("hourly").value);
-    const hours = Number(document.getElementById("hours").value);
-    const days = Number(document.getElementById("days").value);
+    const hourlyInput = document.getElementById("hourly").value;
+    const hoursInput = document.getElementById("hours").value;
+    const daysInput = document.getElementById("days").value;
+
+    const error = document.getElementById("error");
+
+    if (
+      hourlyInput.trim() === "" ||
+      hoursInput.trim() === "" ||
+      daysInput.trim() === ""
+    ) {
+      error.textContent = "時給・勤務時間・勤務日数をすべて入力してください。";
+      return;
+    }
+
+    const hourly = Number(hourlyInput);
+    const hours = Number(hoursInput);
+    const days = Number(daysInput);
 
     if (
       !Number.isFinite(hourly) ||
@@ -346,9 +647,11 @@
       days < 0 ||
       days > 7
     ) {
-      alert("時給・勤務時間・勤務日数を正しく入力してください。");
+      error.textContent = "時給・勤務時間・勤務日数を正しく入力してください。";
       return;
     }
+
+    error.textContent = "";
 
     const daily = hourly * hours;
     const weekly = daily * days;
