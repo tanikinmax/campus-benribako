@@ -7,7 +7,7 @@
 
 <title>Campus便利箱｜大学生向け無料便利ツール集・GPA計算機・文字数カウンター</title>
 
-<meta name="description" content="Campus便利箱は大学生向けの無料便利ツール集です。GPA計算機、文字数カウンター、バイト給料計算、割り勘計算、レポート構成メーカー、課題締切管理など、大学生活に役立つWebツールを無料で利用できます。">
+<meta name="description" content="Campus便利箱は大学生向けの無料便利ツール集です。GPA計算機、文字数カウンター、バイト給料計算、割り勘計算、レポート構成メーカー、課題締切管理、節約計算など、大学生活に役立つWebツールを無料で利用できます。">
 
 <meta name="robots" content="index, follow">
 
@@ -15,7 +15,6 @@
 
 <meta name="theme-color" content="#4f7cff">
 
-<!-- OGP設定 -->
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ja_JP">
 <meta property="og:title" content="Campus便利箱｜大学生向け無料便利ツール集">
@@ -23,7 +22,6 @@
 <meta property="og:url" content="https://tanikinmax.github.io/campus-benribako/">
 <meta property="og:site_name" content="Campus便利箱">
 
-<!-- 構造化データ -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -40,280 +38,466 @@
 </script>
 
 <style>
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
 
 body{
-margin:0;
-font-family:"Noto Sans JP",sans-serif;
-background:#f4f7fb;
-color:#333;
-line-height:1.6;
+  margin:0;
+  font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN",Meiryo,sans-serif;
+  background:#f4f7fb;
+  color:#333;
+  line-height:1.7;
 }
 
-header{
-background:linear-gradient(135deg,#4f7cff,#6c63ff);
-color:white;
-text-align:center;
-padding:42px 20px;
+a{
+  color:#4658bd;
 }
 
-header h1{
-font-size:32px;
-margin:0 0 10px;
-}
-
-header p{
-margin:0;
-opacity:.9;
-}
-
-.container{
-max-width:1100px;
-margin:30px auto;
-padding:0 18px;
-}
-
-.tool-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-gap:22px;
-}
-
-.card{
-background:white;
-padding:23px;
-border-radius:18px;
-box-shadow:0 5px 20px rgba(0,0,0,.05);
-min-width:0;
-}
-
-.card h2{
-font-size:19px;
-margin:0 0 8px;
-color:#4f63d9;
-}
-
-.card p{
-color:#777;
-font-size:13px;
-margin:0 0 14px;
-}
-
-input,textarea,select{
-width:100%;
-padding:11px;
-margin:6px 0;
-border:1px solid #ddd;
-border-radius:10px;
-font-size:14px;
-background:white;
-}
-
-textarea{
-resize:vertical;
-min-height:110px;
+button,
+input,
+textarea,
+select{
+  font:inherit;
 }
 
 button{
-padding:11px 14px;
-margin-top:8px;
-background:#5b72f2;
-color:white;
-border:0;
-border-radius:10px;
-font-size:14px;
-font-weight:bold;
-cursor:pointer;
+  cursor:pointer;
 }
 
-button:hover{
-background:#4057d8;
+header{
+  background:linear-gradient(135deg,#4f7cff,#6c63ff);
+  color:white;
+  text-align:center;
+  padding:48px 20px;
 }
 
-button.secondary{
-background:#edf0ff;
-color:#4658bd;
+header h1{
+  font-size:32px;
+  margin:0 0 10px;
 }
 
-button.danger{
-background:#ffeded;
-color:#c54b59;
+header p{
+  margin:0;
+  opacity:.95;
 }
 
-button.full{
-width:100%;
+.header-note{
+  margin-top:15px;
+  font-size:13px;
+  opacity:.9;
 }
 
-.result{
-margin-top:12px;
-padding:13px;
-background:#eef2ff;
-border-radius:10px;
-color:#4257c5;
-font-weight:bold;
-white-space:pre-wrap;
-font-size:14px;
+.container{
+  max-width:1100px;
+  margin:30px auto;
+  padding:0 18px;
 }
 
-.task-item,.gpa-item{
-background:#f4f6ff;
-padding:11px;
-border-radius:10px;
-margin-top:9px;
-font-size:13px;
+.card{
+  background:white;
+  padding:23px;
+  border-radius:18px;
+  box-shadow:0 5px 20px rgba(0,0,0,.05);
+  min-width:0;
 }
 
-.task-item button,.gpa-item button{
-margin-left:6px;
+.tool-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:22px;
 }
 
-.gpa-row{
-display:grid;
-grid-template-columns:1fr 90px 100px;
-gap:6px;
-align-items:center;
+.card h2{
+  font-size:19px;
+  margin:0 0 8px;
+  color:#4f63d9;
 }
 
-.gpa-row input{
-min-width:0;
-}
-
-.stats{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:8px;
-margin-top:12px;
-}
-
-.stat{
-background:#eef2ff;
-padding:12px 6px;
-border-radius:10px;
-text-align:center;
-}
-
-.stat span{
-display:block;
-font-size:11px;
-color:#68769a;
-}
-
-.stat strong{
-display:block;
-color:#4057c5;
-font-size:21px;
-margin-top:4px;
-}
-
-.tool-section{
-margin-top:28px;
+.card p{
+  color:#777;
+  font-size:13px;
+  margin:0 0 14px;
 }
 
 .section-title{
-color:#4658bd;
-font-size:21px;
-margin:0 0 15px;
+  color:#4658bd;
+  font-size:22px;
+  margin:30px 0 15px;
+}
+
+input,
+textarea,
+select{
+  width:100%;
+  padding:12px;
+  margin:6px 0;
+  border:1px solid #dce1eb;
+  border-radius:10px;
+  font-size:14px;
+  background:white;
+  color:#333;
+}
+
+input:focus,
+textarea:focus,
+select:focus{
+  outline:2px solid #a9b8ff;
+  border-color:#5b72f2;
+}
+
+textarea{
+  resize:vertical;
+  min-height:110px;
+}
+
+button{
+  padding:11px 15px;
+  margin-top:8px;
+  background:#5b72f2;
+  color:white;
+  border:0;
+  border-radius:10px;
+  font-size:14px;
+  font-weight:bold;
+  transition:background .2s;
+}
+
+button:hover{
+  background:#4057d8;
+}
+
+button:focus-visible,
+a:focus-visible{
+  outline:3px solid #ffbd59;
+  outline-offset:3px;
+}
+
+button.secondary{
+  background:#edf0ff;
+  color:#4658bd;
+}
+
+button.secondary:hover{
+  background:#dfe5ff;
+}
+
+button.danger{
+  background:#ffeded;
+  color:#c54b59;
+}
+
+button.danger:hover{
+  background:#ffdddd;
+}
+
+button.full{
+  width:100%;
+}
+
+.result{
+  margin-top:12px;
+  padding:13px;
+  background:#eef2ff;
+  border-radius:10px;
+  color:#4257c5;
+  font-weight:bold;
+  white-space:pre-wrap;
+  font-size:14px;
+  overflow-wrap:anywhere;
+}
+
+.error{
+  background:#fff0f0;
+  color:#c33;
+  border:1px solid #ffd0d0;
+}
+
+.task-item,
+.gpa-item{
+  background:#f4f6ff;
+  padding:12px;
+  border-radius:10px;
+  margin-top:9px;
+  font-size:13px;
+  overflow-wrap:anywhere;
+}
+
+.task-item button,
+.gpa-item button{
+  margin-left:6px;
+}
+
+.gpa-row{
+  display:grid;
+  grid-template-columns:1fr 90px 100px;
+  gap:6px;
+  align-items:center;
+}
+
+.gpa-row input,
+.gpa-row select{
+  min-width:0;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+  margin-top:12px;
+}
+
+.stat{
+  background:#eef2ff;
+  padding:12px 6px;
+  border-radius:10px;
+  text-align:center;
+  min-width:0;
+}
+
+.stat span{
+  display:block;
+  font-size:11px;
+  color:#68769a;
+}
+
+.stat strong{
+  display:block;
+  color:#4057c5;
+  font-size:21px;
+  margin-top:4px;
+  overflow-wrap:anywhere;
 }
 
 .small-note{
-font-size:11px;
-color:#8993a5;
-line-height:1.6;
-margin-top:10px;
+  font-size:11px;
+  color:#8993a5;
+  line-height:1.7;
+  margin-top:10px;
 }
 
 .progress{
-height:9px;
-background:#edf0f6;
-border-radius:20px;
-overflow:hidden;
-margin-top:8px;
+  height:9px;
+  background:#edf0f6;
+  border-radius:20px;
+  overflow:hidden;
+  margin-top:8px;
 }
 
 .bar{
-height:100%;
-width:0;
-background:#6c7ff5;
+  height:100%;
+  width:0;
+  background:#6c7ff5;
+  transition:width .2s;
+}
+
+.tool-link{
+  display:block;
+  text-align:center;
+  margin-top:15px;
+  padding:13px;
+  background:#edf0ff;
+  color:#4658bd;
+  border-radius:10px;
+  text-decoration:none;
+  font-size:14px;
+  font-weight:bold;
+}
+
+.tool-link:hover{
+  background:#dfe5ff;
 }
 
 .seo-links{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-gap:15px;
-margin-top:20px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:15px;
+  margin-top:20px;
 }
 
 .seo-link-card{
-display:block;
-background:#fff;
-padding:20px;
-border-radius:15px;
-text-decoration:none;
-color:#4658bd;
-box-shadow:0 3px 15px rgba(0,0,0,.04);
-transition:transform .2s;
+  display:block;
+  background:#fff;
+  padding:20px;
+  border-radius:15px;
+  text-decoration:none;
+  color:#4658bd;
+  box-shadow:0 3px 15px rgba(0,0,0,.04);
+  transition:transform .2s,box-shadow .2s;
 }
 
 .seo-link-card:hover{
-transform:translateY(-3px);
+  transform:translateY(-3px);
+  box-shadow:0 7px 20px rgba(0,0,0,.08);
 }
 
 .seo-link-card h3{
-margin:0 0 8px;
-font-size:17px;
+  margin:0 0 8px;
+  font-size:17px;
 }
 
 .seo-link-card p{
-margin:0;
-font-size:13px;
-color:#777;
+  margin:0;
+  font-size:13px;
+  color:#777;
 }
 
 .info-section{
-background:white;
-padding:23px;
-border-radius:18px;
-margin-top:25px;
-box-shadow:0 5px 20px rgba(0,0,0,.04);
+  background:white;
+  padding:25px;
+  border-radius:18px;
+  margin-top:28px;
+  box-shadow:0 5px 20px rgba(0,0,0,.04);
 }
 
 .info-section h2{
-color:#4658bd;
-font-size:20px;
-margin-top:0;
+  color:#4658bd;
+  font-size:21px;
+  margin-top:0;
 }
 
 .info-section h3{
-font-size:16px;
-margin-top:20px;
+  font-size:16px;
+  margin-top:23px;
+  color:#4658bd;
 }
 
 .info-section p{
-font-size:14px;
-line-height:1.9;
-color:#555;
+  font-size:14px;
+  line-height:1.9;
+  color:#555;
 }
 
-@media(max-width:600px){
-header h1{font-size:26px}
-.container{padding:0 12px}
-.card{padding:17px}
-.gpa-row{grid-template-columns:1fr 65px 85px}
-.stats{grid-template-columns:1fr 1fr 1fr}
+.info-section li{
+  font-size:14px;
+  margin-bottom:8px;
+  color:#555;
+}
+
+.faq-item{
+  border-bottom:1px solid #eee;
+  padding:14px 0;
+}
+
+.faq-item:last-child{
+  border-bottom:none;
+}
+
+.faq-item h3{
+  margin:0 0 8px;
+  font-size:15px;
+  color:#4658bd;
+}
+
+.faq-item p{
+  margin:0;
+}
+
+.empty-message{
+  color:#999;
+  font-size:13px;
+  margin-top:10px;
 }
 
 footer{
-text-align:center;
-padding:28px;
-color:#999;
-font-size:12px;
+  text-align:center;
+  padding:30px 15px;
+  margin-top:40px;
+  background:#fff;
+  border-top:1px solid #eee;
+  color:#777;
+  font-size:13px;
+}
+
+.footer-links{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:22px;
+  margin-bottom:15px;
+}
+
+.footer-links a{
+  color:#4361ee;
+  text-decoration:none;
+}
+
+.footer-links a:hover{
+  text-decoration:underline;
+}
+
+@media(max-width:600px){
+
+  header{
+    padding:38px 15px;
+  }
+
+  header h1{
+    font-size:26px;
+  }
+
+  .container{
+    padding:0 12px;
+    margin:20px auto;
+  }
+
+  .card{
+    padding:17px;
+  }
+
+  .gpa-row{
+    grid-template-columns:1fr 70px;
+  }
+
+  .gpa-row select{
+    grid-column:1 / -1;
+  }
+
+  .stats{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+  }
+
+  .stat strong{
+    font-size:18px;
+  }
+
+  .section-title{
+    font-size:19px;
+  }
+
+  .info-section{
+    padding:18px;
+  }
+
+  .footer-links{
+    gap:15px;
+  }
 }
 
 @media print{
-header,footer,.no-print{display:none!important}
-body{background:white}
-.container{margin:0;max-width:none}
-.card{box-shadow:none;break-inside:avoid}
+  header,
+  footer,
+  button{
+    display:none!important;
+  }
+
+  body{
+    background:white;
+  }
+
+  .container{
+    margin:0;
+    max-width:none;
+  }
+
+  .card{
+    box-shadow:none;
+    break-inside:avoid;
+  }
 }
 </style>
 </head>
@@ -321,605 +505,1264 @@ body{background:white}
 <body>
 
 <header>
-<h1>🎓 Campus便利箱</h1>
-<p>大学生活をもっと便利に、もっと楽しく。</p>
+  <h1>🎓 Campus便利箱</h1>
+  <p>大学生活をもっと便利に、もっと楽しく。</p>
+  <div class="header-note">
+    大学生向けの無料Webツール集
+  </div>
 </header>
 
 <main class="container">
 
 <!-- サイト紹介 -->
-<section class="card" style="margin-bottom:22px;">
-<h2>Campus便利箱とは？</h2>
+<section class="card" style="margin-bottom:25px;">
 
-<p style="font-size:14px;line-height:1.9;color:#555;">
-Campus便利箱は、大学生の毎日をもっと便利にするための無料Webツール集です。
-GPA計算機や文字数カウンター、バイト給料計算、割り勘計算など、
-大学生活で役立つ便利な機能をひとつのサイトにまとめました。
-大学のレポート作成、成績管理、課題の締切管理、日々の生活費の計算などに活用できます。
-スマートフォンやパソコンから無料で利用できる、大学生のための便利サイトです。
-</p>
+  <h2>Campus便利箱とは？</h2>
+
+  <p style="font-size:14px;line-height:1.9;color:#555;">
+    Campus便利箱は、大学生の毎日をもっと便利にするための無料Webツール集です。
+    GPA計算機や文字数カウンター、バイト給料計算、割り勘計算など、
+    大学生活で役立つ機能をひとつのサイトにまとめました。
+    大学のレポート作成、成績管理、課題の締切管理、日々の生活費の計算などに活用できます。
+    スマートフォンやパソコンから利用でき、面倒な会員登録も必要ありません。
+  </p>
+
 </section>
 
-<!-- 専用ページへのリンク -->
+<!-- 専用ページ -->
 <section aria-labelledby="dedicated-tools-title">
 
-<h2 class="section-title" id="dedicated-tools-title">
-📖 人気の大学生向け専用ツール
-</h2>
+  <h2 class="section-title" id="dedicated-tools-title">
+    📖 人気の大学生向け専用ツール
+  </h2>
 
-<div class="seo-links">
+  <div class="seo-links">
 
-<a href="gpa.html" class="seo-link-card">
-<h3>📊 GPA計算機</h3>
-<p>
-大学の成績と単位数からGPAを計算できる無料ツール。
-大学生の成績管理やGPA確認に活用できます。
-</p>
-</a>
+    <a href="gpa.html" class="seo-link-card">
+      <h3>📊 GPA計算機</h3>
+      <p>
+        大学の成績と単位数からGPAを計算できる無料ツール。
+        大学生の成績管理やGPA確認に活用できます。
+      </p>
+    </a>
 
-<a href="mojisu.html" class="seo-link-card">
-<h3>✍️ 文字数カウンター</h3>
-<p>
-大学のレポートや課題の文字数を簡単にチェック。
-空白除外や目標文字数の確認にも対応しています。
-</p>
-</a>
+    <a href="mojisu.html" class="seo-link-card">
+      <h3>✍️ 文字数カウンター</h3>
+      <p>
+        大学のレポートや課題の文字数を簡単にチェック。
+        空白除外や目標文字数の確認にも対応しています。
+      </p>
+    </a>
 
-<a href="baito.html" class="seo-link-card">
-<h3>💰 バイト給料計算機</h3>
-<p>
-時給・勤務時間・勤務日数からアルバイトの給料を計算。
-月収の目安を簡単に確認できます。
-</p>
-</a>
+    <a href="baito.html" class="seo-link-card">
+      <h3>💰 バイト給料計算機</h3>
+      <p>
+        時給・勤務時間・週の勤務日数からアルバイトの給料を計算。
+        月収や年収の目安を確認できます。
+      </p>
+    </a>
 
-<a href="gpa-guide.html" class="seo-link-card">
-<h3>📖 GPAとは？計算方法・目安・上げるコツ</h3>
-<p>
-GPAの基本的な意味や計算方法、大学生のGPAの目安、
-成績を上げるためのポイントをわかりやすく解説しています。
-</p>
-</a>
+    <a href="gpa-guide.html" class="seo-link-card">
+      <h3>📖 GPAとは？計算方法・目安・上げるコツ</h3>
+      <p>
+        GPAの基本的な意味や計算方法、大学生のGPAの目安、
+        成績を上げるためのポイントをわかりやすく解説しています。
+      </p>
+    </a>
 
-</div>
+  </div>
 
 </section>
 
 <!-- ツール一覧 -->
-<h2 class="section-title" style="margin-top:28px;">
-🧰 大学生向け無料便利ツール一覧
+<h2 class="section-title">
+  🧰 大学生向け無料便利ツール一覧
 </h2>
 
 <div class="tool-grid">
 
 <!-- GPA計算機 -->
 <section class="card" id="gpa">
-<h2>📊 GPA計算機</h2>
-<p>科目名・単位数・成績ポイントからGPAを計算。入力内容はこのブラウザに保存されます。</p>
 
-<input id="gpaName" placeholder="科目名（例：経済学）" maxlength="60">
+  <h2>📊 GPA計算機</h2>
 
-<div class="gpa-row">
-<input id="gpaCredits" type="number" min="1" step="1" placeholder="単位数">
-<input id="gpaPoint" type="number" min="0" max="5" step="0.1" placeholder="GP">
-<button id="gpaAdd" class="full">追加</button>
-</div>
+  <p>
+    科目名・単位数・GPからGPAを計算。
+    入力内容はこのブラウザに保存されます。
+  </p>
 
-<div class="small-note">GPは大学の成績評価に合わせて入力してください（0〜5、0.1刻み）。大学によってGPA算出方法は異なります。</div>
+  <input
+    id="gpaName"
+    type="text"
+    placeholder="科目名（例：経済学）"
+    maxlength="60"
+    aria-label="科目名"
+  >
 
-<div class="stats">
-<div class="stat"><span>現在のGPA</span><strong id="gpaResult">0.00</strong></div>
-<div class="stat"><span>登録科目数</span><strong id="gpaCount">0</strong></div>
-<div class="stat"><span>登録単位数</span><strong id="gpaCreditsTotal">0</strong></div>
-</div>
+  <div class="gpa-row">
 
-<div id="gpaList"></div>
-<button id="gpaClear" class="danger">GPAデータを全削除</button>
+    <input
+      id="gpaCredits"
+      type="number"
+      min="1"
+      step="1"
+      placeholder="単位数"
+      aria-label="単位数"
+    >
 
-<p style="margin-top:15px;">
-<a href="gpa.html" style="color:#4658bd;font-weight:bold;">
-GPA計算機専用ページはこちら →
-</a>
-</p>
+    <input
+      id="gpaPoint"
+      type="number"
+      min="0"
+      max="5"
+      step="0.1"
+      placeholder="GP"
+      aria-label="GP"
+    >
+
+    <select id="gpaPassed" aria-label="単位の取得状況">
+      <option value="true">取得済み</option>
+      <option value="false">未取得</option>
+    </select>
+
+  </div>
+
+  <button id="gpaAdd" class="full">科目を追加する</button>
+
+  <div class="small-note">
+    GPは大学の成績評価に合わせて入力してください（0〜5、0.1刻み）。
+    GPが0でも単位を取得している場合は「取得済み」を選択してください。
+    大学によってGPA算出方法は異なります。
+  </div>
+
+  <div class="stats">
+
+    <div class="stat">
+      <span>現在のGPA</span>
+      <strong id="gpaResult">0.00</strong>
+    </div>
+
+    <div class="stat">
+      <span>登録科目数</span>
+      <strong id="gpaCount">0</strong>
+    </div>
+
+    <div class="stat">
+      <span>登録単位数</span>
+      <strong id="gpaCreditsTotal">0</strong>
+    </div>
+
+  </div>
+
+  <div id="gpaList" aria-live="polite"></div>
+
+  <button id="gpaClear" class="danger">
+    GPAデータを全削除
+  </button>
+
+  <a href="gpa.html" class="tool-link">
+    📊 GPA計算機専用ページはこちら →
+  </a>
+
 </section>
 
 <!-- 文字数カウンター -->
 <section class="card" id="wordcount">
-<h2>✍️ 文字数カウンター</h2>
-<p>レポートや課題の文字数をリアルタイムでチェック！</p>
 
-<textarea id="wcText" placeholder="ここに文章を入力、または貼り付けてください。"></textarea>
-<input id="wcTarget" type="number" min="1" placeholder="目標文字数（任意・例：2000）">
+  <h2>✍️ 文字数カウンター</h2>
 
-<div class="stats">
-<div class="stat"><span>空白・改行含む</span><strong id="wcAll">0</strong></div>
-<div class="stat"><span>空白・改行を除く</span><strong id="wcNoSpace">0</strong></div>
-<div class="stat"><span>改行を除く</span><strong id="wcNoNewline">0</strong></div>
-</div>
+  <p>
+    レポートや課題の文字数をリアルタイムでチェック！
+  </p>
 
-<div class="result" id="wcPages">原稿用紙換算：0.00枚（400字）</div>
+  <textarea
+    id="wcText"
+    placeholder="ここに文章を入力、または貼り付けてください。"
+    aria-label="文字数を数える文章"
+  ></textarea>
 
-<div id="wcGoalArea" style="display:none">
-<div style="display:flex;justify-content:space-between;font-size:12px;color:#68769a;margin-top:12px">
-<span>目標達成率</span>
-<strong id="wcGoalText">0%</strong>
-</div>
-<div class="progress"><div class="bar" id="wcBar"></div></div>
-<div class="small-note" id="wcRemaining"></div>
-</div>
+  <input
+    id="wcTarget"
+    type="number"
+    min="1"
+    step="1"
+    placeholder="目標文字数（任意・例：2000）"
+    aria-label="目標文字数"
+  >
 
-<button id="wcCopy">文章をコピー</button>
-<button id="wcClear" class="secondary">クリア</button>
+  <div class="stats">
 
-<a href="mojisu.html" style="
-display:block;
-text-align:center;
-margin-top:15px;
-padding:13px;
-background:#edf0ff;
-color:#4658bd;
-border-radius:10px;
-text-decoration:none;
-font-size:14px;
-font-weight:bold;
-">
-📚 レポート専用文字数カウンターを使う →
-</a>
+    <div class="stat">
+      <span>空白・改行含む</span>
+      <strong id="wcAll">0</strong>
+    </div>
+
+    <div class="stat">
+      <span>空白・改行を除く</span>
+      <strong id="wcNoSpace">0</strong>
+    </div>
+
+    <div class="stat">
+      <span>改行を除く</span>
+      <strong id="wcNoNewline">0</strong>
+    </div>
+
+  </div>
+
+  <div class="result" id="wcPages">
+    原稿用紙換算：0.00枚（400字）
+  </div>
+
+  <div id="wcGoalArea" hidden>
+
+    <div style="display:flex;justify-content:space-between;font-size:12px;color:#68769a;margin-top:12px">
+      <span>目標達成率</span>
+      <strong id="wcGoalText">0%</strong>
+    </div>
+
+    <div
+      class="progress"
+      role="progressbar"
+      aria-label="目標文字数の達成率"
+      aria-valuemin="0"
+      aria-valuemax="100"
+      aria-valuenow="0"
+      id="wcProgress"
+    >
+      <div class="bar" id="wcBar"></div>
+    </div>
+
+    <div class="small-note" id="wcRemaining"></div>
+
+  </div>
+
+  <div id="wcError" class="small-note" role="alert"></div>
+
+  <button id="wcCopy">文章をコピー</button>
+  <button id="wcClear" class="secondary">クリア</button>
+
+  <a href="mojisu.html" class="tool-link">
+    📚 レポート専用文字数カウンターを使う →
+  </a>
 
 </section>
 
 <!-- バイト給料計算 -->
 <section class="card">
-<h2>💰 バイト給料計算</h2>
-<p>時給と勤務時間から給料を計算！</p>
 
-<input type="number" id="wage" placeholder="時給（円）" min="1">
-<input type="number" id="hours" placeholder="勤務時間（時間）" min="0.1" step="0.1">
-<input type="number" id="days" placeholder="勤務日数" min="1">
+  <h2>💰 バイト給料計算</h2>
 
-<button class="full" onclick="calculateSalary()">給料を計算する</button>
-<div class="result" id="salaryResult">ここに計算結果が表示されます</div>
+  <p>
+    時給・1日の勤務時間・週の勤務日数から月収を計算！
+  </p>
 
-<a href="baito.html" style="
-display:block;
-text-align:center;
-margin-top:15px;
-padding:13px;
-background:#edf0ff;
-color:#4658bd;
-border-radius:10px;
-text-decoration:none;
-font-size:14px;
-font-weight:bold;
-">
-💰 バイト給料計算機の専用ページはこちら →
-</a>
+  <label for="wage" class="small-note">時給（円）</label>
+  <input
+    type="number"
+    id="wage"
+    min="1"
+    step="1"
+    value="1150"
+    placeholder="例：1150"
+  >
+
+  <label for="hours" class="small-note">1日の勤務時間</label>
+  <input
+    type="number"
+    id="hours"
+    min="0.25"
+    max="24"
+    step="0.25"
+    value="5"
+    placeholder="例：5"
+  >
+
+  <label for="days" class="small-note">週の勤務日数</label>
+  <input
+    type="number"
+    id="days"
+    min="1"
+    max="7"
+    step="1"
+    value="3"
+    placeholder="例：3"
+  >
+
+  <button class="full" id="salaryButton">
+    給料を計算する
+  </button>
+
+  <div class="result" id="salaryResult" aria-live="polite">
+    ここに計算結果が表示されます
+  </div>
+
+  <div class="small-note">
+    月収は「週の勤務日数×1日の勤務時間×時給×52週÷12か月」で計算した目安です。
+    税金や社会保険料などは含みません。
+  </div>
+
+  <a href="baito.html" class="tool-link">
+    💰 バイト給料計算機の専用ページはこちら →
+  </a>
 
 </section>
 
 <!-- 割り勘計算 -->
 <section class="card">
-<h2>🍕 割り勘計算</h2>
-<p>友達との食事代を簡単に割り勘！</p>
 
-<input type="number" id="total" placeholder="合計金額（円）" min="1">
-<input type="number" id="people" placeholder="人数" min="1" step="1">
+  <h2>🍕 割り勘計算</h2>
 
-<button class="full" onclick="calculateSplit()">割り勘する</button>
-<div class="result" id="splitResult">ここに計算結果が表示されます</div>
+  <p>
+    友達との食事代や旅行費用を簡単に割り勘！
+  </p>
+
+  <label for="total" class="small-note">合計金額（円）</label>
+  <input
+    type="number"
+    id="total"
+    min="1"
+    step="1"
+    placeholder="例：12000"
+  >
+
+  <label for="people" class="small-note">人数</label>
+  <input
+    type="number"
+    id="people"
+    min="1"
+    step="1"
+    placeholder="例：4"
+  >
+
+  <button class="full" id="splitButton">
+    割り勘する
+  </button>
+
+  <div class="result" id="splitResult" aria-live="polite">
+    ここに計算結果が表示されます
+  </div>
+
+  <div class="small-note">
+    1人あたりの金額は1円未満を切り捨てて表示します。
+    割り切れない場合は端数を別途調整してください。
+  </div>
+
 </section>
 
 <!-- レポート構成メーカー -->
 <section class="card">
-<h2>📝 レポート構成メーカー</h2>
-<p>テーマを入力してレポートの構成を作成！</p>
 
-<input type="text" id="reportTheme" placeholder="レポートのテーマ">
+  <h2>📝 レポート構成メーカー</h2>
 
-<select id="reportType">
-<option value="general">一般的なレポート</option>
-<option value="opinion">意見・考察型</option>
-<option value="research">調査・研究型</option>
-</select>
+  <p>
+    テーマを入力してレポートの基本的な構成を作成！
+  </p>
 
-<button class="full" onclick="makeReport()">構成を作る</button>
-<div class="result" id="reportResult">ここに構成が表示されます</div>
+  <input
+    type="text"
+    id="reportTheme"
+    maxlength="200"
+    placeholder="レポートのテーマ"
+  >
+
+  <select id="reportType" aria-label="レポートの種類">
+
+    <option value="general">一般的なレポート</option>
+    <option value="opinion">意見・考察型</option>
+    <option value="research">調査・研究型</option>
+
+  </select>
+
+  <button class="full" id="reportButton">
+    構成を作る
+  </button>
+
+  <div class="result" id="reportResult" aria-live="polite">
+    ここに構成が表示されます
+  </div>
+
+  <div class="small-note">
+    作成される構成は一般的な例です。
+    実際のレポートでは授業の課題条件や担当教員の指示を優先してください。
+  </div>
+
 </section>
 
 <!-- 課題締切管理 -->
 <section class="card">
-<h2>📌 課題締切管理</h2>
-<p>提出期限を忘れないように管理！</p>
 
-<input type="text" id="taskName" placeholder="課題名">
-<input type="date" id="taskDate">
+  <h2>📌 課題締切管理</h2>
 
-<button class="full" onclick="addTask()">課題を追加する</button>
-<div id="taskList"></div>
+  <p>
+    レポートや提出課題の締切を整理して管理！
+  </p>
+
+  <input
+    type="text"
+    id="taskName"
+    maxlength="100"
+    placeholder="課題名（例：経済学レポート）"
+  >
+
+  <label for="taskDate" class="small-note">提出期限</label>
+  <input
+    type="date"
+    id="taskDate"
+  >
+
+  <button class="full" id="taskAddButton">
+    課題を追加する
+  </button>
+
+  <div id="taskList" aria-live="polite"></div>
+
+  <div class="small-note">
+    登録した課題はこのブラウザに保存されます。
+    別の端末やブラウザとは自動で同期されません。
+  </div>
+
 </section>
 
 <!-- 節約計算 -->
 <section class="card">
-<h2>💸 大学生節約計算</h2>
-<p>目標金額まであといくら？</p>
 
-<input type="number" id="targetMoney" placeholder="目標金額（円）" min="1">
-<input type="number" id="savedMoney" placeholder="現在の貯金額（円）" min="0">
-<input type="number" id="monthlyMoney" placeholder="毎月の貯金額（円）" min="1">
+  <h2>💸 大学生節約計算</h2>
 
-<button class="full" onclick="calculateSaving()">貯金計画を計算する</button>
-<div class="result" id="savingResult">ここに計算結果が表示されます</div>
+  <p>
+    目標金額まであといくら？毎月の貯金額から達成時期を計算！
+  </p>
+
+  <label for="targetMoney" class="small-note">目標金額（円）</label>
+  <input
+    type="number"
+    id="targetMoney"
+    min="1"
+    step="1"
+    placeholder="例：300000"
+  >
+
+  <label for="savedMoney" class="small-note">現在の貯金額（円）</label>
+  <input
+    type="number"
+    id="savedMoney"
+    min="0"
+    step="1"
+    placeholder="例：50000"
+  >
+
+  <label for="monthlyMoney" class="small-note">毎月の貯金額（円）</label>
+  <input
+    type="number"
+    id="monthlyMoney"
+    min="1"
+    step="1"
+    placeholder="例：20000"
+  >
+
+  <button class="full" id="savingButton">
+    貯金計画を計算する
+  </button>
+
+  <div class="result" id="savingResult" aria-live="polite">
+    ここに計算結果が表示されます
+  </div>
+
 </section>
 
 </div>
 
-<!-- SEO向けの説明コンテンツ -->
+<!-- 使い方・説明 -->
 <section class="info-section">
 
-<h2>Campus便利箱でできること</h2>
+  <h2>Campus便利箱でできること</h2>
 
-<p>
-Campus便利箱では、大学生活で必要になる計算や管理を簡単に行えます。
-大学生が日常的に利用するGPA計算、レポート文字数の確認、アルバイトの給料計算、
-友達との割り勘、課題の締切管理など、さまざまな場面で役立つ無料ツールを提供しています。
-</p>
+  <p>
+    Campus便利箱では、大学生活で必要になる計算や管理を簡単に行えます。
+    大学生が日常的に利用するGPA計算、レポート文字数の確認、
+    アルバイトの給料計算、友達との割り勘、課題の締切管理など、
+    さまざまな場面で役立つ無料ツールを提供しています。
+  </p>
 
-<h3>大学生のGPA計算・成績管理</h3>
+  <h3>大学生のGPA計算・成績管理</h3>
 
-<p>
-GPA計算機では、科目ごとの単位数とGPを入力することでGPAを計算できます。
-大学の成績評価に合わせて入力することで、自分の成績を確認する際に役立ちます。
-詳しくは<a href="gpa.html" style="color:#4658bd;font-weight:bold;">GPA計算機専用ページ</a>をご利用ください。
-なお、GPAの算出方法は大学によって異なる場合があります。
-</p>
+  <p>
+    GPA計算機では、科目ごとの単位数とGPを入力することでGPAを計算できます。
+    大学の成績評価に合わせて入力することで、自分の成績を確認する際に役立ちます。
+    また、単位の取得状況も分けて管理できます。
+    詳しくは<a href="gpa.html">GPA計算機専用ページ</a>をご利用ください。
+    なお、GPAの算出方法は大学によって異なる場合があります。
+  </p>
 
-<h3>大学のレポート・課題の文字数チェック</h3>
+  <h3>大学のレポート・課題の文字数チェック</h3>
 
-<p>
-文字数カウンターでは、文章の文字数をリアルタイムで確認できます。
-大学のレポートや課題で指定された文字数を満たしているか確認する際に便利です。
-空白や改行を含めた文字数、空白を除いた文字数などを確認できます。
-<a href="mojisu.html" style="color:#4658bd;font-weight:bold;">文字数カウンター専用ページ</a>も利用できます。
-</p>
+  <p>
+    文字数カウンターでは、文章の文字数をリアルタイムで確認できます。
+    大学のレポートや課題で指定された文字数を満たしているか確認する際に便利です。
+    空白や改行を含めた文字数、空白を除いた文字数などを確認できます。
+    より詳しい機能は<a href="mojisu.html">文字数カウンター専用ページ</a>から利用できます。
+  </p>
 
-<h3>大学生活のお金・予定の管理</h3>
+  <h3>アルバイトの給料・月収の計算</h3>
 
-<p>
-アルバイトの給料計算や友達との割り勘計算、節約計画の作成も簡単に行えます。
-課題締切管理を使えば、大学のレポートや提出課題の期限を整理することもできます。
-Campus便利箱を活用して、大学生活をより便利に過ごしましょう。
-</p>
+  <p>
+    アルバイトの時給、1日の勤務時間、週の勤務日数を入力することで、
+    給料の目安を計算できます。
+    毎月の収入を把握したいときや、アルバイトのシフトを考える際に活用できます。
+    詳しい計算機能は<a href="baito.html">バイト給料計算機専用ページ</a>をご利用ください。
+  </p>
+
+  <h3>大学生活のお金・予定の管理</h3>
+
+  <p>
+    割り勘計算や節約計算を使えば、友達との食事代や旅行費用、
+    目標金額までの貯金計画を簡単に確認できます。
+    課題締切管理では、大学のレポートや提出課題の期限を整理できます。
+    日々の大学生活の中で、ぜひ活用してください。
+  </p>
+
+  <h3>ツールの利用料金とデータ保存について</h3>
+
+  <p>
+    Campus便利箱のツールは無料で利用できます。
+    GPAデータや課題データなど、一部の入力内容は利用中のブラウザ内に保存されます。
+    保存データは同じブラウザで再びサイトを開いたときに利用できますが、
+    別の端末やブラウザとの自動同期には対応していません。
+    ブラウザのデータ削除などによって保存内容が消える場合があるため、
+    必要な情報は別途バックアップすることをおすすめします。
+  </p>
+
+</section>
+
+<!-- FAQ -->
+<section class="info-section">
+
+  <h2>よくある質問</h2>
+
+  <div class="faq-item">
+    <h3>Q. Campus便利箱の利用に料金はかかりますか？</h3>
+    <p>
+      A. いいえ。掲載しているWebツールは無料で利用できます。
+    </p>
+  </div>
+
+  <div class="faq-item">
+    <h3>Q. スマートフォンからも利用できますか？</h3>
+    <p>
+      A. はい。スマートフォンやパソコンのブラウザから利用できます。
+    </p>
+  </div>
+
+  <div class="faq-item">
+    <h3>Q. GPAの計算結果は大学の成績と必ず一致しますか？</h3>
+    <p>
+      A. 大学によってGPAの計算方法や評価基準が異なるため、
+      必ずしも大学の公式な成績と一致するとは限りません。
+      正確な算出方法は所属大学の案内を確認してください。
+    </p>
+  </div>
+
+  <div class="faq-item">
+    <h3>Q. 入力したデータは保存されますか？</h3>
+    <p>
+      A. GPAデータや課題データなど、一部の情報は利用中のブラウザに保存されます。
+      ブラウザのデータ削除などによって消える場合があるため注意してください。
+    </p>
+  </div>
+
+  <div class="faq-item">
+    <h3>Q. バイト給料計算の金額は実際の振込額ですか？</h3>
+    <p>
+      A. いいえ。表示される金額は税金や社会保険料などを差し引く前の概算です。
+      実際の振込額とは異なる場合があります。
+    </p>
+  </div>
 
 </section>
 
 </main>
 
+<!-- フッター -->
+<footer>
+
+  <div class="footer-links">
+
+    <a href="about.html">
+      Campus便利箱について
+    </a>
+
+    <a href="privacy.html">
+      プライバシーポリシー
+    </a>
+
+    <a href="contact.html">
+      お問い合わせ
+    </a>
+
+  </div>
+
+  <p style="margin:0;">
+    © 2026 Campus便利箱
+  </p>
+
+</footer>
+
 <script>
 
-// GPA計算機
-let gpaCourses=[];
+// =====================================
+// 共通関数
+// =====================================
 
-try{
- const v=JSON.parse(localStorage.getItem("campusGpa")||"[]");
- if(Array.isArray(v))gpaCourses=v;
-}catch(e){}
+function getElement(id){
+  return document.getElementById(id);
+}
+
+function showResult(id,message,isError=false){
+  const element=getElement(id);
+  element.textContent=message;
+  element.classList.toggle("error",isError);
+}
+
+function isPositiveInteger(value){
+  return Number.isSafeInteger(value)&&value>0;
+}
+
+function readStoredArray(key){
+  try{
+    const value=JSON.parse(localStorage.getItem(key)||"[]");
+    return Array.isArray(value)?value:[];
+  }catch(e){
+    return [];
+  }
+}
+
+
+// =====================================
+// GPA計算機
+// =====================================
+
+let gpaCourses=readStoredArray("campusGpa");
+
+function normalizeGpaCourses(){
+  gpaCourses=gpaCourses.filter(c=>{
+    return c&&
+      typeof c.name==="string"&&
+      Number.isSafeInteger(Number(c.credits))&&
+      Number(c.credits)>0&&
+      Number.isFinite(Number(c.point))&&
+      Number(c.point)>=0&&
+      Number(c.point)<=5;
+  }).map(c=>({
+    ...c,
+    name:c.name,
+    credits:Number(c.credits),
+    point:Number(c.point),
+    passed:typeof c.passed==="boolean"?c.passed:Number(c.point)>0
+  }));
+}
+
+normalizeGpaCourses();
 
 function saveGpa(){
- localStorage.setItem("campusGpa",JSON.stringify(gpaCourses));
+  try{
+    localStorage.setItem("campusGpa",JSON.stringify(gpaCourses));
+  }catch(e){
+    alert("データを保存できませんでした。ブラウザの保存容量を確認してください。");
+  }
 }
 
 function displayGpa(){
- const list=document.getElementById("gpaList");
- list.innerHTML="";
- let weighted=0,total=0,earned=0;
 
- gpaCourses.forEach((c,i)=>{
-  const credits=Number(c.credits);
-  const point=Number(c.point);
-  total+=credits;
-  weighted+=credits*point;
-  if(point>0)earned+=credits;
+  const list=getElement("gpaList");
+  list.innerHTML="";
 
-  const div=document.createElement("div");
-  div.className="gpa-item";
+  let weighted=0;
+  let total=0;
 
-  const info=document.createElement("span");
-  info.textContent=`${c.name}：${credits}単位 / GP ${point.toFixed(1)}`;
+  gpaCourses.forEach((c,index)=>{
 
-  const del=document.createElement("button");
-  del.textContent="削除";
-  del.className="danger";
-  del.onclick=()=>{
-   gpaCourses.splice(i,1);
-   saveGpa();
-   displayGpa();
-  };
+    const credits=Number(c.credits);
+    const point=Number(c.point);
 
-  div.append(info,del);
-  list.appendChild(div);
- });
+    total+=credits;
+    weighted+=credits*point;
 
- document.getElementById("gpaResult").textContent=total?(weighted/total).toFixed(2):"0.00";
- document.getElementById("gpaCount").textContent=gpaCourses.length;
- document.getElementById("gpaCreditsTotal").textContent=total;
+    const div=document.createElement("div");
+    div.className="gpa-item";
+
+    const info=document.createElement("div");
+
+    info.textContent=
+      c.name+"："+credits+"単位 / GP "+point.toFixed(1)+
+      " / "+(c.passed?"取得済み":"未取得");
+
+    const del=document.createElement("button");
+    del.textContent="削除";
+    del.className="danger";
+
+    del.addEventListener("click",()=>{
+      gpaCourses.splice(index,1);
+      saveGpa();
+      displayGpa();
+    });
+
+    div.append(info,del);
+    list.appendChild(div);
+
+  });
+
+  getElement("gpaResult").textContent=
+    total>0?(weighted/total).toFixed(2):"0.00";
+
+  getElement("gpaCount").textContent=gpaCourses.length;
+
+  getElement("gpaCreditsTotal").textContent=total;
+
+  if(gpaCourses.length===0){
+    const empty=document.createElement("p");
+    empty.className="empty-message";
+    empty.textContent="まだ科目が登録されていません。";
+    list.appendChild(empty);
+  }
 }
 
-document.getElementById("gpaAdd").onclick=()=>{
- const name=document.getElementById("gpaName").value.trim();
- const credits=Number(document.getElementById("gpaCredits").value);
- const point=Number(document.getElementById("gpaPoint").value);
+getElement("gpaAdd").addEventListener("click",()=>{
 
- if(!name||!Number.isInteger(credits)||credits<=0||
- document.getElementById("gpaPoint").value===""||
- point<0||point>5||Math.round(point*10)!==point*10){
-  alert("科目名・正の整数の単位数・0〜5のGP（0.1刻み）を入力してください。");
-  return;
- }
+  const name=getElement("gpaName").value.trim();
+  const creditsValue=getElement("gpaCredits").value;
+  const pointValue=getElement("gpaPoint").value;
+  const passed=getElement("gpaPassed").value==="true";
 
- gpaCourses.push({name,credits,point});
- saveGpa();
- displayGpa();
+  const credits=Number(creditsValue);
+  const point=Number(pointValue);
 
- document.getElementById("gpaName").value="";
- document.getElementById("gpaCredits").value="";
- document.getElementById("gpaPoint").value="";
-};
+  if(
+    !name||
+    !isPositiveInteger(credits)||
+    pointValue===""||
+    !Number.isFinite(point)||
+    point<0||
+    point>5||
+    Math.round(point*10)!==point*10
+  ){
+    alert("科目名・正の整数の単位数・0〜5のGP（0.1刻み）を入力してください。");
+    return;
+  }
 
-document.getElementById("gpaClear").onclick=()=>{
- if(confirm("登録したGPAデータをすべて削除しますか？")){
-  gpaCourses=[];
+  gpaCourses.push({
+    name,
+    credits,
+    point,
+    passed
+  });
+
   saveGpa();
   displayGpa();
- }
-};
+
+  getElement("gpaName").value="";
+  getElement("gpaCredits").value="";
+  getElement("gpaPoint").value="";
+  getElement("gpaPassed").value="true";
+
+});
+
+getElement("gpaClear").addEventListener("click",()=>{
+
+  if(confirm("登録したGPAデータをすべて削除しますか？")){
+
+    gpaCourses=[];
+
+    saveGpa();
+    displayGpa();
+
+  }
+
+});
 
 displayGpa();
 
 
+// =====================================
 // 文字数カウンター
-const wcText=document.getElementById("wcText");
-const wcTarget=document.getElementById("wcTarget");
+// =====================================
+
+const wcText=getElement("wcText");
+const wcTarget=getElement("wcTarget");
+
+function countCharacters(text){
+
+  if(typeof Intl!=="undefined"&&Intl.Segmenter){
+
+    const segmenter=new Intl.Segmenter("ja",{
+      granularity:"grapheme"
+    });
+
+    return [...segmenter.segment(text)].length;
+
+  }
+
+  return Array.from(text).length;
+}
 
 function updateWordCount(){
- const v=wcText.value;
- const all=[...v].length;
- const noSpace=[...v.replace(/[\s\u3000]/g,"")].length;
- const noNewline=[...v.replace(/\r\n|\r|\n/g,"")].length;
 
- document.getElementById("wcAll").textContent=all.toLocaleString();
- document.getElementById("wcNoSpace").textContent=noSpace.toLocaleString();
- document.getElementById("wcNoNewline").textContent=noNewline.toLocaleString();
- document.getElementById("wcPages").textContent="原稿用紙換算："+(all/400).toFixed(2)+"枚（400字）";
+  const value=wcText.value;
 
- const goal=Number(wcTarget.value);
- const area=document.getElementById("wcGoalArea");
+  const all=countCharacters(value);
 
- if(goal>0){
-  area.style.display="block";
-  document.getElementById("wcGoalText").textContent=(all/goal*100).toFixed(1)+"%";
-  document.getElementById("wcBar").style.width=Math.min(all/goal*100,100)+"%";
-  document.getElementById("wcRemaining").textContent=all>=goal
-   ?"🎉 目標文字数を達成しています！"
-   :"目標まであと "+(goal-all).toLocaleString()+" 文字です。";
- }else{
-  area.style.display="none";
- }
+  const noSpace=countCharacters(
+    value.replace(/[\s\u3000]/g,"")
+  );
+
+  const noNewline=countCharacters(
+    value.replace(/\r\n|\r|\n/g,"")
+  );
+
+  getElement("wcAll").textContent=all.toLocaleString();
+
+  getElement("wcNoSpace").textContent=noSpace.toLocaleString();
+
+  getElement("wcNoNewline").textContent=noNewline.toLocaleString();
+
+  getElement("wcPages").textContent=
+    "原稿用紙換算："+(all/400).toFixed(2)+"枚（400字）";
+
+  const targetValue=wcTarget.value;
+  const goal=Number(targetValue);
+
+  const area=getElement("wcGoalArea");
+  const error=getElement("wcError");
+
+  error.textContent="";
+
+  if(targetValue===""){
+    area.hidden=true;
+    return;
+  }
+
+  if(!isPositiveInteger(goal)){
+    area.hidden=true;
+    error.textContent="目標文字数は1以上の整数で入力してください。";
+    return;
+  }
+
+  area.hidden=false;
+
+  const rate=all/goal*100;
+  const displayRate=rate.toFixed(1);
+
+  getElement("wcGoalText").textContent=displayRate+"%";
+
+  getElement("wcBar").style.width=Math.min(rate,100)+"%";
+
+  getElement("wcProgress").setAttribute(
+    "aria-valuenow",
+    String(Math.min(rate,100))
+  );
+
+  getElement("wcRemaining").textContent=
+    all>=goal
+    ?"🎉 目標文字数を達成しています！"
+    :"目標まであと "+(goal-all).toLocaleString()+" 文字です。";
+
 }
 
 wcText.addEventListener("input",updateWordCount);
 wcTarget.addEventListener("input",updateWordCount);
 
-document.getElementById("wcClear").onclick=()=>{
- if(!wcText.value||confirm("入力した文章を消去しますか？")){
-  wcText.value="";
-  updateWordCount();
- }
-};
+getElement("wcClear").addEventListener("click",()=>{
 
-document.getElementById("wcCopy").onclick=async()=>{
- if(!wcText.value){
-  alert("コピーする文章がありません。");
-  return;
- }
- try{
-  await navigator.clipboard.writeText(wcText.value);
-  alert("文章をコピーしました！");
- }catch(e){
-  wcText.select();
-  document.execCommand("copy");
-  alert("文章をコピーしました！");
- }
-};
+  if(!wcText.value||confirm("入力した文章を消去しますか？")){
+
+    wcText.value="";
+    updateWordCount();
+
+  }
+
+});
+
+getElement("wcCopy").addEventListener("click",async()=>{
+
+  if(!wcText.value){
+    alert("コピーする文章がありません。");
+    return;
+  }
+
+  try{
+
+    await navigator.clipboard.writeText(wcText.value);
+    alert("文章をコピーしました！");
+
+  }catch(e){
+
+    wcText.select();
+
+    const success=document.execCommand("copy");
+
+    if(success){
+      alert("文章をコピーしました！");
+    }else{
+      alert("コピーできませんでした。文章を選択して手動でコピーしてください。");
+    }
+
+  }
+
+});
 
 updateWordCount();
 
 
+// =====================================
 // バイト給料計算
+// =====================================
+
 function calculateSalary(){
- const w=Number(document.getElementById("wage").value);
- const h=Number(document.getElementById("hours").value);
- const d=Number(document.getElementById("days").value);
 
- if(w<=0||h<=0||d<=0){
-  alert("すべての項目を正しく入力してください！");
-  return;
- }
+  const wageValue=getElement("wage").value;
+  const hoursValue=getElement("hours").value;
+  const daysValue=getElement("days").value;
 
- document.getElementById("salaryResult").innerText="💰 月収目安："+(w*h*d).toLocaleString()+"円";
+  const wage=Number(wageValue);
+  const hours=Number(hoursValue);
+  const days=Number(daysValue);
+
+  if(
+    wageValue===""||
+    hoursValue===""||
+    daysValue===""||
+    !isPositiveInteger(wage)||
+    !Number.isFinite(hours)||
+    hours<=0||
+    hours>24||
+    Math.round(hours*4)!==hours*4||
+    !Number.isInteger(days)||
+    days<1||
+    days>7
+  ){
+
+    showResult(
+      "salaryResult",
+      "時給は正の整数、勤務時間は0.25〜24時間、週の勤務日数は1〜7日の範囲で入力してください。",
+      true
+    );
+
+    return;
+  }
+
+  const weekly=wage*hours*days;
+  const monthly=weekly*52/12;
+  const yearly=weekly*52;
+
+  if(!Number.isFinite(monthly)||!Number.isFinite(yearly)){
+    showResult("salaryResult","計算できる範囲を超えています。入力内容を確認してください。",true);
+    return;
+  }
+
+  showResult(
+    "salaryResult",
+    "💰 1日あたり："+Math.round(wage*hours).toLocaleString()+"円"+
+    "\n📅 週収："+Math.round(weekly).toLocaleString()+"円"+
+    "\n📆 月収目安："+Math.round(monthly).toLocaleString()+"円"+
+    "\n🎯 年収目安："+Math.round(yearly).toLocaleString()+"円"
+  );
+
 }
 
+getElement("salaryButton").addEventListener("click",calculateSalary);
 
+
+// =====================================
 // 割り勘計算
+// =====================================
+
 function calculateSplit(){
- const t=Number(document.getElementById("total").value);
- const p=Number(document.getElementById("people").value);
 
- if(t<=0||p<=0||!Number.isInteger(p)){
-  alert("金額と人数を正しく入力してください！");
-  return;
- }
+  const totalValue=getElement("total").value;
+  const peopleValue=getElement("people").value;
 
- const each=Math.floor(t/p);
- const remainder=t%p;
+  const total=Number(totalValue);
+  const people=Number(peopleValue);
 
- document.getElementById("splitResult").innerText=
- "🍕 1人あたり："+each.toLocaleString()+"円"+
- (remainder?"\n端数："+remainder+"円（調整してください）":"");
+  if(
+    totalValue===""||
+    peopleValue===""||
+    !isPositiveInteger(total)||
+    !isPositiveInteger(people)
+  ){
+
+    showResult(
+      "splitResult",
+      "合計金額と人数を正の整数で入力してください。",
+      true
+    );
+
+    return;
+  }
+
+  const each=Math.floor(total/people);
+  const remainder=total%people;
+
+  showResult(
+    "splitResult",
+    "🍕 1人あたり："+each.toLocaleString()+"円"+
+    (remainder
+      ?"\n端数："+remainder.toLocaleString()+"円（別途調整してください）"
+      :"")
+  );
+
 }
 
+getElement("splitButton").addEventListener("click",calculateSplit);
 
+
+// =====================================
 // レポート構成メーカー
+// =====================================
+
 function makeReport(){
- const theme=document.getElementById("reportTheme").value.trim();
- const type=document.getElementById("reportType").value;
 
- if(!theme){
-  alert("テーマを入力してください！");
-  return;
- }
+  const theme=getElement("reportTheme").value.trim();
+  const type=getElement("reportType").value;
 
- let s="";
+  if(!theme){
+    showResult("reportResult","レポートのテーマを入力してください。",true);
+    return;
+  }
 
- if(type==="general"){
-  s="【レポート構成】\n\nテーマ："+theme+
-  "\n\n① はじめに\n・テーマの背景\n・問題提起"+
-  "\n\n② 本論\n・テーマに関する説明\n・具体例やデータ\n・重要なポイント"+
-  "\n\n③ 考察\n・内容についての分析\n・自分の考え"+
-  "\n\n④ おわりに\n・結論\n・今後の課題";
- }else if(type==="opinion"){
-  s="【意見・考察型レポート】\n\nテーマ："+theme+
-  "\n\n① 問題提起\n② 自分の主張\n③ 根拠・具体例\n④ 反対意見への検討\n⑤ 結論";
- }else{
-  s="【調査・研究型レポート】\n\nテーマ："+theme+
-  "\n\n① 研究目的\n② 先行研究\n③ 調査方法\n④ 調査結果\n⑤ 考察\n⑥ 結論";
- }
+  let result="";
 
- document.getElementById("reportResult").innerText=s;
+  if(type==="general"){
+
+    result=
+      "【一般的なレポート構成】"+
+      "\n\nテーマ："+theme+
+      "\n\n① はじめに"+
+      "\n・テーマの背景"+
+      "\n・問題提起"+
+      "\n\n② 本論"+
+      "\n・テーマに関する説明"+
+      "\n・具体例やデータ"+
+      "\n・重要なポイント"+
+      "\n\n③ 考察"+
+      "\n・内容についての分析"+
+      "\n・自分の考え"+
+      "\n\n④ おわりに"+
+      "\n・結論"+
+      "\n・今後の課題";
+
+  }else if(type==="opinion"){
+
+    result=
+      "【意見・考察型レポート】"+
+      "\n\nテーマ："+theme+
+      "\n\n① 問題提起"+
+      "\n・何が問題なのか"+
+      "\n\n② 自分の主張"+
+      "\n・自分の立場や意見"+
+      "\n\n③ 根拠・具体例"+
+      "\n・資料や具体例を用いた説明"+
+      "\n\n④ 反対意見への検討"+
+      "\n・異なる立場からの考察"+
+      "\n\n⑤ 結論"+
+      "\n・主張のまとめ";
+
+  }else{
+
+    result=
+      "【調査・研究型レポート】"+
+      "\n\nテーマ："+theme+
+      "\n\n① 研究目的"+
+      "\n・調査する目的や背景"+
+      "\n\n② 先行研究"+
+      "\n・既存の研究や資料"+
+      "\n\n③ 調査方法"+
+      "\n・調査対象や手順"+
+      "\n\n④ 調査結果"+
+      "\n・得られたデータや事実"+
+      "\n\n⑤ 考察"+
+      "\n・結果から分かること"+
+      "\n\n⑥ 結論"+
+      "\n・研究内容のまとめ";
+
+  }
+
+  showResult("reportResult",result);
+
 }
 
+getElement("reportButton").addEventListener("click",makeReport);
 
+
+// =====================================
 // 課題締切管理
-let tasks=[];
+// =====================================
 
-try{
- const saved=JSON.parse(localStorage.getItem("campusTasks")||"[]");
- if(Array.isArray(saved))tasks=saved;
-}catch(e){
- tasks=[];
-}
+let tasks=readStoredArray("campusTasks");
+
+tasks=tasks.filter(task=>{
+  return task&&
+    typeof task.name==="string"&&
+    typeof task.date==="string"&&
+    /^\d{4}-\d{2}-\d{2}$/.test(task.date);
+});
 
 function saveTasks(){
- localStorage.setItem("campusTasks",JSON.stringify(tasks));
+
+  try{
+    localStorage.setItem("campusTasks",JSON.stringify(tasks));
+  }catch(e){
+    alert("課題データを保存できませんでした。");
+  }
+
 }
 
 function addTask(){
- const name=document.getElementById("taskName").value.trim();
- const date=document.getElementById("taskDate").value;
 
- if(!name||!date){
-  alert("課題名と締切を入力してください！");
-  return;
- }
+  const name=getElement("taskName").value.trim();
+  const date=getElement("taskDate").value;
 
- tasks.push({name,date});
- tasks.sort((a,b)=>a.date.localeCompare(b.date));
+  if(!name||!date){
+    alert("課題名と締切を入力してください！");
+    return;
+  }
 
- saveTasks();
- displayTasks();
+  const parsedDate=new Date(date+"T00:00:00");
 
- document.getElementById("taskName").value="";
- document.getElementById("taskDate").value="";
+  if(
+    Number.isNaN(parsedDate.getTime())||
+    parsedDate.toISOString().slice(0,10)!==date
+  ){
+    alert("正しい締切日を入力してください。");
+    return;
+  }
+
+  tasks.push({name,date});
+
+  tasks.sort((a,b)=>a.date.localeCompare(b.date));
+
+  saveTasks();
+  displayTasks();
+
+  getElement("taskName").value="";
+  getElement("taskDate").value="";
+
 }
 
 function displayTasks(){
- const list=document.getElementById("taskList");
- list.innerHTML="";
 
- tasks.forEach((task,index)=>{
-  const div=document.createElement("div");
-  div.className="task-item";
+  const list=getElement("taskList");
+  list.innerHTML="";
 
-  const text=document.createElement("div");
-  text.innerText="📌 "+task.name+"\n締切："+task.date;
+  if(tasks.length===0){
 
-  const button=document.createElement("button");
-  button.innerText="削除";
-  button.className="danger";
-  button.onclick=()=>deleteTask(index);
+    const empty=document.createElement("p");
+    empty.className="empty-message";
+    empty.textContent="登録された課題はありません。";
 
-  div.append(text,button);
-  list.appendChild(div);
- });
+    list.appendChild(empty);
+    return;
+
+  }
+
+  tasks.forEach((task,index)=>{
+
+    const div=document.createElement("div");
+    div.className="task-item";
+
+    const text=document.createElement("div");
+
+    text.textContent=
+      "📌 "+task.name+"\n締切："+task.date;
+
+    const button=document.createElement("button");
+
+    button.textContent="削除";
+    button.className="danger";
+
+    button.addEventListener("click",()=>{
+      deleteTask(index);
+    });
+
+    div.append(text,button);
+    list.appendChild(div);
+
+  });
+
 }
 
 function deleteTask(index){
- tasks.splice(index,1);
- saveTasks();
- displayTasks();
+
+  tasks.splice(index,1);
+
+  saveTasks();
+  displayTasks();
+
 }
 
-
-// 節約計算
-function calculateSaving(){
- const target=Number(document.getElementById("targetMoney").value);
- const saved=Number(document.getElementById("savedMoney").value);
- const monthly=Number(document.getElementById("monthlyMoney").value);
-
- if(target<=0||saved<0||monthly<=0){
-  alert("正しい金額を入力してください！");
-  return;
- }
-
- const remaining=target-saved;
-
- document.getElementById("savingResult").innerText=
- remaining<=0
- ?"🎉 目標達成！おめでとう！"
- :"💸 あと："+remaining.toLocaleString()+"円\n📅 目標達成まで：約"+Math.ceil(remaining/monthly)+"ヶ月";
-}
+getElement("taskAddButton").addEventListener("click",addTask);
 
 displayTasks();
 
+
+// =====================================
+// 節約計算
+// =====================================
+
+function calculateSaving(){
+
+  const targetValue=getElement("targetMoney").value;
+  const savedValue=getElement("savedMoney").value;
+  const monthlyValue=getElement("monthlyMoney").value;
+
+  const target=Number(targetValue);
+  const saved=Number(savedValue);
+  const monthly=Number(monthlyValue);
+
+  if(
+    targetValue===""||
+    savedValue===""||
+    monthlyValue===""||
+    !isPositiveInteger(target)||
+    !Number.isSafeInteger(saved)||
+    saved<0||
+    !isPositiveInteger(monthly)
+  ){
+
+    showResult(
+      "savingResult",
+      "目標金額と毎月の貯金額は正の整数、現在の貯金額は0以上の整数で入力してください。",
+      true
+    );
+
+    return;
+  }
+
+  const remaining=target-saved;
+
+  if(remaining<=0){
+
+    showResult(
+      "savingResult",
+      "🎉 目標達成！おめでとうございます！"
+    );
+
+    return;
+
+  }
+
+  const months=Math.ceil(remaining/monthly);
+
+  showResult(
+    "savingResult",
+    "💸 目標まであと："+remaining.toLocaleString()+"円"+
+    "\n📅 目標達成まで：約"+months.toLocaleString()+"か月"+
+    "\n\n毎月"+monthly.toLocaleString()+"円ずつ貯金した場合の目安です。"
+  );
+
+}
+
+getElement("savingButton").addEventListener("click",calculateSaving);
+
 </script>
-
-<!-- フッター -->
-<footer style="
-text-align:center;
-padding:30px 15px;
-margin-top:40px;
-background:#ffffff;
-border-top:1px solid #eeeeee;
-color:#777;
-font-size:13px;
-">
-
-<div style="
-display:flex;
-justify-content:center;
-flex-wrap:wrap;
-gap:25px;
-margin-bottom:15px;
-">
-
-<a href="about.html" style="color:#4361ee;text-decoration:none;">
-Campus便利箱について
-</a>
-
-<a href="privacy.html" style="color:#4361ee;text-decoration:none;">
-プライバシーポリシー
-</a>
-
-<a href="contact.html" style="color:#4361ee;text-decoration:none;">
-お問い合わせ
-</a>
-
-</div>
-
-<p style="margin:0;">
-© 2026 Campus便利箱
-</p>
-
-</footer>
 
 </body>
 </html>
