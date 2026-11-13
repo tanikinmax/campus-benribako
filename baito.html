@@ -123,4 +123,254 @@
     }
 
     button:hover {
-      filter:
+      filter: brightness(1.04);
+    }
+
+    .results {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .result {
+      padding: 17px;
+      border-radius: 13px;
+      background: #f3f6ff;
+      border: 1px solid #e5eaff;
+    }
+
+    .result.primary {
+      grid-column: 1 / -1;
+      background: #eef1ff;
+    }
+
+    .result-label {
+      color: #64718a;
+      font-size: 14px;
+    }
+
+    .result-value {
+      margin-top: 4px;
+      color: #385fbd;
+      font-size: clamp(21px, 4vw, 27px);
+      font-weight: 800;
+      overflow-wrap: anywhere;
+    }
+
+    .note {
+      padding: 14px 16px;
+      border-radius: 12px;
+      background: #fff8e8;
+      color: #72551c;
+      font-size: 14px;
+    }
+
+    .steps {
+      padding-left: 1.3em;
+    }
+
+    .steps li {
+      margin: 7px 0;
+    }
+
+    footer {
+      padding: 24px 16px;
+      text-align: center;
+      color: #748097;
+      font-size: 13px;
+    }
+
+    footer a {
+      color: #526fc0;
+      text-decoration: none;
+      margin: 0 8px;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 520px) {
+      header {
+        padding: 34px 16px 30px;
+      }
+
+      .card {
+        padding: 19px;
+      }
+
+      .results {
+        grid-template-columns: 1fr;
+      }
+
+      .result.primary {
+        grid-column: auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <p class="site-name">Campus便利箱</p>
+  <h1>バイト給料計算機</h1>
+  <p>時給と勤務時間から、給料の目安をかんたん計算！</p>
+</header>
+
+<main>
+
+  <section class="card">
+    <h2>給料を計算する</h2>
+
+    <div class="field">
+      <label for="hourly">時給</label>
+      <div class="input-wrap">
+        <input id="hourly" type="number" min="0" step="1" value="1150" inputmode="numeric">
+        <span class="unit">円</span>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="hours">1日の勤務時間</label>
+      <div class="input-wrap">
+        <input id="hours" type="number" min="0" max="24" step="0.25" value="5" inputmode="decimal">
+        <span class="unit">時間</span>
+      </div>
+      <p class="hint">休憩時間を除いた、実際に働く時間を入力してください。</p>
+    </div>
+
+    <div class="field">
+      <label for="days">週の勤務日数</label>
+      <div class="input-wrap">
+        <input id="days" type="number" min="0" max="7" step="1" value="3" inputmode="numeric">
+        <span class="unit">日</span>
+      </div>
+    </div>
+
+    <button type="button" id="calculate">給料を計算する</button>
+  </section>
+
+  <section class="card" aria-live="polite">
+    <h2>計算結果</h2>
+
+    <div class="results">
+
+      <div class="result">
+        <div class="result-label">日給の目安</div>
+        <div class="result-value" id="daily">5,750円</div>
+      </div>
+
+      <div class="result">
+        <div class="result-label">週給の目安</div>
+        <div class="result-value" id="weekly">17,250円</div>
+      </div>
+
+      <div class="result primary">
+        <div class="result-label">月収の目安</div>
+        <div class="result-value" id="monthly">74,750円</div>
+      </div>
+
+      <div class="result">
+        <div class="result-label">年収の目安</div>
+        <div class="result-value" id="yearly">897,000円</div>
+      </div>
+
+    </div>
+
+    <p class="hint">
+      月収は「週給 × 52 ÷ 12」、年収は「週給 × 52」で概算しています。
+    </p>
+  </section>
+
+  <section class="card">
+    <h2>この計算機の使い方</h2>
+
+    <ol class="steps">
+      <li>アルバイト先の時給を入力します。</li>
+      <li>1日に実際に働く時間（休憩を除く）を入力します。</li>
+      <li>週に何日働くかを入力して、「給料を計算する」を押します。</li>
+    </ol>
+  </section>
+
+  <section class="card">
+    <h2>計算するときの注意点</h2>
+
+    <div class="note">
+      表示される金額は、毎週同じ日数・時間で働いた場合の単純な目安です。
+
+      実際の給与は、シフト、勤務日数、深夜手当、時間外手当、各種控除などによって変わります。
+
+      このページでは税金・社会保険料などを差し引いた手取り額は計算していません。
+    </div>
+  </section>
+
+  <p style="text-align:center;">
+    <a href="index.html" style="color:#526fc0;">
+      ← Campus便利箱トップへ戻る
+    </a>
+  </p>
+
+</main>
+
+<footer>
+
+  <div>
+    <a href="index.html">トップページ</a>
+    <a href="about.html">このサイトについて</a>
+    <a href="privacy.html">プライバシーポリシー</a>
+    <a href="contact.html">お問い合わせ</a>
+  </div>
+
+  <p>© 2026 Campus便利箱</p>
+
+</footer>
+
+<script>
+  const yen = value =>
+    Math.round(value).toLocaleString("ja-JP") + "円";
+
+  function calculateSalary() {
+
+    const hourly = Number(document.getElementById("hourly").value);
+    const hours = Number(document.getElementById("hours").value);
+    const days = Number(document.getElementById("days").value);
+
+    if (
+      !Number.isFinite(hourly) ||
+      !Number.isFinite(hours) ||
+      !Number.isFinite(days) ||
+      hourly < 0 ||
+      hours < 0 ||
+      hours > 24 ||
+      days < 0 ||
+      days > 7
+    ) {
+      alert("時給・勤務時間・勤務日数を正しく入力してください。");
+      return;
+    }
+
+    const daily = hourly * hours;
+    const weekly = daily * days;
+    const monthly = weekly * 52 / 12;
+    const yearly = weekly * 52;
+
+    document.getElementById("daily").textContent = yen(daily);
+    document.getElementById("weekly").textContent = yen(weekly);
+    document.getElementById("monthly").textContent = yen(monthly);
+    document.getElementById("yearly").textContent = yen(yearly);
+  }
+
+  document.getElementById("calculate")
+    .addEventListener("click", calculateSalary);
+
+  ["hourly", "hours", "days"].forEach(id => {
+    document.getElementById(id)
+      .addEventListener("input", calculateSalary);
+  });
+
+  calculateSalary();
+</script>
+
+</body>
+</html>
