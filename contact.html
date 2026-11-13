@@ -4,9 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>お問い合わせ | Campus便利箱</title>
+<title>お問い合わせ・ご意見はこちら｜Campus便利箱</title>
 
-<meta name="description" content="Campus便利箱へのご質問、ご意見、不具合の報告はこちらから。お問い合わせフォームと個人情報の取り扱いについてご案内しています。">
+<meta name="description" content="Campus便利箱へのご質問、ご意見、不具合の報告はこちらから。お問い合わせフォームや個人情報の取り扱いについてご案内しています。">
+
+<meta name="robots" content="index, follow">
 
 <style>
 * {
@@ -66,6 +68,22 @@ iframe {
   border: none;
   border-radius: 10px;
   display: block;
+}
+
+.form-link {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 13px;
+  color: #666;
+}
+
+.form-link a {
+  color: #4361ee;
+  text-decoration: none;
+}
+
+.form-link a:hover {
+  text-decoration: underline;
 }
 
 .privacy {
@@ -137,13 +155,21 @@ footer {
 
     <iframe
       src="https://docs.google.com/forms/d/e/1FAIpQLSeKmlYTcy8N8PXmlFvqI_1B-KBVWu2SzgdASbsgHSJuB3tE_A/viewform?embedded=true"
+      title="Campus便利箱 お問い合わせフォーム"
       width="100%"
       height="1000"
-      frameborder="0"
-      marginheight="0"
-      marginwidth="0">
-      読み込んでいます…
+      loading="lazy">
+      お問い合わせフォームを読み込んでいます。
     </iframe>
+
+    <p class="form-link">
+      フォームが表示されない場合は、
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSeKmlYTcy8N8PXmlFvqI_1B-KBVWu2SzgdASbsgHSJuB3tE_A/viewform"
+         target="_blank"
+         rel="noopener noreferrer">
+        こちらからお問い合わせください。
+      </a>
+    </p>
 
     <p class="privacy">
       お問い合わせの際の個人情報の取り扱いについては、
