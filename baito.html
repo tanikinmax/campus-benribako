@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>バイト給料計算機｜時給から月収・年収を簡単計算 - Campus便利箱</title>
+
+  <meta name="description" content="時給・1日の勤務時間・週の勤務日数から、アルバイトの給料を簡単計算。日給・週給・月収・年収の目安を無料で確認できます。">
+
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://tanikinmax.github.io/campus-benribako/baito.html">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans JP", sans-serif;
+      color: #263247;
+      background: #f4f6fb;
+      line-height: 1.7;
+    }
+
+    header {
+      padding: 42px 20px 36px;
+      text-align: center;
+      color: white;
+      background: linear-gradient(135deg, #4776e6, #7656c9);
+    }
+
+    header .site-name {
+      margin: 0 0 8px;
+      font-size: 14px;
+      opacity: 0.9;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: clamp(25px, 5vw, 34px);
+    }
+
+    header p {
+      margin: 10px 0 0;
+      opacity: 0.95;
+    }
+
+    main {
+      width: min(760px, calc(100% - 28px));
+      margin: 28px auto 48px;
+    }
+
+    .card {
+      margin-bottom: 20px;
+      padding: 24px;
+      background: white;
+      border-radius: 18px;
+      box-shadow: 0 5px 22px rgba(34, 54, 95, 0.07);
+    }
+
+    h2 {
+      margin: 0 0 16px;
+      color: #344a78;
+      font-size: 21px;
+    }
+
+    .field {
+      margin: 17px 0;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 7px;
+      font-weight: 700;
+    }
+
+    .input-wrap {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+
+    input {
+      width: 100%;
+      min-width: 0;
+      padding: 13px 14px;
+      border: 1px solid #d8deeb;
+      border-radius: 10px;
+      font: inherit;
+      font-size: 16px;
+      background: white;
+    }
+
+    input:focus {
+      outline: 3px solid rgba(71, 118, 230, 0.16);
+      border-color: #4776e6;
+    }
+
+    .unit {
+      flex: 0 0 auto;
+      color: #64718a;
+    }
+
+    .hint {
+      margin: 5px 0 0;
+      color: #78849a;
+      font-size: 13px;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px 18px;
+      border: 0;
+      border-radius: 12px;
+      color: white;
+      background: linear-gradient(135deg, #4776e6, #7656c9);
+      font: inherit;
+      font-weight: 700;
+      font-size: 17px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      filter:
