@@ -21,7 +21,6 @@
 <meta property="og:url" content="https://tanikinmax.github.io/campus-benribako/mojisu.html">
 <meta property="og:site_name" content="Campus便利箱">
 
-<!-- 構造化データ -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -47,7 +46,7 @@
 
 body {
     margin: 0;
-    font-family: "Noto Sans JP", sans-serif;
+    font-family: "Noto Sans JP", "Yu Gothic", sans-serif;
     background: #f4f7fb;
     color: #333;
     line-height: 1.8;
@@ -137,6 +136,13 @@ textarea:focus {
     font-size: 13px;
 }
 
+.input-error {
+    color: #d93636;
+    font-size: 13px;
+    width: 100%;
+    display: none;
+}
+
 .progress-area {
     background: #f4f7ff;
     border-radius: 12px;
@@ -224,6 +230,12 @@ button:hover {
     opacity: 0.85;
 }
 
+button:focus-visible,
+a:focus-visible {
+    outline: 3px solid #a8c0ff;
+    outline-offset: 3px;
+}
+
 .copy-btn {
     background: #4f7cff;
     color: white;
@@ -266,6 +278,16 @@ button:hover {
     margin-top: 22px;
 }
 
+.info p,
+.info li {
+    color: #555;
+}
+
+.info ul,
+.info ol {
+    padding-left: 24px;
+}
+
 .faq-item {
     border-bottom: 1px solid #edf0f6;
     padding: 15px 0;
@@ -303,15 +325,37 @@ button:hover {
     font-weight: bold;
 }
 
+.note {
+    background: #f4f7ff;
+    border-left: 4px solid #4f7cff;
+    padding: 13px 15px;
+    border-radius: 7px;
+    font-size: 13px;
+    color: #53677f;
+    margin: 15px 0;
+}
+
 footer {
     text-align: center;
-    padding: 25px;
+    padding: 25px 15px;
     font-size: 12px;
     color: #888;
 }
 
+footer a {
+    color: #557ba5;
+    text-decoration: none;
+    margin: 0 8px;
+    display: inline-block;
+}
+
 @media (max-width: 500px) {
+
     .card {
+        padding: 18px;
+    }
+
+    .info {
         padding: 18px;
     }
 
@@ -330,8 +374,18 @@ footer {
     header h1 {
         font-size: 23px;
     }
+
+    .target-setting input {
+        width: 110px;
+    }
+
+    .buttons button {
+        flex: 1;
+    }
+
 }
 </style>
+
 </head>
 
 <body>
@@ -348,14 +402,34 @@ footer {
     <h2>📝 目標文字数を設定</h2>
 
     <div class="target-setting">
+
         <label for="targetCount">目標文字数</label>
-        <input type="number" id="targetCount" value="1200" min="1">
+
+        <input
+            type="number"
+            id="targetCount"
+            value="1200"
+            min="1"
+            step="1"
+            inputmode="numeric"
+        >
+
         <span>文字</span>
+
+        <div class="input-error" id="targetError" role="alert">
+            目標文字数は1以上の整数で入力してください。
+        </div>
+
     </div>
 
     <div class="report-mode">
+
         <input type="checkbox" id="reportMode" checked>
-        <label for="reportMode">レポートモード（空白・改行を除いて計算）</label>
+
+        <label for="reportMode">
+            レポートモード（空白・改行を除いて計算）
+        </label>
+
     </div>
 
     <div class="progress-area">
@@ -365,11 +439,23 @@ footer {
             <strong id="progressPercent">0%</strong>
         </div>
 
-        <div class="progress-bar">
+        <div
+            class="progress-bar"
+            role="progressbar"
+            aria-label="目標文字数の達成率"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            aria-valuenow="0"
+            id="progressBar"
+        >
             <div class="progress-fill" id="progressFill"></div>
         </div>
 
-        <div class="progress-message" id="progressMessage" aria-live="polite">
+        <div
+            class="progress-message"
+            id="progressMessage"
+            aria-live="polite"
+        >
             目標まであと1200文字！
         </div>
 
@@ -406,7 +492,7 @@ footer {
         </div>
 
         <div class="stat">
-            <p>単語数（スペース区切り）</p>
+            <p>単語数（空白区切り）</p>
             <strong id="wordCount">0</strong>
         </div>
 
@@ -418,8 +504,20 @@ footer {
     </div>
 
     <div class="buttons">
-        <button class="copy-btn" onclick="copyText()">📋 文章をコピー</button>
-        <button class="clear-btn" onclick="clearText()">🗑️ クリア</button>
+
+        <button class="copy-btn" id="copyBtn">
+            📋 文章をコピー
+        </button>
+
+        <button class="clear-btn" id="clearBtn">
+            🗑️ クリア
+        </button>
+
+    </div>
+
+    <div class="note">
+        入力した文章はこのページ内で文字数を計算します。
+        文字数カウントのために文章をサーバーへ送信する処理は行っていません。
     </div>
 
 </section>
@@ -429,9 +527,9 @@ footer {
     <h2>📖 無料文字数カウンターの使い方</h2>
 
     <p>
-    Campus便利箱の文字数カウンターは、大学のレポートや課題、作文などの文字数を無料で確認できるオンラインツールです。
-    文章を入力するだけで、文字数や目標達成率をリアルタイムで自動計算します。
-    面倒な手動カウントは必要ありません。
+        Campus便利箱の文字数カウンターは、大学のレポートや課題、作文などの文字数を無料で確認できるオンラインツールです。
+        文章を入力するだけで、文字数や目標達成率をリアルタイムで自動計算します。
+        面倒な手動カウントは必要ありません。
     </p>
 
     <h3>この文字数カウントツールでできること</h3>
@@ -448,32 +546,166 @@ footer {
         <li>入力した文章をコピー</li>
     </ul>
 
-    <h3>大学のレポートの文字数を確認する方法</h3>
+    <h3>文字数カウンターの使い方</h3>
+
+    <ol>
+        <li>目標文字数を入力します。</li>
+        <li>レポートモードを選択します。</li>
+        <li>文章入力欄にカウントしたい文章を貼り付けます。</li>
+        <li>文字数や目標達成率を確認します。</li>
+        <li>必要に応じて文章をコピーします。</li>
+    </ol>
 
     <p>
-    大学のレポートでは「1200字以上」「2000字程度」など、指定された文字数を守ることが重要です。
-    このツールでは目標文字数を自由に設定できるため、課題の指定に合わせて文字数を確認できます。
+        レポートモードをオンにすると、空白と改行を除いた文字数を基準に目標達成率を計算します。
+        オフにすると、改行を含む総文字数を基準に計算します。
+    </p>
+
+</section>
+
+<section class="info">
+
+    <h2>🎓 大学のレポートで知っておきたい文字数の基礎知識</h2>
+
+    <h3>「1200字以内」「1200字以上」「1200字程度」の違い</h3>
+
+    <p>
+        大学のレポート課題では、文字数について「以内」「以上」「程度」といった表現が使われます。
+        それぞれ意味が異なるため、課題の指示を正しく理解することが大切です。
+    </p>
+
+    <ul>
+        <li><strong>1200字以内：</strong>1200字を超えない範囲で書くこと。</li>
+        <li><strong>1200字以上：</strong>最低でも1200字を書くこと。</li>
+        <li><strong>1200字程度：</strong>1200字を目安に書くこと。許容範囲は提出先の指示によります。</li>
+    </ul>
+
+    <div class="note">
+        文字数の許容範囲や数え方は、授業や担当教員によって異なる場合があります。
+        課題の指示を最優先にしてください。
+    </div>
+
+    <h3>レポートの文字数配分の考え方</h3>
+
+    <p>
+        レポートを書くときは、最初に全体の構成を決めておくと文章をまとめやすくなります。
+        例えば、1200字程度のレポートなら、次のような配分を目安にできます。
+    </p>
+
+    <ul>
+        <li><strong>序論：</strong>テーマや問題意識を説明する。</li>
+        <li><strong>本論：</strong>根拠や具体例を示しながら自分の考えを説明する。</li>
+        <li><strong>結論：</strong>内容を整理し、考察や結論をまとめる。</li>
+    </ul>
+
+    <p>
+        例えば、1200字のレポートでは、序論を200字、本論を800字、結論を200字程度にする構成が考えられます。
+        ただし、これはあくまで一例であり、テーマや課題の内容によって適切な配分は変わります。
+    </p>
+
+    <h3>レポートの文字数にタイトルや参考文献は含まれる？</h3>
+
+    <p>
+        タイトル、氏名、学籍番号、参考文献、注釈などを文字数に含めるかどうかは、大学や授業の指定によって異なります。
+        本文のみを対象とする場合もあれば、参考文献などを含める場合もあります。
     </p>
 
     <p>
-    レポートモードをオンにすると、空白と改行を除いた文字数を基準に目標達成率を計算します。
-    目標に達していない場合は、あと何文字必要かが表示されます。
+        提出前には、課題の説明や授業資料を確認し、指定された範囲で文字数を数えるようにしましょう。
     </p>
 
-    <h3>文字数のカウント方法について</h3>
+    <h3>レポートの文字数が足りないときの対処法</h3>
 
     <p>
-    総文字数は改行を含めてカウントします。
-    改行を除いた文字数では改行コードを除外し、空白・改行を除いた文字数ではスペースやタブなども除外します。
+        文字数が不足しているときは、同じ内容を繰り返して文章を長くするのではなく、
+        内容を具体的に掘り下げることが重要です。
+    </p>
+
+    <ul>
+        <li>主張の理由や根拠を具体的に説明する。</li>
+        <li>関連する事例やデータを追加する。</li>
+        <li>複数の視点からテーマを考察する。</li>
+        <li>自分の考えに至った理由を説明する。</li>
+        <li>序論・本論・結論の内容が十分か見直す。</li>
+    </ul>
+
+    <p>
+        文字数を増やすことだけを目的にせず、課題のテーマに沿った内容になっているかを確認しましょう。
+    </p>
+
+</section>
+
+<section class="info">
+
+    <h2>🔢 文字数のカウント方法について</h2>
+
+    <h3>総文字数（改行含む）</h3>
+
+    <p>
+        入力した文章の文字数を、改行も含めてカウントします。
+        画面上で入力された文字を基準に数えます。
+    </p>
+
+    <h3>改行を除いた文字数</h3>
+
+    <p>
+        改行コードを除外して文字数を計算します。
+        段落を分けるための改行を文字数に含めたくない場合に便利です。
+    </p>
+
+    <h3>空白・改行を除いた文字数</h3>
+
+    <p>
+        半角スペース、全角スペース、タブ、改行などの空白文字を除いてカウントします。
+        レポートモードでは、この文字数を目標達成率の計算に使用します。
+    </p>
+
+    <h3>段落数</h3>
+
+    <p>
+        このツールでは、空行で区切られた文章のまとまりを1段落として数えます。
+        文章が空の場合は0段落と表示します。
+        なお、改行だけで段落を分ける形式では、実際の段落数と異なる場合があります。
+    </p>
+
+    <h3>単語数</h3>
+
+    <p>
+        空白で区切られた文字列のまとまりを1単語として数えます。
+        英語などスペースで単語を区切る文章で参考にできます。
+        日本語の文章では、単語を正確に分割する形態素解析ではありません。
+    </p>
+
+    <h3>読了時間</h3>
+
+    <p>
+        読了時間は、空白・改行を除いた文字数を1分あたり500文字として計算した目安です。
+        実際の読む速度は文章の難しさや個人差によって変わります。
+    </p>
+
+    <div class="note">
+        絵文字や一部の特殊な文字は、使用するソフトやサービスによって文字数の扱いが異なる場合があります。
+        提出先が指定するカウント方法を必ず確認してください。
+    </div>
+
+</section>
+
+<section class="info">
+
+    <h2>💻 Wordと文字数カウンターで数字が違う理由</h2>
+
+    <p>
+        Microsoft Wordなどの文書作成ソフトと、この文字数カウンターで表示される数字が異なる場合があります。
     </p>
 
     <p>
-    読了時間は、日本語の文章を1分あたり500文字として計算した目安です。
-    単語数は空白で区切られた語の数を表示しており、日本語の単語を正確に解析するものではありません。
+        主な理由は、空白や改行、記号、特殊文字などを文字数に含めるかどうかの違いです。
+        また、ソフトによって文字数の数え方や対象範囲が異なる場合があります。
     </p>
 
     <p>
-    ※大学や提出先によって文字数の数え方が異なる場合があります。提出先の指定を必ず確認してください。
+        例えば、レポート本文だけを数えたい場合と、タイトルや参考文献まで含めたい場合では、結果が変わります。
+        そのため、提出先の指定に合わせてカウント方法を選ぶことが大切です。
     </p>
 
 </section>
@@ -485,35 +717,54 @@ footer {
     <div class="faq-item">
         <h3>Q. この文字数カウンターは無料で使えますか？</h3>
         <p>
-        はい。Campus便利箱の文字数カウンターは無料で利用できます。目標文字数の設定や達成率の確認なども無料です。
+            はい。Campus便利箱の文字数カウンターは無料で利用できます。
+            目標文字数の設定や達成率の確認なども無料です。
         </p>
     </div>
 
     <div class="faq-item">
         <h3>Q. 大学のレポートの文字数を数えられますか？</h3>
         <p>
-        はい。大学のレポートや課題の文章を入力することで、文字数をリアルタイムで確認できます。目標文字数を設定すれば、指定文字数への達成率も確認できます。
+            はい。大学のレポートや課題の文章を入力することで、文字数をリアルタイムで確認できます。
+            目標文字数を設定すれば、指定文字数への達成率も確認できます。
         </p>
     </div>
 
     <div class="faq-item">
         <h3>Q. 空白や改行を除いた文字数を確認できますか？</h3>
         <p>
-        はい。空白・改行を除いた文字数と、改行のみを除いた文字数の両方を確認できます。
+            はい。空白・改行を除いた文字数と、改行のみを除いた文字数の両方を確認できます。
         </p>
     </div>
 
     <div class="faq-item">
-        <h3>Q. 入力した文章は保存されますか？</h3>
+        <h3>Q. 入力した文章はサーバーに送信されますか？</h3>
         <p>
-        このツールは入力された文章をブラウザ上で計算する仕組みです。文字数カウントのために文章をサーバーへ送信する処理は行っていません。
+            このツールの文字数計算はブラウザ上で行われます。
+            文字数カウントのために入力文章をサーバーへ送信する処理は行っていません。
         </p>
     </div>
 
     <div class="faq-item">
         <h3>Q. スマートフォンでも使えますか？</h3>
         <p>
-        はい。スマートフォン、タブレット、パソコンから利用できます。
+            はい。スマートフォン、タブレット、パソコンから利用できます。
+        </p>
+    </div>
+
+    <div class="faq-item">
+        <h3>Q. 目標文字数を超えた場合はどうなりますか？</h3>
+        <p>
+            目標達成率が100%を超えて表示され、目標達成のメッセージが表示されます。
+            進捗バーは100%の位置で止まります。
+        </p>
+    </div>
+
+    <div class="faq-item">
+        <h3>Q. 入力した文章は保存されますか？</h3>
+        <p>
+            このページでは文章を自動保存する機能はありません。
+            ページを閉じたり再読み込みしたりすると入力内容が消えるため、必要な文章は事前にコピーして保存してください。
         </p>
     </div>
 
@@ -524,19 +775,25 @@ footer {
     <h2>🎓 大学生向けの関連ツール</h2>
 
     <p>
-    Campus便利箱では、大学生活や学習に役立つ無料ツールを提供しています。
-    レポート作成や大学の成績管理にぜひ活用してください。
+        Campus便利箱では、大学生活や学習に役立つ無料ツールを提供しています。
+        レポート作成や大学の成績管理にぜひ活用してください。
     </p>
 
     <p>
         <a href="gpa.html">
-        GPA計算機｜大学のGPAを無料で自動計算
+            GPA計算機｜大学のGPAを無料で自動計算
+        </a>
+    </p>
+
+    <p>
+        <a href="baito.html">
+            バイト給料計算機｜アルバイトの給料を計算
         </a>
     </p>
 
     <p>
         <a href="index.html">
-        Campus便利箱のトップページ｜大学生向け無料便利ツール一覧
+            Campus便利箱のトップページ｜大学生向け無料便利ツール一覧
         </a>
     </p>
 
@@ -549,7 +806,18 @@ footer {
 </main>
 
 <footer>
-    © Campus便利箱
+
+    <p>Campus便利箱｜大学生活をもっと便利に。</p>
+
+    <p>
+        <a href="index.html">トップページ</a>
+        <a href="about.html">運営者情報</a>
+        <a href="privacy.html">プライバシーポリシー</a>
+        <a href="contact.html">お問い合わせ</a>
+    </p>
+
+    <p>© 2026 Campus便利箱</p>
+
 </footer>
 
 <script>
@@ -558,68 +826,147 @@ const textInput = document.getElementById("textInput");
 const targetCount = document.getElementById("targetCount");
 const reportMode = document.getElementById("reportMode");
 
-function countCharacters() {
+const targetError = document.getElementById("targetError");
+
+// Unicodeの文字数を数える
+// 絵文字や結合文字なども可能な範囲で1文字として扱う
+function countCharacters(text) {
+
+    if (typeof Intl !== "undefined" && Intl.Segmenter) {
+
+        const segmenter = new Intl.Segmenter("ja", {
+            granularity: "grapheme"
+        });
+
+        return Array.from(segmenter.segment(text)).length;
+
+    }
+
+    // Intl.Segmenterが使えないブラウザ向け
+    return Array.from(text).length;
+
+}
+
+// 目標文字数の確認
+function getValidTarget() {
+
+    const value = targetCount.value.trim();
+
+    const target = Number(value);
+
+    if (
+        value === "" ||
+        !Number.isSafeInteger(target) ||
+        target < 1
+    ) {
+
+        targetError.style.display = "block";
+
+        targetCount.setAttribute("aria-invalid", "true");
+
+        return null;
+
+    }
+
+    targetError.style.display = "none";
+
+    targetCount.removeAttribute("aria-invalid");
+
+    return target;
+
+}
+
+// 文字数計算
+function updateCount() {
 
     const text = textInput.value;
 
-    // Unicodeコードポイント単位で文字数を計算
-    const total = Array.from(text).length;
+    // 総文字数
+    const total = countCharacters(text);
 
     // 改行を除いた文字数
-    const noLine = Array.from(
-        text.replace(/\r\n|\r|\n/g, "")
-    ).length;
+    const noLineText = text.replace(/\r\n|\r|\n/g, "");
+
+    const noLine = countCharacters(noLineText);
 
     // 空白・改行を除いた文字数
-    const noSpace = Array.from(
-        text.replace(/\s/g, "")
-    ).length;
+    const noSpaceText = text.replace(/\s/g, "");
 
-    // レポートモードに応じた文字数
-    const currentCount = reportMode.checked ? noSpace : total;
+    const noSpace = countCharacters(noSpaceText);
 
-    // 目標文字数
-    const target = Math.max(1, Number(targetCount.value) || 1);
-
-    // 達成率
-    const percentage = Math.floor(
-        (currentCount / target) * 100
-    );
-
-    // 段落数
+    // 段落数：空行で区切られた文章のまとまり
     const paragraphs = text.trim()
         ? text.trim().split(/\n\s*\n/).filter(p => p.trim()).length
         : 0;
 
-    // 単語数（空白区切り）
+    // 単語数：空白で区切られた文字列のまとまり
     const words = text.trim().match(/\S+/g);
 
-    // 読了時間（500文字/分）
+    // 読了時間：500文字/分
     const readingMinutes = Math.ceil(noSpace / 500);
 
-    document.getElementById("totalCount").textContent = total;
+    // 画面に表示
+    document.getElementById("totalCount").textContent =
+        total.toLocaleString("ja-JP");
 
-    document.getElementById("noLineCount").textContent = noLine;
+    document.getElementById("noLineCount").textContent =
+        noLine.toLocaleString("ja-JP");
 
-    document.getElementById("noSpaceCount").textContent = noSpace;
+    document.getElementById("noSpaceCount").textContent =
+        noSpace.toLocaleString("ja-JP");
 
-    document.getElementById("paragraphCount").textContent = paragraphs;
+    document.getElementById("paragraphCount").textContent =
+        paragraphs.toLocaleString("ja-JP");
 
     document.getElementById("wordCount").textContent =
-        words ? words.length : 0;
+        (words ? words.length : 0).toLocaleString("ja-JP");
 
     document.getElementById("readTime").textContent =
         readingMinutes + "分";
 
-    document.getElementById("progressPercent").textContent =
-        percentage + "%";
+    // 目標文字数の確認
+    const target = getValidTarget();
 
-    document.getElementById("progressFill").style.width =
-        Math.min(percentage, 100) + "%";
-
-    // 目標達成メッセージ
     const message = document.getElementById("progressMessage");
 
+    const progressPercent = document.getElementById("progressPercent");
+
+    const progressFill = document.getElementById("progressFill");
+
+    const progressBar = document.getElementById("progressBar");
+
+    if (target === null) {
+
+        progressPercent.textContent = "--";
+
+        progressFill.style.width = "0%";
+
+        progressBar.setAttribute("aria-valuenow", "0");
+
+        message.textContent = "正しい目標文字数を入力してください。";
+
+        return;
+
+    }
+
+    // レポートモードに応じて基準文字数を変更
+    const currentCount = reportMode.checked ? noSpace : total;
+
+    const percentage = Math.floor(
+        (currentCount / target) * 100
+    );
+
+    progressPercent.textContent = percentage + "%";
+
+    progressFill.style.width =
+        Math.min(percentage, 100) + "%";
+
+    progressBar.setAttribute(
+        "aria-valuenow",
+        String(Math.min(percentage, 100))
+    );
+
+    // 目標達成メッセージ
     if (currentCount >= target) {
 
         message.textContent = "🎉 目標達成！お疲れさま！";
@@ -627,12 +974,15 @@ function countCharacters() {
     } else {
 
         message.textContent =
-            "目標まであと" + (target - currentCount) + "文字！";
+            "目標まであと" +
+            (target - currentCount).toLocaleString("ja-JP") +
+            "文字！";
 
     }
 
 }
 
+// 文章をクリア
 function clearText() {
 
     if (!textInput.value) {
@@ -642,37 +992,77 @@ function clearText() {
     if (confirm("入力した文章をすべて削除しますか？")) {
 
         textInput.value = "";
-        countCharacters();
+
+        updateCount();
+
+        textInput.focus();
 
     }
 
 }
 
+// 文章をコピー
 async function copyText() {
 
     const text = textInput.value;
 
     if (!text) {
+
         alert("コピーする文章がありません！");
+
         return;
+
     }
 
     try {
 
-        await navigator.clipboard.writeText(text);
+        if (
+            navigator.clipboard &&
+            window.isSecureContext
+        ) {
+
+            await navigator.clipboard.writeText(text);
+
+        } else {
+
+            throw new Error("Clipboard API unavailable");
+
+        }
 
         alert("文章をコピーしました！");
 
     } catch (error) {
 
-        textInput.select();
+        // Clipboard APIが使えない場合の代替処理
+        try {
 
-        const result = document.execCommand("copy");
+            textInput.focus();
 
-        if (result) {
-            alert("文章をコピーしました！");
-        } else {
-            alert("コピーできませんでした。文章を選択してコピーしてください。");
+            textInput.select();
+
+            textInput.setSelectionRange(0, text.length);
+
+            const result = document.execCommand("copy");
+
+            textInput.setSelectionRange(
+                textInput.value.length,
+                textInput.value.length
+            );
+
+            if (result) {
+
+                alert("文章をコピーしました！");
+
+            } else {
+
+                alert("コピーできませんでした。文章を選択して手動でコピーしてください。");
+
+            }
+
+        } catch (fallbackError) {
+
+            alert("コピーできませんでした。文章を選択して手動でコピーしてください。");
+
         }
 
     }
@@ -680,16 +1070,28 @@ async function copyText() {
 }
 
 // 入力時に自動計算
-textInput.addEventListener("input", countCharacters);
+textInput.addEventListener("input", updateCount);
 
 // 目標文字数変更時
-targetCount.addEventListener("input", countCharacters);
+targetCount.addEventListener("input", updateCount);
 
 // モード変更時
-reportMode.addEventListener("change", countCharacters);
+reportMode.addEventListener("change", updateCount);
+
+// クリアボタン
+document.getElementById("clearBtn").addEventListener(
+    "click",
+    clearText
+);
+
+// コピー按钮
+document.getElementById("copyBtn").addEventListener(
+    "click",
+    copyText
+);
 
 // 初期表示
-countCharacters();
+updateCount();
 
 </script>
 
