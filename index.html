@@ -1625,17 +1625,33 @@ function addTask(){
     return;
   }
 
-  const parsedDate=new Date(date+"T00:00:00");
+  // 日付の形式と実在する日付を確認
+  const match=date.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+
+  if(!match){
+    alert("正しい締切日を入力してください。");
+    return;
+  }
+
+  const year=Number(match[1]);
+  const month=Number(match[2]);
+  const day=Number(match[3]);
+
+  const parsedDate=new Date(year,month-1,day);
 
   if(
-    Number.isNaN(parsedDate.getTime())||
-    parsedDate.toISOString().slice(0,10)!==date
+    parsedDate.getFullYear()!==year||
+    parsedDate.getMonth()!==month-1||
+    parsedDate.getDate()!==day
   ){
     alert("正しい締切日を入力してください。");
     return;
   }
 
-  tasks.push({name,date});
+  tasks.push({
+    name:name,
+    date:date
+  });
 
   tasks.sort((a,b)=>a.date.localeCompare(b.date));
 
@@ -1646,7 +1662,6 @@ function addTask(){
   getElement("taskDate").value="";
 
 }
-
 function displayTasks(){
 
   const list=getElement("taskList");
