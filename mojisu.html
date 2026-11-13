@@ -5,9 +5,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>レポート文字数カウンター｜目標文字数・達成率を確認 - Campus便利箱</title>
+<title>文字数カウント｜無料レポート文字数カウンター - Campus便利箱</title>
 
-<meta name="description" content="大学生のレポート作成に便利な無料文字数カウンター。目標文字数の設定、達成率、不足文字数、段落数、読了時間をリアルタイムで確認できます。">
+<meta name="description" content="無料で使える文字数カウンター。大学のレポートや課題の文字数をリアルタイムでカウントできます。目標文字数、達成率、不足文字数、段落数、単語数、読了時間も確認できる便利なツールです。">
+
 <meta name="robots" content="index, follow">
 
 <link rel="canonical" href="https://tanikinmax.github.io/campus-benribako/mojisu.html">
@@ -17,10 +18,11 @@
 <!-- OGP設定 -->
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ja_JP">
-<meta property="og:title" content="レポート文字数カウンター｜Campus便利箱">
-<meta property="og:description" content="大学生向け無料文字数カウンター。目標文字数、達成率、不足文字数、段落数をリアルタイムで確認できます。">
+<meta property="og:title" content="文字数カウント｜無料レポート文字数カウンター - Campus便利箱">
+<meta property="og:description" content="大学生のレポートや課題に便利な無料文字数カウンター。目標文字数、達成率、段落数、読了時間をリアルタイムで確認できます。">
 <meta property="og:url" content="https://tanikinmax.github.io/campus-benribako/mojisu.html">
 <meta property="og:site_name" content="Campus便利箱">
+
 <style>
 * {
     box-sizing: border-box;
@@ -31,6 +33,7 @@ body {
     font-family: "Noto Sans JP", sans-serif;
     background: #f4f7fb;
     color: #333;
+    line-height: 1.7;
 }
 
 header {
@@ -67,6 +70,11 @@ header p {
 h2 {
     font-size: 20px;
     margin-top: 0;
+}
+
+h3 {
+    font-size: 17px;
+    margin-top: 25px;
 }
 
 textarea {
@@ -235,6 +243,29 @@ button:hover {
     font-size: 18px;
 }
 
+.info h3 {
+    font-size: 16px;
+    margin-top: 22px;
+}
+
+.faq-item {
+    border-bottom: 1px solid #edf0f6;
+    padding: 15px 0;
+}
+
+.faq-item:last-child {
+    border-bottom: none;
+}
+
+.faq-item h3 {
+    margin: 0 0 8px;
+    color: #4f7cff;
+}
+
+.faq-item p {
+    margin: 0;
+}
+
 .back {
     display: block;
     text-align: center;
@@ -267,6 +298,10 @@ footer {
     .progress-top strong {
         font-size: 25px;
     }
+
+    header h1 {
+        font-size: 23px;
+    }
 }
 </style>
 </head>
@@ -274,13 +309,13 @@ footer {
 <body>
 
 <header>
-    <h1>レポート文字数カウンター</h1>
-    <p>大学生のレポート・課題作成をサポート！</p>
+    <h1>無料文字数カウンター</h1>
+    <p>大学のレポート・課題の文字数をリアルタイムでカウント！</p>
 </header>
 
-<div class="container">
+<main class="container">
 
-    <div class="card">
+    <section class="card">
 
         <h2>📝 目標文字数を設定</h2>
 
@@ -312,7 +347,7 @@ footer {
 
         </div>
 
-        <h2>✏️ 文章を入力</h2>
+        <h2>✏️ 文章を入力して文字数カウント</h2>
 
         <textarea id="textInput" placeholder="ここに大学のレポートや課題の文章を入力してください..."></textarea>
 
@@ -355,44 +390,107 @@ footer {
             <button class="clear-btn" onclick="clearText()">🗑️ クリア</button>
         </div>
 
-    </div>
+    </section>
 
-    <div class="info">
+    <section class="info">
 
-        <h2>📖 このツールの使い方</h2>
+        <h2>📖 無料文字数カウンターの使い方</h2>
 
         <p>
-        Campus便利箱のレポート文字数カウンターは、大学のレポートや課題の文字数をリアルタイムで確認できる無料ツールです。
+        Campus便利箱の文字数カウンターは、大学のレポートや課題、作文などの文字数を無料で確認できるオンラインツールです。
+        文章を入力するだけで、文字数や目標達成率をリアルタイムに計算します。
         </p>
+
+        <h3>この文字数カウントツールでできること</h3>
 
         <ul>
-            <li>目標文字数を自由に設定できます。</li>
-            <li>目標までの達成率を確認できます。</li>
-            <li>あと何文字必要かを自動計算します。</li>
-            <li>空白や改行を含めた文字数を確認できます。</li>
-            <li>段落数や読了時間の目安も確認できます。</li>
-            <li>入力した文章をコピーできます。</li>
+            <li>文章の総文字数をカウント</li>
+            <li>改行を除いた文字数を確認</li>
+            <li>空白・改行を除いた文字数を確認</li>
+            <li>目標文字数と達成率を設定・確認</li>
+            <li>目標までの不足文字数を自動計算</li>
+            <li>文章の段落数を確認</li>
+            <li>スペース区切りの単語数をカウント</li>
+            <li>読了時間の目安を表示</li>
+            <li>入力した文章をコピー</li>
         </ul>
 
+        <h3>大学のレポートの文字数を確認する方法</h3>
+
         <p>
-        ※読了時間は日本語の文章を1分あたり500文字として計算した目安です。
+        大学のレポートでは、「1200字以上」「2000字程度」など、指定された文字数を守ることが重要です。
+        このツールでは目標文字数を自由に設定できるため、課題の指定に合わせて文字数を確認できます。
         </p>
 
         <p>
-        ※単語数は空白で区切られた語の数です。日本語の単語を正確に解析するものではありません。
+        レポートモードをオンにすると、空白と改行を除いた文字数を基準に目標達成率を計算します。
+        目標に達していない場合は、あと何文字必要かが表示されます。
+        </p>
+
+        <h3>文字数のカウント方法について</h3>
+
+        <p>
+        総文字数は改行を含めてカウントします。
+        改行を除いた文字数では改行コードを除外し、空白・改行を除いた文字数ではスペースやタブなども除外します。
         </p>
 
         <p>
-        ※文字数の判定方法は大学や提出先の指定に従ってください。
+        読了時間は、日本語の文章を1分あたり500文字として計算した目安です。
+        単語数は空白で区切られた語の数を表示しており、日本語の単語を正確に解析するものではありません。
         </p>
 
-    </div>
+        <p>
+        ※大学や提出先によって文字数の数え方が異なる場合があります。提出先の指定を必ず確認してください。
+        </p>
+
+    </section>
+
+    <section class="info">
+
+        <h2>❓ 文字数カウンターのよくある質問</h2>
+
+        <div class="faq-item">
+            <h3>Q. この文字数カウンターは無料で使えますか？</h3>
+            <p>
+            はい。Campus便利箱の文字数カウンターは無料で利用できます。目標文字数の設定や達成率の確認なども無料です。
+            </p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Q. 大学のレポートの文字数を数えられますか？</h3>
+            <p>
+            はい。大学のレポートや課題の文章を入力することで、文字数をリアルタイムで確認できます。目標文字数を設定すれば、指定文字数への達成率も確認できます。
+            </p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Q. 空白や改行を除いた文字数を確認できますか？</h3>
+            <p>
+            はい。空白・改行を除いた文字数と、改行のみを除いた文字数の両方を確認できます。
+            </p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Q. 入力した文章は保存されますか？</h3>
+            <p>
+            このツールは入力された文章をブラウザ上で計算する仕組みです。文字数カウントのために文章をサーバーへ送信する処理は行っていません。ただし、ブラウザや端末の機能による保存については別途ご注意ください。
+            </p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Q. スマートフォンでも使えますか？</h3>
+            <p>
+            はい。スマートフォン、タブレット、パソコンから利用できます。
+            </p>
+        </div>
+
+    </section>
 
     <a href="index.html" class="back">
         ← Campus便利箱のトップページへ戻る
     </a>
 
-</div>
+</main>
 
 <footer>
     © Campus便利箱
