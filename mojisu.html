@@ -894,10 +894,14 @@ function updateCount() {
 
     const noSpace = countCharacters(noSpaceText);
 
-    // 段落数：空行で区切られた文章のまとまり
-    const paragraphs = text.trim()
-        ? text.trim().split(/\n\s*\n/).filter(p => p.trim()).length
-        : 0;
+   // 段落数：改行コードを統一してから空行で区切る
+const normalizedText = text
+    .replace(/\r\n/g, "\n")
+    .replace(/\r/g, "\n");
+
+const paragraphs = normalizedText.trim()
+    ? normalizedText.trim().split(/\n\s*\n/).filter(p => p.trim()).length
+    : 0;
 
     // 単語数：空白で区切られた文字列のまとまり
     const words = text.trim().match(/\S+/g);
