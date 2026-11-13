@@ -7,9 +7,7 @@
   <title>バイト給料計算機｜時給から日給・月収・年収を無料計算 - Campus便利箱</title>
 
   <meta name="description" content="時給・1日の勤務時間・週の勤務日数を入力するだけで、アルバイトの日給・週給・月収・年収を無料で自動計算！大学生やアルバイトをしている方の収入目安の確認に便利な給料計算機です。">
-
   <meta name="keywords" content="バイト給料計算,アルバイト給料計算,時給計算,月収計算,年収計算,バイト月収,給料計算機">
-
   <meta name="robots" content="index, follow">
   <meta name="author" content="tanikinmax">
 
@@ -71,7 +69,15 @@
       },
       {
         "@type": "Question",
-        "name": "学生のアルバイトでも使えますか？",
+        "name": "勤務日数やシフトが変わった場合も使えますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "はい。時給や勤務時間、週の勤務日数を変更すると、その条件に応じた収入の目安を計算できます。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "大学生のアルバイトでも使えますか？",
         "acceptedAnswer": {
           "@type": "Answer",
           "text": "はい。大学生や専門学生、高校生など、アルバイトの収入目安を確認したい方に利用できます。"
@@ -215,6 +221,11 @@
       filter: brightness(1.04);
     }
 
+    button:focus-visible {
+      outline: 3px solid #263247;
+      outline-offset: 3px;
+    }
+
     .results {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -252,6 +263,14 @@
       background: #fff8e8;
       color: #72551c;
       font-size: 14px;
+    }
+
+    .error {
+      min-height: 1.8em;
+      margin: 10px 0 0;
+      color: #c0392b;
+      font-size: 14px;
+      font-weight: 700;
     }
 
     .steps {
@@ -376,44 +395,72 @@
 
     <p>
       時給・1日の勤務時間・週の勤務日数を入力すると、
-      アルバイトの<strong>日給・週給・月収・年収</strong>の目安を自動で計算できます。
+      アルバイトの<strong>日給・週給・月収・年収</strong>の目安を計算できます。
       大学生やアルバイトをしている方の収入確認に活用してください。
     </p>
 
     <div class="field">
       <label for="hourly">時給</label>
       <div class="input-wrap">
-        <input id="hourly" type="number" min="0" step="1" value="1150" inputmode="numeric">
+        <input
+          id="hourly"
+          type="number"
+          min="1"
+          step="1"
+          value="1150"
+          inputmode="numeric"
+          aria-describedby="hourly-hint"
+        >
         <span class="unit">円</span>
       </div>
+      <p class="hint" id="hourly-hint">アルバイト先で設定されている時給を入力してください。</p>
     </div>
 
     <div class="field">
       <label for="hours">1日の勤務時間</label>
       <div class="input-wrap">
-        <input id="hours" type="number" min="0" max="24" step="0.25" value="5" inputmode="decimal">
+        <input
+          id="hours"
+          type="number"
+          min="0.25"
+          max="24"
+          step="0.25"
+          value="5"
+          inputmode="decimal"
+          aria-describedby="hours-hint"
+        >
         <span class="unit">時間</span>
       </div>
-      <p class="hint">休憩時間を除いた、実際に働く時間を入力してください。</p>
+      <p class="hint" id="hours-hint">休憩時間を除いた実際の勤務時間を入力してください。15分単位で入力できます。</p>
     </div>
 
     <div class="field">
       <label for="days">週の勤務日数</label>
       <div class="input-wrap">
-        <input id="days" type="number" min="0" max="7" step="1" value="3" inputmode="numeric">
+        <input
+          id="days"
+          type="number"
+          min="1"
+          max="7"
+          step="1"
+          value="3"
+          inputmode="numeric"
+          aria-describedby="days-hint"
+        >
         <span class="unit">日</span>
       </div>
+      <p class="hint" id="days-hint">週に何日働くかを入力してください。</p>
     </div>
 
     <button type="button" id="calculate">給料を計算する</button>
-    <p id="error" class="hint" role="alert" style="color:#c0392b;" aria-live="polite"></p>
+
+    <p id="error" class="error" role="alert" aria-live="polite"></p>
   </section>
 
   <section class="card" aria-live="polite">
     <h2>バイトの給料計算結果</h2>
 
     <div class="results">
-
       <div class="result">
         <div class="result-label">日給の目安</div>
         <div class="result-value" id="daily">5,750円</div>
@@ -433,7 +480,6 @@
         <div class="result-label">年収の目安</div>
         <div class="result-value" id="yearly">897,000円</div>
       </div>
-
     </div>
 
     <p class="hint">
@@ -466,24 +512,16 @@
     </p>
 
     <h3>日給の計算方法</h3>
-    <div class="formula">
-      時給 × 1日の勤務時間 ＝ 日給
-    </div>
+    <div class="formula">時給 × 1日の勤務時間 ＝ 日給</div>
 
     <h3>週給の計算方法</h3>
-    <div class="formula">
-      日給 × 週の勤務日数 ＝ 週給
-    </div>
+    <div class="formula">日給 × 週の勤務日数 ＝ 週給</div>
 
     <h3>月収の計算方法</h3>
-    <div class="formula">
-      週給 × 52週 ÷ 12か月 ＝ 平均月収
-    </div>
+    <div class="formula">週給 × 52週 ÷ 12か月 ＝ 平均月収</div>
 
     <h3>年収の計算方法</h3>
-    <div class="formula">
-      週給 × 52週 ＝ 年収
-    </div>
+    <div class="formula">週給 × 52週 ＝ 年収</div>
 
     <p>
       この計算機では、1年間を52週として計算しています。
@@ -515,6 +553,36 @@
   </section>
 
   <section class="card">
+    <h2>大学生がバイトの収入を管理するときのポイント</h2>
+
+    <h3>毎月の収入を把握する</h3>
+    <p>
+      アルバイトの収入は、シフトの回数や勤務時間によって変わります。
+      毎月の給与明細を確認し、実際に受け取った金額を記録しておくと、
+      生活費や貯金に使える金額を把握しやすくなります。
+    </p>
+
+    <h3>シフトの変化を考慮する</h3>
+    <p>
+      試験期間や長期休暇など、大学生活の予定によって働ける時間は変わります。
+      この計算機で勤務日数や勤務時間を変更し、収入の変化を事前に確認しておくと便利です。
+    </p>
+
+    <h3>給与明細で額面と手取りを確認する</h3>
+    <p>
+      計算機で表示される金額は、税金や社会保険料などを差し引く前の額面給与です。
+      実際の振込額は控除などによって異なるため、給与明細で確認しましょう。
+    </p>
+
+    <h3>収入と支出のバランスを考える</h3>
+    <p>
+      アルバイトで得た収入をすべて使うのではなく、
+      食費や交通費などの生活費、趣味に使うお金、貯金するお金に分けて考えると、
+      無理のないお金の管理につながります。
+    </p>
+  </section>
+
+  <section class="card">
     <h2>給料を計算するときの注意点</h2>
 
     <div class="note">
@@ -523,10 +591,11 @@
       このページでは税金・社会保険料などを差し引いた手取り額は計算していません。
     </div>
 
-    <h3>手取り額とは異なります</h3>
+    <h3>額面給与と手取り額は異なります</h3>
     <p>
-      この計算機で表示される金額は、税金や社会保険料などを差し引く前の額面給与の目安です。
-      実際に受け取る金額は、勤務先での控除や個人の状況によって異なります。
+      額面給与は、税金や社会保険料などを差し引く前の給与です。
+      手取り額は、額面給与から所得税や社会保険料などの控除を差し引いた後に、
+      実際に受け取る金額を指します。
     </p>
 
     <h3>深夜手当や残業代は含まれません</h3>
@@ -539,6 +608,7 @@
     <p>
       月によって勤務日数やシフトが異なる場合、実際の給料も変わります。
       このページの月収は、年間の週給を12か月で割った平均値です。
+      特定の月の実際の給与額を示すものではありません。
     </p>
   </section>
 
@@ -569,9 +639,18 @@
     </div>
 
     <div class="faq-item">
+      <h3>Q. 勤務日数やシフトが変わった場合も使えますか？</h3>
+      <p>
+        A. はい。時給や勤務時間、週の勤務日数を変更すると、
+        その条件に応じた収入の目安を計算できます。
+      </p>
+    </div>
+
+    <div class="faq-item">
       <h3>Q. 大学生のアルバイトでも使えますか？</h3>
       <p>
-        A. はい。大学生や専門学生、高校生など、アルバイトの収入目安を確認したい方に利用できます。
+        A. はい。大学生や専門学生、高校生など、
+        アルバイトの収入目安を確認したい方に利用できます。
       </p>
     </div>
   </section>
@@ -600,7 +679,6 @@
 </main>
 
 <footer>
-
   <div>
     <a href="index.html">トップページ</a>
     <a href="about.html">このサイトについて</a>
@@ -609,27 +687,33 @@
   </div>
 
   <p>© 2026 Campus便利箱</p>
-
 </footer>
 
 <script>
   const yen = value =>
     Math.round(value).toLocaleString("ja-JP") + "円";
 
+  const inputIds = ["hourly", "hours", "days"];
+
+  function showError(message) {
+    document.getElementById("error").textContent = message;
+
+    ["daily", "weekly", "monthly", "yearly"].forEach(id => {
+      document.getElementById(id).textContent = "―";
+    });
+  }
+
   function calculateSalary() {
-
-    const hourlyInput = document.getElementById("hourly").value;
-    const hoursInput = document.getElementById("hours").value;
-    const daysInput = document.getElementById("days").value;
-
-    const error = document.getElementById("error");
+    const hourlyInput = document.getElementById("hourly").value.trim();
+    const hoursInput = document.getElementById("hours").value.trim();
+    const daysInput = document.getElementById("days").value.trim();
 
     if (
-      hourlyInput.trim() === "" ||
-      hoursInput.trim() === "" ||
-      daysInput.trim() === ""
+      hourlyInput === "" ||
+      hoursInput === "" ||
+      daysInput === ""
     ) {
-      error.textContent = "時給・勤務時間・勤務日数をすべて入力してください。";
+      showError("時給・勤務時間・勤務日数をすべて入力してください。");
       return;
     }
 
@@ -640,23 +724,54 @@
     if (
       !Number.isFinite(hourly) ||
       !Number.isFinite(hours) ||
-      !Number.isFinite(days) ||
-      hourly < 0 ||
-      hours < 0 ||
-      hours > 24 ||
-      days < 0 ||
-      days > 7
+      !Number.isFinite(days)
     ) {
-      error.textContent = "時給・勤務時間・勤務日数を正しく入力してください。";
+      showError("数字を正しく入力してください。");
       return;
     }
 
-    error.textContent = "";
+    if (
+      !Number.isSafeInteger(hourly) ||
+      hourly <= 0
+    ) {
+      showError("時給は1円以上の整数で入力してください。");
+      return;
+    }
+
+    if (
+      hours <= 0 ||
+      hours > 24 ||
+      Math.abs(hours * 4 - Math.round(hours * 4)) > 0.000001
+    ) {
+      showError("勤務時間は0.25時間以上24時間以内で、15分単位で入力してください。");
+      return;
+    }
+
+    if (
+      !Number.isInteger(days) ||
+      days < 1 ||
+      days > 7
+    ) {
+      showError("週の勤務日数は1日から7日までの整数で入力してください。");
+      return;
+    }
 
     const daily = hourly * hours;
     const weekly = daily * days;
     const monthly = weekly * 52 / 12;
     const yearly = weekly * 52;
+
+    if (
+      !Number.isFinite(daily) ||
+      !Number.isFinite(weekly) ||
+      !Number.isFinite(monthly) ||
+      !Number.isFinite(yearly)
+    ) {
+      showError("入力された数値が大きすぎます。数値を確認してください。");
+      return;
+    }
+
+    document.getElementById("error").textContent = "";
 
     document.getElementById("daily").textContent = yen(daily);
     document.getElementById("weekly").textContent = yen(weekly);
@@ -667,7 +782,7 @@
   document.getElementById("calculate")
     .addEventListener("click", calculateSalary);
 
-  ["hourly", "hours", "days"].forEach(id => {
+  inputIds.forEach(id => {
     document.getElementById(id)
       .addEventListener("input", calculateSalary);
   });
