@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -7,19 +6,21 @@
 
 <title>GPA計算機｜無料で大学のGPAを自動計算 - Campus便利箱</title>
 
-<meta name="description" content="大学生・専門学生向けの無料GPA計算機。科目名、単位数、成績を入力するだけでGPAを自動計算！累積GPAや取得単位数も確認できる便利なツールです。">
+<meta name="description" content="大学生・専門学生向けの無料GPA計算機。科目名、単位数、GP、単位取得状況を入力するだけでGPAを自動計算！取得単位数や登録科目の単位取得率も確認できます。">
 
 <meta name="keywords" content="GPA計算機,GPA計算,大学生,大学,単位,GPA,無料ツール">
+
+<meta name="robots" content="index, follow">
 
 <link rel="canonical" href="https://tanikinmax.github.io/campus-benribako/gpa.html">
 
 <meta property="og:title" content="GPA計算機｜Campus便利箱">
-<meta property="og:description" content="単位数とGPを入力するだけでGPAを自動計算。大学生向け無料ツール。">
+<meta property="og:description" content="単位数とGPを入力するだけでGPAを自動計算。取得単位数も確認できる大学生向け無料ツール。">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://tanikinmax.github.io/campus-benribako/gpa.html">
+<meta property="og:site_name" content="Campus便利箱">
 
 <style>
-
 * {
     box-sizing: border-box;
 }
@@ -167,7 +168,7 @@ main {
 
 .form-grid {
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
     gap: 12px;
 }
 
@@ -178,16 +179,19 @@ label {
     margin-bottom: 6px;
 }
 
-input {
+input,
+select {
     width: 100%;
     padding: 12px;
     border: 1px solid #d8e0eb;
     border-radius: 9px;
     font-size: 15px;
     background: #fbfcfe;
+    color: #263449;
 }
 
-input:focus {
+input:focus,
+select:focus {
     outline: none;
     border-color: #4d83c2;
     box-shadow: 0 0 0 3px rgba(77,131,194,0.12);
@@ -233,7 +237,7 @@ button:hover {
 
 .subject-item {
     display: grid;
-    grid-template-columns: 2fr 0.7fr 0.7fr auto;
+    grid-template-columns: 2fr 0.7fr 0.7fr 1fr auto;
     gap: 10px;
     align-items: center;
     padding: 13px 0;
@@ -252,6 +256,16 @@ button:hover {
 .subject-info {
     font-size: 13px;
     color: #68778b;
+}
+
+.status-passed {
+    color: #18845c;
+    font-weight: bold;
+}
+
+.status-failed {
+    color: #d44b4b;
+    font-weight: bold;
 }
 
 .delete-btn {
@@ -315,8 +329,6 @@ th {
     margin: 0;
 }
 
-/* SEO説明文 */
-
 .seo-content h2 {
     font-size: 19px;
     color: #183153;
@@ -328,14 +340,26 @@ th {
     margin-top: 0;
 }
 
+.seo-content h3 {
+    font-size: 16px;
+    color: #285b91;
+    margin-top: 20px;
+}
+
 .seo-content p,
 .seo-content li {
     font-size: 14px;
     color: #53677f;
 }
 
-.seo-content ol {
+.seo-content ol,
+.seo-content ul {
     padding-left: 25px;
+}
+
+.text-link {
+    color: #285b91;
+    font-weight: bold;
 }
 
 footer {
@@ -351,8 +375,26 @@ footer a {
     margin: 0 8px;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 700px) {
+    .form-grid {
+        grid-template-columns: 1fr 1fr;
+    }
 
+    .form-grid > div:first-child {
+        grid-column: 1 / -1;
+    }
+
+    .subject-item {
+        grid-template-columns: 1fr 1fr;
+        gap: 7px;
+    }
+
+    .subject-item .delete-btn {
+        justify-self: start;
+    }
+}
+
+@media (max-width: 600px) {
     main {
         margin-top: 25px;
     }
@@ -365,14 +407,6 @@ footer a {
         padding: 19px;
     }
 
-    .form-grid {
-        grid-template-columns: 1fr 1fr;
-    }
-
-    .form-grid > div:first-child {
-        grid-column: 1 / -1;
-    }
-
     .stats {
         grid-template-columns: repeat(3, 1fr);
     }
@@ -381,21 +415,10 @@ footer a {
         font-size: 18px;
     }
 
-    .subject-item {
-        grid-template-columns: 1fr 1fr;
-        gap: 5px;
-    }
-
-    .subject-item .delete-btn {
-        justify-self: start;
-    }
-
     .result-number {
         font-size: 42px;
     }
-
 }
-
 </style>
 
 <script type="application/ld+json">
@@ -404,7 +427,7 @@ footer a {
   "@type": "WebApplication",
   "name": "Campus便利箱 GPA計算機",
   "url": "https://tanikinmax.github.io/campus-benribako/gpa.html",
-  "description": "大学生向けの無料GPA計算機。単位数とGPを入力してGPAを自動計算できます。",
+  "description": "大学生向けの無料GPA計算機。単位数とGP、単位取得状況を入力してGPAを自動計算できます。",
   "applicationCategory": "EducationalApplication",
   "operatingSystem": "Any",
   "offers": {
@@ -462,7 +485,7 @@ footer a {
     <div class="progress-area">
 
         <div class="progress-label">
-            <span>単位取得割合</span>
+            <span>登録科目の単位取得率</span>
             <span id="progressText">0%</span>
         </div>
 
@@ -495,12 +518,21 @@ footer a {
             <input type="number" id="subjectPoint" min="0" max="5" step="0.1" value="4.0">
         </div>
 
+        <div>
+            <label for="subjectStatus">単位取得状況</label>
+            <select id="subjectStatus">
+                <option value="true">取得済み</option>
+                <option value="false">未取得</option>
+            </select>
+        </div>
+
     </div>
 
     <button class="primary-btn" id="addSubject">＋ 科目を追加する</button>
 
     <div class="note">
-        GPは0.0〜5.0の範囲で入力してください。0.1刻みで入力できます。大学によってGPの評価基準は異なります。
+        GPは0.0〜5.0の範囲で入力してください。0.1刻みで入力できます。
+        単位取得状況はGPとは別に選択できます。大学によってGPの評価基準や単位認定の条件は異なります。
     </div>
 
 </section>
@@ -545,6 +577,7 @@ footer a {
                 <th>科目</th>
                 <th>単位数</th>
                 <th>GP</th>
+                <th>取得状況</th>
             </tr>
         </thead>
 
@@ -553,23 +586,31 @@ footer a {
                 <td>英語</td>
                 <td>2</td>
                 <td>4.0</td>
+                <td>取得済み</td>
             </tr>
 
             <tr>
                 <td>経済学</td>
                 <td>2</td>
                 <td>3.0</td>
+                <td>取得済み</td>
             </tr>
 
             <tr>
                 <td>情報処理</td>
                 <td>2</td>
                 <td>2.0</td>
+                <td>取得済み</td>
             </tr>
         </tbody>
     </table>
 
     <p><strong>計算結果：3.00</strong></p>
+
+    <div class="note">
+        この計算機では、登録したすべての科目をGPAの計算対象としています。
+        実際の大学では、履修取消科目や認定科目などが計算対象外になる場合があります。
+    </div>
 
 </section>
 
@@ -588,8 +629,16 @@ footer a {
     <div class="faq-item">
         <strong>Q. 大学によってGPAの基準は違いますか？</strong>
         <p>
-            はい。GPの割り当てや評価方法は大学によって異なります。
+            はい。GPの割り当てや評価方法、計算対象となる科目は大学によって異なります。
             この計算機ではGPを自由に入力できるため、自分の大学の基準に合わせて利用できます。
+        </p>
+    </div>
+
+    <div class="faq-item">
+        <strong>Q. GPが0でも単位を取得した場合はどうすればよいですか？</strong>
+        <p>
+            科目追加時にGPを0.0に設定し、単位取得状況を「取得済み」にしてください。
+            GPAと取得単位数をそれぞれ別に計算できます。
         </p>
     </div>
 
@@ -598,6 +647,7 @@ footer a {
         <p>
             はい。入力した科目データはブラウザのローカルストレージに自動保存されます。
             同じブラウザで開けば、次回もデータを利用できます。
+            ブラウザのデータを削除すると、保存内容も消える場合があります。
         </p>
     </div>
 
@@ -609,9 +659,16 @@ footer a {
         </p>
     </div>
 
-</section>
+    <div class="faq-item">
+        <strong>Q. 単位取得率は卒業に必要な単位数に対する割合ですか？</strong>
+        <p>
+            いいえ。このページの単位取得率は、登録した科目の単位数のうち、
+            取得済みとして登録した単位数の割合です。
+            卒業に必要な単位数に対する進捗率ではありません。
+        </p>
+    </div>
 
-<!-- SEO説明文：フッターより上に配置 -->
+</section>
 
 <section class="card seo-content">
 
@@ -630,7 +687,8 @@ footer a {
         <li>科目名を入力します。</li>
         <li>科目の単位数を入力します。</li>
         <li>GPを入力します。</li>
-        <li>GPAの計算結果を確認します。</li>
+        <li>単位取得状況を選択します。</li>
+        <li>GPAや取得単位数、単位取得率を確認します。</li>
     </ol>
 
     <h2>大学生のGPAを計算するメリット</h2>
@@ -641,26 +699,53 @@ footer a {
         就職活動や奨学金の申請などでGPAを確認する際にも便利です。
     </p>
 
-<h2>Campus便利箱について</h2>
+    <h2>単位数によってGPAへの影響は変わる？</h2>
 
-<p>
-    Campus便利箱は、大学生の学習や大学生活をサポートする
-    無料の便利ツールサイトです。
-    GPA計算機のほか、レポート作成や大学生活に役立つツールを提供しています。
-</p>
+    <p>
+        GPAは単純に科目ごとのGPを足して科目数で割るのではなく、
+        単位数を考慮した加重平均で計算します。
+        そのため、単位数の多い科目はGPA全体に与える影響も大きくなります。
+    </p>
 
-<p>
-    大学のレポートや課題を作成する際には、
-    <a href="mojisu.html">無料の文字数カウンター</a>
-    もぜひ活用してください。
-    文字数を簡単に確認できるため、レポートや課題の文字数調整に便利です。
-</p>
+    <p>
+        例えば、2単位の科目と4単位の科目では、
+        同じGPであってもGPA計算における重みが異なります。
+        自分の履修科目を確認しながら成績を管理することが大切です。
+    </p>
 
-<p>
-    そのほかの大学生向け便利ツールは、
-    <a href="index.html">Campus便利箱のトップページ</a>
-    から確認できます。
-</p>
+    <h2>GPAを計算するときの注意点</h2>
+
+    <p>
+        GPAの計算方法は大学によって異なります。
+        GPの割り当てだけでなく、不合格科目や履修取消科目、
+        認定科目などを計算対象に含めるかどうかも違う場合があります。
+    </p>
+
+    <p>
+        この計算機では、入力したすべての科目をGPAの計算対象としています。
+        大学が公表しているGPAと異なる場合は、所属大学の履修要項や成績評価基準を確認してください。
+    </p>
+
+    <h2>Campus便利箱について</h2>
+
+    <p>
+        Campus便利箱は、大学生の学習や大学生活をサポートする
+        無料の便利ツールサイトです。
+        GPA計算機のほか、レポート作成や大学生活に役立つツールを提供しています。
+    </p>
+
+    <p>
+        大学のレポートや課題を作成する際には、
+        <a href="mojisu.html" class="text-link">無料の文字数カウンター</a>
+        もぜひ活用してください。
+        文字数を簡単に確認できるため、レポートや課題の文字数調整に便利です。
+    </p>
+
+    <p>
+        そのほかの大学生向け便利ツールは、
+        <a href="index.html" class="text-link">Campus便利箱のトップページ</a>
+        から確認できます。
+    </p>
 
 </section>
 
@@ -672,8 +757,12 @@ footer a {
 
     <p>
         <a href="index.html">トップページ</a>
+        <a href="about.html">運営者情報</a>
         <a href="privacy.html">プライバシーポリシー</a>
+        <a href="contact.html">お問い合わせ</a>
     </p>
+
+    <p>© 2026 Campus便利箱</p>
 
 </footer>
 
@@ -683,7 +772,6 @@ footer a {
 
 const STORAGE_KEY = "campusGpa";
 
-// 旧バージョンの成績をGPに変換
 const gradePoints = {
     S: 4.0,
     A: 3.0,
@@ -694,13 +782,12 @@ const gradePoints = {
 
 let subjects = [];
 
-// 保存データを読み込む
+// 科目データを読み込む
 function loadSubjects() {
 
     try {
 
-        // トップページのデータを優先
-        const currentData = localStorage.getItem("campusGpa");
+        const currentData = localStorage.getItem(STORAGE_KEY);
 
         if (currentData !== null) {
 
@@ -708,23 +795,34 @@ function loadSubjects() {
 
             if (Array.isArray(parsed)) {
 
-                subjects = parsed.map(item => ({
-                    name: String(item.name || ""),
-                    credits: Number(item.credits),
-                    point: Number(item.point)
-                })).filter(item =>
-                    Number.isFinite(item.credits) &&
+                subjects = parsed.map(item => {
+
+                    const point = Number(item.point);
+                    const credits = Number(item.credits);
+
+                    return {
+                        name: String(item.name || ""),
+                        credits: credits,
+                        point: point,
+                        passed: typeof item.passed === "boolean"
+                            ? item.passed
+                            : point > 0
+                    };
+
+                }).filter(item =>
+                    Number.isInteger(item.credits) &&
                     item.credits > 0 &&
                     Number.isFinite(item.point) &&
                     item.point >= 0 &&
                     item.point <= 5
                 );
 
+                saveSubjects();
                 return;
             }
         }
 
-        // トップページのデータがない場合は旧gpa.htmlのデータを読み込む
+        // 旧バージョンのデータを読み込む
         const oldData = localStorage.getItem("campusGpaSubjects");
 
         if (oldData !== null) {
@@ -736,21 +834,21 @@ function loadSubjects() {
                 subjects = parsed.map(item => {
 
                     const grade = String(item.grade || "D").toUpperCase();
+                    const point = gradePoints[grade] ?? 0;
 
                     return {
                         name: String(item.name || ""),
                         credits: Number(item.credits),
-                        point: gradePoints[grade] ?? 0
+                        point: point,
+                        passed: grade !== "D"
                     };
 
                 }).filter(item =>
-                    Number.isFinite(item.credits) &&
+                    Number.isInteger(item.credits) &&
                     item.credits > 0
                 );
 
-                // 新しい形式にも保存
                 saveSubjects();
-
                 return;
             }
         }
@@ -784,10 +882,11 @@ function calculateGPA() {
 
         totalCredits += subject.credits;
 
+        // GPAは登録した全科目を対象に計算
         totalPoints += subject.credits * subject.point;
 
-        // GPが0より大きい科目を取得単位として扱う
-        if (subject.point > 0) {
+        // 取得単位数は取得状況をもとに計算
+        if (subject.passed) {
             earnedCredits += subject.credits;
         }
 
@@ -856,6 +955,15 @@ function renderSubjects() {
         point.className = "subject-info";
         point.textContent = "GP " + subject.point.toFixed(1);
 
+        const status = document.createElement("div");
+        status.className = subject.passed
+            ? "subject-info status-passed"
+            : "subject-info status-failed";
+
+        status.textContent = subject.passed
+            ? "取得済み"
+            : "未取得";
+
         const deleteButton = document.createElement("button");
         deleteButton.className = "delete-btn";
         deleteButton.textContent = "削除";
@@ -872,6 +980,7 @@ function renderSubjects() {
         item.appendChild(name);
         item.appendChild(credits);
         item.appendChild(point);
+        item.appendChild(status);
         item.appendChild(deleteButton);
 
         list.appendChild(item);
@@ -892,6 +1001,9 @@ document.getElementById("addSubject").addEventListener("click", () => {
     const point = Number(
         document.getElementById("subjectPoint").value
     );
+
+    const passed =
+        document.getElementById("subjectStatus").value === "true";
 
     if (!name) {
         alert("科目名を入力してください。");
@@ -916,7 +1028,8 @@ document.getElementById("addSubject").addEventListener("click", () => {
     subjects.push({
         name: name,
         credits: credits,
-        point: point
+        point: point,
+        passed: passed
     });
 
     saveSubjects();
@@ -925,6 +1038,7 @@ document.getElementById("addSubject").addEventListener("click", () => {
     document.getElementById("subjectName").value = "";
     document.getElementById("subjectCredits").value = 2;
     document.getElementById("subjectPoint").value = 4.0;
+    document.getElementById("subjectStatus").value = "true";
 
 });
 
@@ -958,11 +1072,11 @@ document.getElementById("sampleBtn").addEventListener("click", () => {
     }
 
     subjects = [
-        { name: "英語コミュニケーション", credits: 2, point: 4.0 },
-        { name: "経済学入門", credits: 2, point: 3.0 },
-        { name: "情報処理", credits: 2, point: 2.0 },
-        { name: "第二外国語", credits: 2, point: 3.5 },
-        { name: "基礎演習", credits: 2, point: 4.5 }
+        { name: "英語コミュニケーション", credits: 2, point: 4.0, passed: true },
+        { name: "経済学入門", credits: 2, point: 3.0, passed: true },
+        { name: "情報処理", credits: 2, point: 2.0, passed: true },
+        { name: "第二外国語", credits: 2, point: 3.5, passed: true },
+        { name: "基礎演習", credits: 2, point: 4.5, passed: true }
     ];
 
     saveSubjects();
@@ -978,4 +1092,3 @@ calculateGPA();
 
 </body>
 </html>
-```
