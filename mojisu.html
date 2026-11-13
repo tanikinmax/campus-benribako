@@ -1,13 +1,12 @@
-```html
 <!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>文字数カウント｜無料レポート文字数カウンター - Campus便利箱</title>
+<title>文字数カウント｜無料でレポートの文字数を自動計算 - Campus便利箱</title>
 
-<meta name="description" content="無料で使える文字数カウンター。大学のレポートや課題の文字数をリアルタイムでカウントできます。目標文字数、達成率、不足文字数、段落数、単語数、読了時間も確認できる便利なツールです。">
+<meta name="description" content="無料の文字数カウンター。大学のレポートや課題、作文の文字数をリアルタイムで自動計算。空白・改行を除いた文字数、目標達成率、段落数、読了時間も確認できます。">
 
 <meta name="robots" content="index, follow">
 
@@ -15,13 +14,31 @@
 
 <meta name="theme-color" content="#4f7cff">
 
-<!-- OGP設定 -->
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ja_JP">
-<meta property="og:title" content="文字数カウント｜無料レポート文字数カウンター - Campus便利箱">
-<meta property="og:description" content="大学生のレポートや課題に便利な無料文字数カウンター。目標文字数、達成率、段落数、読了時間をリアルタイムで確認できます。">
+<meta property="og:title" content="無料文字数カウンター｜レポート・課題の文字数計算">
+<meta property="og:description" content="大学のレポートや課題に便利な無料文字数カウンター。文字数、目標達成率、段落数などをリアルタイムで確認できます。">
 <meta property="og:url" content="https://tanikinmax.github.io/campus-benribako/mojisu.html">
 <meta property="og:site_name" content="Campus便利箱">
+
+<!-- 構造化データ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Campus便利箱 無料文字数カウンター",
+  "url": "https://tanikinmax.github.io/campus-benribako/mojisu.html",
+  "applicationCategory": "EducationalApplication",
+  "operatingSystem": "Any",
+  "browserRequirements": "JavaScript enabled",
+  "description": "大学のレポートや課題の文字数を無料でカウントできるオンラインツールです。",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  }
+}
+</script>
 
 <style>
 * {
@@ -33,7 +50,7 @@ body {
     font-family: "Noto Sans JP", sans-serif;
     background: #f4f7fb;
     color: #333;
-    line-height: 1.7;
+    line-height: 1.8;
 }
 
 header {
@@ -88,6 +105,7 @@ textarea {
     resize: vertical;
     outline: none;
     background: #fff;
+    font-family: inherit;
 }
 
 textarea:focus {
@@ -266,6 +284,16 @@ button:hover {
     margin: 0;
 }
 
+.related-links a {
+    color: #4f7cff;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.related-links a:hover {
+    text-decoration: underline;
+}
+
 .back {
     display: block;
     text-align: center;
@@ -310,204 +338,213 @@ footer {
 
 <header>
     <h1>無料文字数カウンター</h1>
-    <p>大学のレポート・課題の文字数をリアルタイムでカウント！</p>
+    <p>大学のレポート・課題・作文の文字数をリアルタイムで自動計算！</p>
 </header>
 
 <main class="container">
 
-    <section class="card">
+<section class="card">
 
-        <h2>📝 目標文字数を設定</h2>
+    <h2>📝 目標文字数を設定</h2>
 
-        <div class="target-setting">
-            <label for="targetCount">目標文字数</label>
-            <input type="number" id="targetCount" value="1200" min="1">
-            <span>文字</span>
+    <div class="target-setting">
+        <label for="targetCount">目標文字数</label>
+        <input type="number" id="targetCount" value="1200" min="1">
+        <span>文字</span>
+    </div>
+
+    <div class="report-mode">
+        <input type="checkbox" id="reportMode" checked>
+        <label for="reportMode">レポートモード（空白・改行を除いて計算）</label>
+    </div>
+
+    <div class="progress-area">
+
+        <div class="progress-top">
+            <span>目標達成率</span>
+            <strong id="progressPercent">0%</strong>
         </div>
 
-        <div class="report-mode">
-            <input type="checkbox" id="reportMode" checked>
-            <label for="reportMode">レポートモード（空白・改行を除いて計算）</label>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
         </div>
 
-        <div class="progress-area">
-
-            <div class="progress-top">
-                <span>目標達成率</span>
-                <strong id="progressPercent">0%</strong>
-            </div>
-
-            <div class="progress-bar">
-                <div class="progress-fill" id="progressFill"></div>
-            </div>
-
-            <div class="progress-message" id="progressMessage">
-                目標まであと1200文字！
-            </div>
-
+        <div class="progress-message" id="progressMessage" aria-live="polite">
+            目標まであと1200文字！
         </div>
 
-        <h2>✏️ 文章を入力して文字数カウント</h2>
+    </div>
 
-        <textarea id="textInput" placeholder="ここに大学のレポートや課題の文章を入力してください..."></textarea>
+    <h2>✏️ 文章を入力して文字数をカウント</h2>
 
-        <div class="stats">
+    <textarea
+        id="textInput"
+        placeholder="ここに大学のレポートや課題の文章を入力してください..."
+        aria-label="文字数をカウントする文章"
+    ></textarea>
 
-            <div class="stat">
-                <p>総文字数（改行含む）</p>
-                <strong id="totalCount">0</strong>
-            </div>
+    <div class="stats">
 
-            <div class="stat">
-                <p>改行を除いた文字数</p>
-                <strong id="noLineCount">0</strong>
-            </div>
-
-            <div class="stat">
-                <p>空白・改行を除いた文字数</p>
-                <strong id="noSpaceCount">0</strong>
-            </div>
-
-            <div class="stat">
-                <p>段落数</p>
-                <strong id="paragraphCount">0</strong>
-            </div>
-
-            <div class="stat">
-                <p>単語数（スペース区切り）</p>
-                <strong id="wordCount">0</strong>
-            </div>
-
-            <div class="stat">
-                <p>読了時間の目安</p>
-                <strong id="readTime">0分</strong>
-            </div>
-
+        <div class="stat">
+            <p>総文字数（改行含む）</p>
+            <strong id="totalCount">0</strong>
         </div>
 
-        <div class="buttons">
-            <button class="copy-btn" onclick="copyText()">📋 文章をコピー</button>
-            <button class="clear-btn" onclick="clearText()">🗑️ クリア</button>
+        <div class="stat">
+            <p>改行を除いた文字数</p>
+            <strong id="noLineCount">0</strong>
         </div>
 
-    </section>
+        <div class="stat">
+            <p>空白・改行を除いた文字数</p>
+            <strong id="noSpaceCount">0</strong>
+        </div>
 
-    <section class="info">
+        <div class="stat">
+            <p>段落数</p>
+            <strong id="paragraphCount">0</strong>
+        </div>
 
-        <h2>📖 無料文字数カウンターの使い方</h2>
+        <div class="stat">
+            <p>単語数（スペース区切り）</p>
+            <strong id="wordCount">0</strong>
+        </div>
 
+        <div class="stat">
+            <p>読了時間の目安</p>
+            <strong id="readTime">0分</strong>
+        </div>
+
+    </div>
+
+    <div class="buttons">
+        <button class="copy-btn" onclick="copyText()">📋 文章をコピー</button>
+        <button class="clear-btn" onclick="clearText()">🗑️ クリア</button>
+    </div>
+
+</section>
+
+<section class="info">
+
+    <h2>📖 無料文字数カウンターの使い方</h2>
+
+    <p>
+    Campus便利箱の文字数カウンターは、大学のレポートや課題、作文などの文字数を無料で確認できるオンラインツールです。
+    文章を入力するだけで、文字数や目標達成率をリアルタイムで自動計算します。
+    面倒な手動カウントは必要ありません。
+    </p>
+
+    <h3>この文字数カウントツールでできること</h3>
+
+    <ul>
+        <li>文章の総文字数をカウント</li>
+        <li>改行を除いた文字数を確認</li>
+        <li>空白・改行を除いた文字数を確認</li>
+        <li>目標文字数と達成率を設定・確認</li>
+        <li>目標までの不足文字数を自動計算</li>
+        <li>文章の段落数を確認</li>
+        <li>スペース区切りの単語数をカウント</li>
+        <li>読了時間の目安を表示</li>
+        <li>入力した文章をコピー</li>
+    </ul>
+
+    <h3>大学のレポートの文字数を確認する方法</h3>
+
+    <p>
+    大学のレポートでは「1200字以上」「2000字程度」など、指定された文字数を守ることが重要です。
+    このツールでは目標文字数を自由に設定できるため、課題の指定に合わせて文字数を確認できます。
+    </p>
+
+    <p>
+    レポートモードをオンにすると、空白と改行を除いた文字数を基準に目標達成率を計算します。
+    目標に達していない場合は、あと何文字必要かが表示されます。
+    </p>
+
+    <h3>文字数のカウント方法について</h3>
+
+    <p>
+    総文字数は改行を含めてカウントします。
+    改行を除いた文字数では改行コードを除外し、空白・改行を除いた文字数ではスペースやタブなども除外します。
+    </p>
+
+    <p>
+    読了時間は、日本語の文章を1分あたり500文字として計算した目安です。
+    単語数は空白で区切られた語の数を表示しており、日本語の単語を正確に解析するものではありません。
+    </p>
+
+    <p>
+    ※大学や提出先によって文字数の数え方が異なる場合があります。提出先の指定を必ず確認してください。
+    </p>
+
+</section>
+
+<section class="info">
+
+    <h2>❓ 文字数カウンターのよくある質問</h2>
+
+    <div class="faq-item">
+        <h3>Q. この文字数カウンターは無料で使えますか？</h3>
         <p>
-        Campus便利箱の文字数カウンターは、大学のレポートや課題、作文などの文字数を無料で確認できるオンラインツールです。
-        文章を入力するだけで、文字数や目標達成率をリアルタイムに計算します。
+        はい。Campus便利箱の文字数カウンターは無料で利用できます。目標文字数の設定や達成率の確認なども無料です。
         </p>
+    </div>
 
-        <h3>この文字数カウントツールでできること</h3>
-
-        <ul>
-            <li>文章の総文字数をカウント</li>
-            <li>改行を除いた文字数を確認</li>
-            <li>空白・改行を除いた文字数を確認</li>
-            <li>目標文字数と達成率を設定・確認</li>
-            <li>目標までの不足文字数を自動計算</li>
-            <li>文章の段落数を確認</li>
-            <li>スペース区切りの単語数をカウント</li>
-            <li>読了時間の目安を表示</li>
-            <li>入力した文章をコピー</li>
-        </ul>
-
-        <h3>大学のレポートの文字数を確認する方法</h3>
-
+    <div class="faq-item">
+        <h3>Q. 大学のレポートの文字数を数えられますか？</h3>
         <p>
-        大学のレポートでは、「1200字以上」「2000字程度」など、指定された文字数を守ることが重要です。
-        このツールでは目標文字数を自由に設定できるため、課題の指定に合わせて文字数を確認できます。
+        はい。大学のレポートや課題の文章を入力することで、文字数をリアルタイムで確認できます。目標文字数を設定すれば、指定文字数への達成率も確認できます。
         </p>
+    </div>
 
+    <div class="faq-item">
+        <h3>Q. 空白や改行を除いた文字数を確認できますか？</h3>
         <p>
-        レポートモードをオンにすると、空白と改行を除いた文字数を基準に目標達成率を計算します。
-        目標に達していない場合は、あと何文字必要かが表示されます。
+        はい。空白・改行を除いた文字数と、改行のみを除いた文字数の両方を確認できます。
         </p>
+    </div>
 
-        <h3>文字数のカウント方法について</h3>
-
+    <div class="faq-item">
+        <h3>Q. 入力した文章は保存されますか？</h3>
         <p>
-        総文字数は改行を含めてカウントします。
-        改行を除いた文字数では改行コードを除外し、空白・改行を除いた文字数ではスペースやタブなども除外します。
+        このツールは入力された文章をブラウザ上で計算する仕組みです。文字数カウントのために文章をサーバーへ送信する処理は行っていません。
         </p>
+    </div>
 
+    <div class="faq-item">
+        <h3>Q. スマートフォンでも使えますか？</h3>
         <p>
-        読了時間は、日本語の文章を1分あたり500文字として計算した目安です。
-        単語数は空白で区切られた語の数を表示しており、日本語の単語を正確に解析するものではありません。
+        はい。スマートフォン、タブレット、パソコンから利用できます。
         </p>
+    </div>
 
-        <p>
-        ※大学や提出先によって文字数の数え方が異なる場合があります。提出先の指定を必ず確認してください。
-        </p>
+</section>
 
-    </section>
-
-    <section class="info">
-
-        <h2>❓ 文字数カウンターのよくある質問</h2>
-
-        <div class="faq-item">
-            <h3>Q. この文字数カウンターは無料で使えますか？</h3>
-            <p>
-            はい。Campus便利箱の文字数カウンターは無料で利用できます。目標文字数の設定や達成率の確認なども無料です。
-            </p>
-        </div>
-
-        <div class="faq-item">
-            <h3>Q. 大学のレポートの文字数を数えられますか？</h3>
-            <p>
-            はい。大学のレポートや課題の文章を入力することで、文字数をリアルタイムで確認できます。目標文字数を設定すれば、指定文字数への達成率も確認できます。
-            </p>
-        </div>
-
-        <div class="faq-item">
-            <h3>Q. 空白や改行を除いた文字数を確認できますか？</h3>
-            <p>
-            はい。空白・改行を除いた文字数と、改行のみを除いた文字数の両方を確認できます。
-            </p>
-        </div>
-
-        <div class="faq-item">
-            <h3>Q. 入力した文章は保存されますか？</h3>
-            <p>
-            このツールは入力された文章をブラウザ上で計算する仕組みです。文字数カウントのために文章をサーバーへ送信する処理は行っていません。ただし、ブラウザや端末の機能による保存については別途ご注意ください。
-            </p>
-        </div>
-
-        <div class="faq-item">
-            <h3>Q. スマートフォンでも使えますか？</h3>
-            <p>
-            はい。スマートフォン、タブレット、パソコンから利用できます。
-            </p>
-        </div>
-
-    </section>
-
-   <div class="info">
+<section class="info related-links">
 
     <h2>🎓 大学生向けの関連ツール</h2>
 
     <p>
-        Campus便利箱では、大学生活や学習に役立つ無料ツールを提供しています。
-        レポート作成だけでなく、大学の成績管理にも活用してみてください。
+    Campus便利箱では、大学生活や学習に役立つ無料ツールを提供しています。
+    レポート作成や大学の成績管理にぜひ活用してください。
     </p>
 
     <p>
         <a href="gpa.html">
-            GPA計算機｜大学のGPAを無料で自動計算
+        GPA計算機｜大学のGPAを無料で自動計算
         </a>
     </p>
 
     <p>
         <a href="index.html">
-            Campus便利箱のトップページ｜大学生向け無料便利ツール一覧
+        Campus便利箱のトップページ｜大学生向け無料便利ツール一覧
         </a>
     </p>
 
-</div>
+</section>
+
+<a href="index.html" class="back">
+    ← トップページに戻る
+</a>
 
 </main>
 
@@ -525,14 +562,18 @@ function countCharacters() {
 
     const text = textInput.value;
 
-    // 総文字数（改行含む）
-    const total = text.length;
+    // Unicodeコードポイント単位で文字数を計算
+    const total = Array.from(text).length;
 
     // 改行を除いた文字数
-    const noLine = text.replace(/\r\n|\r|\n/g, "").length;
+    const noLine = Array.from(
+        text.replace(/\r\n|\r|\n/g, "")
+    ).length;
 
     // 空白・改行を除いた文字数
-    const noSpace = text.replace(/\s/g, "").length;
+    const noSpace = Array.from(
+        text.replace(/\s/g, "")
+    ).length;
 
     // レポートモードに応じた文字数
     const currentCount = reportMode.checked ? noSpace : total;
@@ -541,9 +582,11 @@ function countCharacters() {
     const target = Math.max(1, Number(targetCount.value) || 1);
 
     // 達成率
-    const percentage = Math.floor((currentCount / target) * 100);
+    const percentage = Math.floor(
+        (currentCount / target) * 100
+    );
 
-    // 段落数（空行を除く）
+    // 段落数
     const paragraphs = text.trim()
         ? text.trim().split(/\n\s*\n/).filter(p => p.trim()).length
         : 0;
@@ -571,7 +614,6 @@ function countCharacters() {
     document.getElementById("progressPercent").textContent =
         percentage + "%";
 
-    // バーは100%を上限にする
     document.getElementById("progressFill").style.width =
         Math.min(percentage, 100) + "%";
 
@@ -588,6 +630,7 @@ function countCharacters() {
             "目標まであと" + (target - currentCount) + "文字！";
 
     }
+
 }
 
 function clearText() {
@@ -602,6 +645,7 @@ function clearText() {
         countCharacters();
 
     }
+
 }
 
 async function copyText() {
@@ -616,6 +660,7 @@ async function copyText() {
     try {
 
         await navigator.clipboard.writeText(text);
+
         alert("文章をコピーしました！");
 
     } catch (error) {
@@ -631,6 +676,7 @@ async function copyText() {
         }
 
     }
+
 }
 
 // 入力時に自動計算
@@ -649,4 +695,3 @@ countCharacters();
 
 </body>
 </html>
-```
