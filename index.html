@@ -298,7 +298,7 @@ button.full{
 .tool-link{
   display:block;
   text-align:center;
-  margin-top:15px;
+    margin-top:15px;
   padding:13px;
   background:#edf0ff;
   color:#4658bd;
@@ -376,6 +376,34 @@ button.full{
   font-size:14px;
   margin-bottom:8px;
   color:#555;
+}
+
+/* 大学生の具体的な活用ガイド */
+.usage-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:15px;
+  margin:20px 0;
+}
+.usage-card{
+  background:#f7f8ff;
+  border:1px solid #e5eaff;
+  border-radius:12px;
+  padding:18px;
+}
+.usage-card h3{
+  margin:0 0 9px;
+  color:#4658bd;
+  font-size:16px;
+}
+.usage-card p{
+  margin:0 0 12px;
+}
+.usage-card a{
+  display:inline-block;
+  font-size:13px;
+  font-weight:bold;
+  text-decoration:none;
 }
 
 .faq-item{
@@ -518,8 +546,7 @@ footer{
 <section class="card" style="margin-bottom:25px;">
 
   <h2>Campus便利箱とは？</h2>
-
-  <p style="font-size:14px;line-height:1.9;color:#555;">
+    <p style="font-size:14px;line-height:1.9;color:#555;">
     Campus便利箱は、大学生の毎日をもっと便利にするための無料Webツール集です。
     GPA計算機や文字数カウンター、バイト給料計算、割り勘計算など、
     大学生活で役立つ機能をひとつのサイトにまとめました。
@@ -769,7 +796,7 @@ footer{
   <label for="hours" class="small-note">1日の勤務時間</label>
   <input
     type="number"
-    id="hours"
+        id="hours"
     min="0.25"
     max="24"
     step="0.25"
@@ -808,7 +835,7 @@ footer{
 </section>
 
 <!-- 割り勘計算 -->
-<section class="card">
+<section class="card" id="split">
 
   <h2>🍕 割り勘計算</h2>
 
@@ -889,7 +916,7 @@ footer{
 </section>
 
 <!-- 課題締切管理 -->
-<section class="card">
+<section class="card" id="deadline">
 
   <h2>📌 課題締切管理</h2>
 
@@ -922,9 +949,8 @@ footer{
   </div>
 
 </section>
-
 <!-- 節約計算 -->
-<section class="card">
+<section class="card" id="saving">
 
   <h2>💸 大学生節約計算</h2>
 
@@ -1032,13 +1058,6 @@ footer{
   </p>
 
 </section>
-
-<!-- FAQ -->
-<section class="info-section">
-
-  <h2>よくある質問</h2>
-
-  <div class="faq-item">
     <h3>Q. Campus便利箱の利用に料金はかかりますか？</h3>
     <p>
       A. いいえ。掲載しているWebツールは無料で利用できます。
@@ -1288,125 +1307,106 @@ displayGpa();
 // =====================================
 // 文字数カウンター
 // =====================================
-
-const wcText=getElement("wcText");
-const wcTarget=getElement("wcTarget");
-
-function countCharacters(text){
-
-  if(typeof Intl!=="undefined"&&Intl.Segmenter){
-
-    const segmenter=new Intl.Segmenter("ja",{
-      granularity:"grapheme"
-    });
-
-    return [...segmenter.segment(text)].length;
-
-  }
-
-  return Array.from(text).length;
-}
-
 function updateWordCount(){
 
-  const value=wcText.value;
+  const text=getElement("wcText").value;
 
-  const all=countCharacters(value);
+  const all=text.length;
 
-  const noSpace=countCharacters(
-    value.replace(/[\s\u3000]/g,"")
-  );
+  const noSpace=text.replace(/[\s　]/g,"").length;
 
-  const noNewline=countCharacters(
-    value.replace(/\r\n|\r|\n/g,"")
-  );
+  const noNewline=text.replace(/[\r\n]/g,"").length;
 
-  getElement("wcAll").textContent=all.toLocaleString();
+  getElement("wcAll").textContent=all;
 
-  getElement("wcNoSpace").textContent=noSpace.toLocaleString();
+  getElement("wcNoSpace").textContent=noSpace;
 
-  getElement("wcNoNewline").textContent=noNewline.toLocaleString();
+  getElement("wcNoNewline").textContent=noNewline;
 
   getElement("wcPages").textContent=
-    "原稿用紙換算："+(all/400).toFixed(2)+"枚（400字）";
+    "原稿用紙換算："+(noSpace/400).toFixed(2)+"枚（400字）";
 
-  const targetValue=wcTarget.value;
-  const goal=Number(targetValue);
+  const targetValue=getElement("wcTarget").value;
 
-  const area=getElement("wcGoalArea");
-  const error=getElement("wcError");
+  const goalArea=getElement("wcGoalArea");
 
-  error.textContent="";
+  if(targetValue!==""&&Number(targetValue)>0){
 
-  if(targetValue===""){
-    area.hidden=true;
-    return;
+    const target=Number(targetValue);
+
+    const percent=Math.min(100,Math.floor(noSpace/target*100));
+
+    goalArea.hidden=false;
+
+    getElement("wcGoalText").textContent=percent+"%";
+
+    getElement("wcBar").style.width=percent+"%";
+
+    getElement("wcProgress").setAttribute("aria-valuenow",percent);
+
+    if(noSpace>=target){
+
+      getElement("wcRemaining").textContent=
+        "🎉 目標文字数を達成しました！";
+
+    }else{
+
+      getElement("wcRemaining").textContent=
+        "あと"+(target-noSpace)+"文字で目標達成です。";
+
+    }
+
+  }else{
+
+    goalArea.hidden=true;
+
   }
-
-  if(!isPositiveInteger(goal)){
-    area.hidden=true;
-    error.textContent="目標文字数は1以上の整数で入力してください。";
-    return;
-  }
-
-  area.hidden=false;
-
-  const rate=all/goal*100;
-  const displayRate=rate.toFixed(1);
-
-  getElement("wcGoalText").textContent=displayRate+"%";
-
-  getElement("wcBar").style.width=Math.min(rate,100)+"%";
-
-  getElement("wcProgress").setAttribute(
-    "aria-valuenow",
-    String(Math.min(rate,100))
-  );
-
-  getElement("wcRemaining").textContent=
-    all>=goal
-    ?"🎉 目標文字数を達成しています！"
-    :"目標まであと "+(goal-all).toLocaleString()+" 文字です。";
 
 }
 
-wcText.addEventListener("input",updateWordCount);
-wcTarget.addEventListener("input",updateWordCount);
+getElement("wcText").addEventListener("input",updateWordCount);
 
-getElement("wcClear").addEventListener("click",()=>{
+getElement("wcTarget").addEventListener("input",updateWordCount);
 
-  if(!wcText.value||confirm("入力した文章を消去しますか？")){
+getElement("wcCopy").addEventListener("click",async()=>{
 
-    wcText.value="";
-    updateWordCount();
+  const text=getElement("wcText").value;
+
+  if(!text){
+
+    alert("コピーする文章がありません。");
+
+    return;
+
+  }
+
+  try{
+
+    await navigator.clipboard.writeText(text);
+
+    alert("文章をコピーしました！");
+
+  }catch(e){
+
+    getElement("wcText").select();
+
+    document.execCommand("copy");
+
+    alert("文章をコピーしました！");
 
   }
 
 });
 
-getElement("wcCopy").addEventListener("click",async()=>{
+getElement("wcClear").addEventListener("click",()=>{
 
-  if(!wcText.value){
-    alert("コピーする文章がありません。");
-    return;
-  }
+  if(confirm("入力した文章を削除しますか？")){
 
-  try{
+    getElement("wcText").value="";
 
-    await navigator.clipboard.writeText(wcText.value);
-    alert("文章をコピーしました！");
+    getElement("wcTarget").value="";
 
-  }catch(e){
-
-    wcText.select();
-
-    const success=document.execCommand("copy");
-
-    if(success){
-      alert("文章をコピーしました！");
-    }else{
-      alert("コピーできませんでした。文章を選択して手動でコピーしてください。");
-    }
+    updateWordCount();
 
   }
 
@@ -1419,305 +1419,326 @@ updateWordCount();
 // バイト給料計算
 // =====================================
 
-function calculateSalary(){
+getElement("salaryButton").addEventListener("click",()=>{
 
-  const wageValue=getElement("wage").value;
-  const hoursValue=getElement("hours").value;
-  const daysValue=getElement("days").value;
+  const wage=Number(getElement("wage").value);
 
-  const wage=Number(wageValue);
-  const hours=Number(hoursValue);
-  const days=Number(daysValue);
+  const hours=Number(getElement("hours").value);
+
+  const days=Number(getElement("days").value);
 
   if(
-    wageValue===""||
-    hoursValue===""||
-    daysValue===""||
-    !isPositiveInteger(wage)||
+    !Number.isFinite(wage)||
     !Number.isFinite(hours)||
+    !Number.isFinite(days)||
+    wage<=0||
     hours<=0||
     hours>24||
-    Math.round(hours*4)!==hours*4||
-    !Number.isInteger(days)||
     days<1||
-    days>7
+    days>7||
+    !Number.isInteger(days)
   ){
 
     showResult(
       "salaryResult",
-      "時給は正の整数、勤務時間は0.25〜24時間、週の勤務日数は1〜7日の範囲で入力してください。",
+      "時給・勤務時間・週の勤務日数を正しく入力してください。",
       true
     );
 
     return;
+
   }
 
-  const weekly=wage*hours*days;
+  const daily=wage*hours;
+
+  const weekly=daily*days;
+
   const monthly=weekly*52/12;
-  const yearly=weekly*52;
 
-  if(!Number.isFinite(monthly)||!Number.isFinite(yearly)){
-    showResult("salaryResult","計算できる範囲を超えています。入力内容を確認してください。",true);
-    return;
-  }
+  const yearly=weekly*52;
 
   showResult(
     "salaryResult",
-    "💰 1日あたり："+Math.round(wage*hours).toLocaleString()+"円"+
-    "\n📅 週収："+Math.round(weekly).toLocaleString()+"円"+
-    "\n📆 月収目安："+Math.round(monthly).toLocaleString()+"円"+
-    "\n🎯 年収目安："+Math.round(yearly).toLocaleString()+"円"
+    "【計算結果】\n"+
+    "日給：約"+Math.round(daily).toLocaleString()+"円\n"+
+    "週給：約"+Math.round(weekly).toLocaleString()+"円\n"+
+    "月収：約"+Math.round(monthly).toLocaleString()+"円\n"+
+    "年収：約"+Math.round(yearly).toLocaleString()+"円"
   );
 
-}
-
-getElement("salaryButton").addEventListener("click",calculateSalary);
+});
 
 
 // =====================================
 // 割り勘計算
 // =====================================
 
-function calculateSplit(){
+getElement("splitButton").addEventListener("click",()=>{
 
-  const totalValue=getElement("total").value;
-  const peopleValue=getElement("people").value;
+  const total=Number(getElement("total").value);
 
-  const total=Number(totalValue);
-  const people=Number(peopleValue);
+  const people=Number(getElement("people").value);
 
   if(
-    totalValue===""||
-    peopleValue===""||
-    !isPositiveInteger(total)||
-    !isPositiveInteger(people)
+    !Number.isSafeInteger(total)||
+    !Number.isSafeInteger(people)||
+    total<=0||
+    people<=0
   ){
 
     showResult(
       "splitResult",
-      "合計金額と人数を正の整数で入力してください。",
+      "合計金額と人数を正しく入力してください。",
       true
     );
 
     return;
+
   }
 
-  const each=Math.floor(total/people);
+  const perPerson=Math.floor(total/people);
+
   const remainder=total%people;
 
   showResult(
     "splitResult",
-    "🍕 1人あたり："+each.toLocaleString()+"円"+
-    (remainder
-      ?"\n端数："+remainder.toLocaleString()+"円（別途調整してください）"
-      :"")
+    "【割り勘結果】\n"+
+    "1人あたり："+perPerson.toLocaleString()+"円\n"+
+    "端数："+remainder.toLocaleString()+"円\n"+
+    "合計："+total.toLocaleString()+"円"
   );
 
-}
-
-getElement("splitButton").addEventListener("click",calculateSplit);
+});
 
 
 // =====================================
 // レポート構成メーカー
 // =====================================
 
-function makeReport(){
+getElement("reportButton").addEventListener("click",()=>{
 
   const theme=getElement("reportTheme").value.trim();
+
   const type=getElement("reportType").value;
 
   if(!theme){
-    showResult("reportResult","レポートのテーマを入力してください。",true);
+
+    showResult(
+      "reportResult",
+      "レポートのテーマを入力してください。",
+      true
+    );
+
     return;
+
   }
 
-  let result="";
+  let structure="";
 
   if(type==="general"){
 
-    result=
-      "【一般的なレポート構成】"+
-      "\n\nテーマ："+theme+
-      "\n\n① はじめに"+
-      "\n・テーマの背景"+
-      "\n・問題提起"+
-      "\n\n② 本論"+
-      "\n・テーマに関する説明"+
-      "\n・具体例やデータ"+
-      "\n・重要なポイント"+
-      "\n\n③ 考察"+
-      "\n・内容についての分析"+
-      "\n・自分の考え"+
-      "\n\n④ おわりに"+
-      "\n・結論"+
-      "\n・今後の課題";
+    structure=
+      "【レポート構成例】\n\n"+
+      "テーマ："+theme+"\n\n"+
+      "1. はじめに\n"+
+      "テーマを選んだ理由や問題意識を説明する。\n\n"+
+      "2. 本論\n"+
+      "テーマに関する情報や事実を整理し、具体例を挙げる。\n\n"+
+      "3. 考察\n"+
+      "調べた内容をもとに自分の考えを述べる。\n\n"+
+      "4. おわりに\n"+
+      "レポート全体をまとめ、結論を示す。\n\n"+
+      "5. 参考文献\n"+
+      "使用した資料や文献を記載する。";
 
   }else if(type==="opinion"){
 
-    result=
-      "【意見・考察型レポート】"+
-      "\n\nテーマ："+theme+
-      "\n\n① 問題提起"+
-      "\n・何が問題なのか"+
-      "\n\n② 自分の主張"+
-      "\n・自分の立場や意見"+
-      "\n\n③ 根拠・具体例"+
-      "\n・資料や具体例を用いた説明"+
-      "\n\n④ 反対意見への検討"+
-      "\n・異なる立場からの考察"+
-      "\n\n⑤ 結論"+
-      "\n・主張のまとめ";
+    structure=
+      "【意見・考察型レポート構成例】\n\n"+
+      "テーマ："+theme+"\n\n"+
+      "1. 問題提起\n"+
+      "テーマに関する疑問や課題を提示する。\n\n"+
+      "2. 自分の主張\n"+
+      "問題に対する自分の立場を明確にする。\n\n"+
+      "3. 根拠・具体例\n"+
+      "主張を支える理由や事例を示す。\n\n"+
+      "4. 反対意見への検討\n"+
+      "異なる考え方にも触れ、検討する。\n\n"+
+      "5. 結論\n"+
+      "主張を整理し、結論を述べる。";
 
   }else{
 
-    result=
-      "【調査・研究型レポート】"+
-      "\n\nテーマ："+theme+
-      "\n\n① 研究目的"+
-      "\n・調査する目的や背景"+
-      "\n\n② 先行研究"+
-      "\n・既存の研究や資料"+
-      "\n\n③ 調査方法"+
-      "\n・調査対象や手順"+
-      "\n\n④ 調査結果"+
-      "\n・得られたデータや事実"+
-      "\n\n⑤ 考察"+
-      "\n・結果から分かること"+
-      "\n\n⑥ 結論"+
-      "\n・研究内容のまとめ";
+    structure=
+      "【調査・研究型レポート構成例】\n\n"+
+      "テーマ："+theme+"\n\n"+
+      "1. 研究目的\n"+
+      "何を明らかにしたいのか説明する。\n\n"+
+      "2. 先行研究・背景\n"+
+      "既存の研究やテーマの背景を整理する。\n\n"+
+      "3. 調査方法\n"+
+      "使用した資料や調査方法を説明する。\n\n"+
+      "4. 調査結果\n"+
+      "調査から得られた事実を示す。\n\n"+
+      "5. 考察\n"+
+      "結果から分かることを分析する。\n\n"+
+      "6. 結論\n"+
+      "研究のまとめと今後の課題を述べる。";
 
   }
 
-  showResult("reportResult",result);
+  showResult("reportResult",structure);
 
-}
-
-getElement("reportButton").addEventListener("click",makeReport);
+});
 
 
 // =====================================
 // 課題締切管理
 // =====================================
-
 let tasks=readStoredArray("campusTasks");
-
-tasks=tasks.filter(task=>{
-  return task&&
-    typeof task.name==="string"&&
-    typeof task.date==="string"&&
-    /^\d{4}-\d{2}-\d{2}$/.test(task.date);
-});
 
 function saveTasks(){
 
   try{
+
     localStorage.setItem("campusTasks",JSON.stringify(tasks));
+
   }catch(e){
+
     alert("課題データを保存できませんでした。");
+
   }
 
 }
 
-function addTask(){
-
-  const name=getElement("taskName").value.trim();
-  const date=getElement("taskDate").value;
-
-  if(!name||!date){
-    alert("課題名と締切を入力してください！");
-    return;
-  }
-
-  // 日付の形式と実在する日付を確認
-  const match=date.match(/^(\d{4})-(\d{2})-(\d{2})$/);
-
-  if(!match){
-    alert("正しい締切日を入力してください。");
-    return;
-  }
-
-  const year=Number(match[1]);
-  const month=Number(match[2]);
-  const day=Number(match[3]);
-
-  const parsedDate=new Date(year,month-1,day);
-
-  if(
-    parsedDate.getFullYear()!==year||
-    parsedDate.getMonth()!==month-1||
-    parsedDate.getDate()!==day
-  ){
-    alert("正しい締切日を入力してください。");
-    return;
-  }
-
-  tasks.push({
-    name:name,
-    date:date
-  });
-
-  tasks.sort((a,b)=>a.date.localeCompare(b.date));
-
-  saveTasks();
-  displayTasks();
-
-  getElement("taskName").value="";
-  getElement("taskDate").value="";
-
-}
 function displayTasks(){
 
   const list=getElement("taskList");
+
   list.innerHTML="";
+
+  tasks.sort((a,b)=>a.date.localeCompare(b.date));
 
   if(tasks.length===0){
 
     const empty=document.createElement("p");
+
     empty.className="empty-message";
+
     empty.textContent="登録された課題はありません。";
 
     list.appendChild(empty);
+
     return;
 
   }
 
+  const today=new Date();
+
+  today.setHours(0,0,0,0);
+
   tasks.forEach((task,index)=>{
 
     const div=document.createElement("div");
+
     div.className="task-item";
 
-    const text=document.createElement("div");
+    const info=document.createElement("div");
 
-    text.textContent=
-      "📌 "+task.name+"\n締切："+task.date;
+    const name=document.createElement("strong");
 
-    const button=document.createElement("button");
+    name.textContent=task.name;
 
-    button.textContent="削除";
-    button.className="danger";
+    const date=document.createElement("p");
 
-    button.addEventListener("click",()=>{
-      deleteTask(index);
+    date.textContent="提出期限："+task.date;
+
+    const deadline=new Date(task.date+"T00:00:00");
+
+    const diff=Math.ceil(
+      (deadline-today)/(1000*60*60*24)
+    );
+
+    const status=document.createElement("p");
+
+    if(diff<0){
+
+      status.textContent="期限超過";
+
+      status.style.color="#e53935";
+
+    }else if(diff===0){
+
+      status.textContent="今日が締切！";
+
+      status.style.color="#e53935";
+
+    }else{
+
+      status.textContent="あと"+diff+"日";
+
+      status.style.color="#4658bd";
+
+    }
+
+    info.append(name,date,status);
+
+    const del=document.createElement("button");
+
+    del.textContent="削除";
+
+    del.className="danger";
+
+    del.addEventListener("click",()=>{
+
+      if(confirm("この課題を削除しますか？")){
+
+        tasks.splice(index,1);
+
+        saveTasks();
+
+        displayTasks();
+
+      }
+
     });
 
-    div.append(text,button);
+    div.append(info,del);
+
     list.appendChild(div);
 
   });
 
 }
 
-function deleteTask(index){
+getElement("taskAddButton").addEventListener("click",()=>{
 
-  tasks.splice(index,1);
+  const name=getElement("taskName").value.trim();
+
+  const date=getElement("taskDate").value;
+
+  if(!name||!date){
+
+    alert("課題名と提出期限を入力してください。");
+
+    return;
+
+  }
+
+  tasks.push({
+    name,
+    date
+  });
 
   saveTasks();
+
   displayTasks();
 
-}
+  getElement("taskName").value="";
 
-getElement("taskAddButton").addEventListener("click",addTask);
+  getElement("taskDate").value="";
+
+});
 
 displayTasks();
 
@@ -1726,33 +1747,31 @@ displayTasks();
 // 節約計算
 // =====================================
 
-function calculateSaving(){
+getElement("savingButton").addEventListener("click",()=>{
 
-  const targetValue=getElement("targetMoney").value;
-  const savedValue=getElement("savedMoney").value;
-  const monthlyValue=getElement("monthlyMoney").value;
+  const target=Number(getElement("targetMoney").value);
 
-  const target=Number(targetValue);
-  const saved=Number(savedValue);
-  const monthly=Number(monthlyValue);
+  const saved=Number(getElement("savedMoney").value);
+
+  const monthly=Number(getElement("monthlyMoney").value);
 
   if(
-    targetValue===""||
-    savedValue===""||
-    monthlyValue===""||
-    !isPositiveInteger(target)||
+    !Number.isSafeInteger(target)||
     !Number.isSafeInteger(saved)||
+    !Number.isSafeInteger(monthly)||
+    target<=0||
     saved<0||
-    !isPositiveInteger(monthly)
+    monthly<=0
   ){
 
     showResult(
       "savingResult",
-      "目標金額と毎月の貯金額は正の整数、現在の貯金額は0以上の整数で入力してください。",
+      "目標金額・現在の貯金額・毎月の貯金額を正しく入力してください。",
       true
     );
 
     return;
+
   }
 
   const remaining=target-saved;
@@ -1761,7 +1780,9 @@ function calculateSaving(){
 
     showResult(
       "savingResult",
-      "🎉 目標達成！おめでとうございます！"
+      "🎉 すでに目標金額を達成しています！\n"+
+      "現在の貯金額："+saved.toLocaleString()+"円\n"+
+      "目標金額："+target.toLocaleString()+"円"
     );
 
     return;
@@ -1770,16 +1791,48 @@ function calculateSaving(){
 
   const months=Math.ceil(remaining/monthly);
 
+  const years=Math.floor(months/12);
+
+  const remainingMonths=months%12;
+
+  let period="";
+
+  if(years>0){
+
+    period+=years+"年";
+
+  }
+
+  if(remainingMonths>0){
+
+    period+=remainingMonths+"か月";
+
+  }
+
+  if(period===""){
+
+    period="0か月";
+
+  }
+
   showResult(
     "savingResult",
-    "💸 目標まであと："+remaining.toLocaleString()+"円"+
-    "\n📅 目標達成まで：約"+months.toLocaleString()+"か月"+
-    "\n\n毎月"+monthly.toLocaleString()+"円ずつ貯金した場合の目安です。"
+    "【貯金計画】\n"+
+    "目標金額："+target.toLocaleString()+"円\n"+
+    "現在の貯金額："+saved.toLocaleString()+"円\n"+
+    "あと："+remaining.toLocaleString()+"円\n"+
+    "毎月の貯金額："+monthly.toLocaleString()+"円\n"+
+    "達成まで：約"+months+"か月（"+period+"）"
   );
 
-}
+});
 
-getElement("savingButton").addEventListener("click",calculateSaving);
+
+// =====================================
+// 初期設定
+// =====================================
+
+getElement("taskDate").min=new Date().toISOString().split("T")[0];
 
 </script>
 
